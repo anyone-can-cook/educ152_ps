@@ -4,9 +4,14 @@ title: "EDUC152, Problem Set #1"
 date: ""
 urlcolor: blue
 output: 
-  pdf_document:
-    pandoc_args: ["--extract-media", "."]
-    keep_md: yes
+  #pdf_document:
+    #pandoc_args: ["--extract-media", "."]
+    #keep_md: yes
+    #self_contained: true
+  html_document:
+    toc: true
+    toc_depth: 2
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}

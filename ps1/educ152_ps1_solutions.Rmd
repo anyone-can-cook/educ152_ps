@@ -406,7 +406,7 @@ Answer the following questions with respect to the above plot (one sentence or l
 - Interpret the value of standard error in words
   - __YOUR ANSWER HERE__: On average, the sample mean from one random sample is 2112 away from the mean of all sample means. 
   
-- Why is the standard error from this sampling distribution (each sample has sample size n=20) larger than the sampling distribution from the previous example (each sample has sample size n=20)?  
+- Why is the standard error from this sampling distribution (each sample has sample size n=20) larger than the sampling distribution from the previous example (each sample has sample size n=200)?  
   - __YOUR ANSWER HERE__: The standard error from the sampling distribution with a sample size of 20 is larger because the sample size for each random sample is smaller. The larger our sample size, the smaller our standard error is. Which means the smaller our standard error, the more precise our estimates.
 
 

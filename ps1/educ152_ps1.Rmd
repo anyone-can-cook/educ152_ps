@@ -42,7 +42,7 @@ Please run the code in the following chunk, which does the following:
 - Creates data frame of generated variables (population)
 - Creates sample versions of the IPEDS and gnerated data frames
 
-_Note: code chunk omitted from PDF document using include = FALSE_
+_Note: code chunk omitted from html document using include = FALSE_
 ```{r, include= FALSE}
 #-----------------------------------------------------------------------------
 # Load libraries

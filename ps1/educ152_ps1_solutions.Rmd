@@ -211,7 +211,7 @@ get_sampling_distribution <- function(data_vec, num_samples = 500, sample_size =
 #-----------------------------------------------------------------------------
 
 
-plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.sided', plot_title = '') {
+plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.sided', plot_title = '', shade_rejection = TRUE, shade_pval = FALSE) {
   
   data_vec <- na.omit(data_vec)
   
@@ -229,42 +229,72 @@ plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.s
     cv_lower <- qt(p = alpha, df = deg_freedom, lower.tail = T)
     cv_legend <- round(cv_lower, 2)
     cv_legend2 <- round(cv_lower * std_err + mu, 2)
-    pval <- pt(q = t, df = deg_freedom, lower.tail = T)
+    pval <- round(pt(q = t, df = deg_freedom, lower.tail = T), 4)
   } else if (alternative == 'greater') {  # right-tailed
     cv_upper <- qt(p = alpha, df = deg_freedom, lower.tail = F)
     cv_legend <- round(cv_upper, 2)
     cv_legend2 <- round(cv_upper * std_err + mu, 2)
-    pval <- pt(q = t, df = deg_freedom, lower.tail = F)
+    pval <- round(pt(q = t, df = deg_freedom, lower.tail = F), 4)
   } else {  # two-tailed
     cv_lower <- qt(p = alpha / 2, df = deg_freedom, lower.tail = T)
     cv_upper <- qt(p = alpha / 2, df = deg_freedom, lower.tail = F)
     cv_legend <- str_c('\u00B1', round(cv_upper, 2))
     cv_legend2 <- str_c(round(cv_lower * std_err + mu, 2), ' & ', round(cv_upper * std_err + mu, 2))
-    pval <- 2 * pt(q = t, df = deg_freedom, lower.tail = t < 0)
+    pval_half <- round(pt(q = t, df = deg_freedom, lower.tail = t < 0), 4)
+    pval <- str_c(pval_half, ' + ', pval_half, ' = ', 2 * pval_half)
   }
   
   # Plot t-distribution
   p <- ggplot(data.frame(x = -c(-4, 4)), aes(x)) +
     ggtitle(plot_title) + xlab('') + ylab('') +
-    stat_function(fun = dt, args = list(df = deg_freedom))
+    stat_function(fun = dt, args = list(df = deg_freedom), xlim = c(-4, 4))
   
   # Shade rejection region using critical value
   if (alternative != 'greater') {
-    p <- p +
-      stat_function(fun = dt, args = list(df = deg_freedom),
-                    xlim = c(-4, cv_lower),
-                    geom = 'area', alpha = 0.3, fill = 'red') +
-      geom_vline(aes(xintercept = cv_lower, color = 'cval'),
-                 linetype = 'dotted', size = 0.8, alpha = 0.8)
+    p <- p + geom_vline(aes(xintercept = cv_lower, color = 'cval'),
+                        linetype = 'dotted', size = 0.8, alpha = 0.8)
+    
+    if (shade_rejection) {
+      p <- p + stat_function(fun = dt, args = list(df = deg_freedom),
+                             xlim = c(-4, cv_lower),
+                             geom = 'area', alpha = 0.3, fill = 'red')
+    }
+    
+    if (shade_pval) {
+      p <- p + stat_function(fun = dt, args = list(df = deg_freedom),
+                             xlim = c(-4, if_else(alternative == 'two.sided', -abs(t), t)),
+                             geom = 'area', alpha = 0.3, fill = 'blue')
+    }
   }
   if (alternative != 'less') {
-    p <- p +
-      stat_function(fun = dt, args = list(df = deg_freedom),
-                    xlim = c(cv_upper, 4),
-                    geom = 'area', alpha = 0.3, fill = 'red') +
-      geom_vline(aes(xintercept = cv_upper, color = 'cval'),
-                 linetype = 'dotted', size = 0.8, alpha = 0.8)
+    p <- p + geom_vline(aes(xintercept = cv_upper, color = 'cval'),
+                        linetype = 'dotted', size = 0.8, alpha = 0.8)
+    
+    if (shade_rejection) {
+      p <- p + stat_function(fun = dt, args = list(df = deg_freedom),
+                             xlim = c(cv_upper, 4),
+                             geom = 'area', alpha = 0.3, fill = 'red')
+    }
+    
+    if (shade_pval) {
+      p <- p + stat_function(fun = dt, args = list(df = deg_freedom),
+                             xlim = c(if_else(alternative == 'two.sided', abs(t), t), 4),
+                             geom = 'area', alpha = 0.3, fill = 'blue')
+    }
   }
+  
+  # Legend text
+  legend_text <- c(str_c('t-statistics: ', round(t, 2)),
+                   str_c('SE: ', round(std_err, 2)),
+                   str_c('p-value: ', pval),
+                   str_c('Critical value: ', cv_legend),
+                   str_c('alpha: ', round(alpha, 2)))
+  
+  p <- p +
+    annotate('text', size = 9*5/14, x = 4.81, y = 0.14, hjust = 0,
+             label = 'bold(Statistics)', parse = T) +
+    annotate('text', size = 8*5/14, x = 4.86, y = 0:4 * -0.015 + 0.12, hjust = 0,
+             label = legend_text)
   
   # Label plot
   p <- p +
@@ -273,15 +303,14 @@ plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.s
     scale_x_continuous(sec.axis = sec_axis(trans = ~ . * std_err + mu)) +
     scale_color_manual(name = 'Legend',
                        breaks = c('tstat', 'cval'),
-                       labels = c(str_c('t-statistics: ', round(t, 2), ' / ', round(xbar, 2),
-                                        ' (SE: ', round(std_err, 2), ')',
-                                        '\n(p-value: ', round(pval, 3), ')'),
-                                  str_c('Critical value: ', cv_legend, ' / ', cv_legend2,
-                                        '\n(alpha: ', round(alpha, 2), ')')),
-                       values = c(tstat='blue', cval='red')) +
+                       labels = c('t-statistics / p-value', 'critical value / alpha'),
+                       values = c(tstat = 'blue', cval = 'red')) +
     theme(plot.title = element_text(size = 10, face = 'bold', hjust = 0.5),
+          plot.margin = unit(c(5.5, 28, 5.5, 5.5), 'pt'),
           legend.title = element_text(size = 9, face = 'bold'),
-          legend.text = element_text(size = 8))
+          legend.text = element_text(size = 8)) +
+    coord_cartesian(xlim = c(-4, 4),
+                    clip = 'off')
 
   p
 }

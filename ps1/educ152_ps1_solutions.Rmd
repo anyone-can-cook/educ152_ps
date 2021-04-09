@@ -11,7 +11,9 @@ output:
   html_document:
     toc: true
     toc_depth: 2
+    toc_float: true
     self_contained: true
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -26,20 +28,25 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", highlight = TRUE, warning
 
 # Overview
 
-add text
+In this problem set, you will be working with the IPEDS dataset from lecture. You will be given the code to create several dataframes and plotting functions we will be working on in this problem set. Part I will give you practice working with distributions and sampling distributions and part II will give you practice with hypothesis testing. Both sections will include a mix of coding questions and conceptual questions where you will need to include a written response. Part III, will ask you to make a post on the class #problemsets channel about something you learned __or__ you can reply to another student's post.    
 
-# Create data and load functions
+If you have any questions about the problem set, please also post them on the #problemsets slack channel. 
 
-Run the code in the following chunk, which does the following:
 
-- loads libraries
-- loads and creates IPEDS data frame  (population)
-- creates data frame of generated variables (population)
-- creates sample versions of the IPEDS and gnerated data frames
+## Create data and load functions
 
-Note: code chunk omitted from PDF document
+Please run the code in the following chunk, which does the following:
+
+- Loads libraries
+- Loads and creates IPEDS data frame  (population)
+- Creates data frame of generated variables (population)
+- Creates sample versions of the IPEDS and gnerated data frames
+
+_Note: code chunk omitted from PDF document using include = FALSE_
 ```{r, include= FALSE}
+#-----------------------------------------------------------------------------
 # Load libraries
+#-----------------------------------------------------------------------------
 
   #install.packages('tidyverse') # if you haven't installed already
   #install.packages('labelled') # if you haven't installed already
@@ -49,8 +56,10 @@ library(tidyverse) # load tidyverse package
 library(labelled) # load labelled package package
 library(patchwork)
 
-
+#-----------------------------------------------------------------------------
 # Load ipeds dataset from course website url
+#-----------------------------------------------------------------------------
+
 load(file = url('https://github.com/anyone-can-cook/educ152/raw/main/data/ipeds/output_data/panel_data.RData'))
 
 # Create ipeds data frame with fewer variables/observations
@@ -110,10 +119,9 @@ df_ipeds_pop <- panel_data %>%
 
 df_ipeds_pop %>% glimpse()
 
-
-#####
-##### Create data frame of generated variables, with each variable meant to represent the entire population
-#####
+#-----------------------------------------------------------------------------
+# Create data frame of generated variables, with each variable meant to represent the entire population
+#-----------------------------------------------------------------------------
 
 num_obs <- 10000
 
@@ -140,9 +148,8 @@ df_generated_pop <- data.frame(norm_dist, rskew_dist, lskew_dist, stdnorm_dist)
 rm(norm_dist,rskew_dist,lskew_dist,stdnorm_dist)
 rm(num_obs)
 
-#####
-##### Create sample versions of generated population data frame and IPEDS population data frame
-#####
+#-----------------------------------------------------------------------------
+# Create sample versions of generated population data frame and IPEDS #-----------------------------------------------------------------------------
 
 # create sample version of our generated data
   set.seed(124) # set seed so that everyone ends up with the same random sample
@@ -158,9 +165,9 @@ rm(num_obs)
   df_ipeds_sample <- df_ipeds_pop %>% sample_n(size = 200) 
 
 
-##########
+#-----------------------------------------------------------------------------
 # Create function to generate plots of variable distributions
-##########
+#-----------------------------------------------------------------------------
 
 plot_distribution <- function(data_vec, plot_title = '') {
   p <- ggplot(as.data.frame(data_vec), aes(x=data_vec)) + xlab('') +
@@ -184,9 +191,9 @@ plot_distribution <- function(data_vec, plot_title = '') {
 }
 
 
-##########
+#-----------------------------------------------------------------------------
 # Write function to get the sampling distribution from a variable (defaults equal 500 samples of size 200)
-##########
+#-----------------------------------------------------------------------------
 
 get_sampling_distribution <- function(data_vec, num_samples = 500, sample_size = 200) {
   sample_means <- vector(mode = 'numeric', num_samples)
@@ -199,9 +206,9 @@ get_sampling_distribution <- function(data_vec, num_samples = 500, sample_size =
   sample_means
 }
 
-##########
+#-----------------------------------------------------------------------------
 # Write Function to generate sampling distribution (with t-test value) assuming null hypothesis is correct
-##########
+#-----------------------------------------------------------------------------
 
 
 plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.sided', plot_title = '') {
@@ -282,107 +289,134 @@ plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.s
 
 
 
-\textcolor{red}{\textbf{/1}}
+## Part I: Distributions and sampling distribution
 
+\textcolor{red}{\textbf{/X}}  
 
-# Distributions and sampling distribution
-
-Use the function we created `plot_distribution()` to plot the distribution of the variable `norm_dist` from the data frame `df_generated_pop`
+#### 1. Use the function we created in the code chunk above `plot_distribution()` to plot the distribution of the variable `norm_dist` from the data frame `df_generated_pop`
 ```{r}
-plot_distribution(data_vec = df_generated_pop$norm_dist, plot_title = "distribution of variable norm_dist")
+plot_distribution(data_vec = df_generated_pop$norm_dist, plot_title = "Distribution of variable norm_dist")
 ```
+
 What is the standard deviation and interpret this value in words
 
-- YOUR ANSWER HERE:
+- __YOUR ANSWER HERE__: The standard deviation is 4.99 and it reads as follows: on average, observations are 4.99 away from the mean of 49.99.
 
 Does the distribution above have a normal, left-skewed, or right-skwed shape? Why?
 
-- YOUR ANSWER HERE:
-
-What is the "empirical rule"? Drawing from the empirical rule, what percentage of observations in the above distribution have values between 45 and 55? between 40 and 60? between 35 and 65?
-
-- YOUR ANSWER HERE:
+- __YOUR ANSWER HERE__: The distribution is a normal distribution. We can infer this because the distribution is symmetrical and gives us a "bell shape" and the mean and median are almost the same (e.g. mean = 49.99 and median = 50.01).
 
 
-Use the function we created `plot_distribution()` to plot the distribution of the variable `tuitfee_grad_nres` from the data frame `df_ipeds_pop`
+What is the "empirical rule"? Drawing from the empirical rule, what percentage of observations in the above distribution have values between 45 and 55? between 40 and 60? between 35 and 65?  
 
-- Note: the data frame `df_ipeds_population` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population
+- Note: Make sure you answer all parts of the question.
+
+- __YOUR ANSWER HERE__: The empirical rule states that if a variable is approximately normally distributed, then : 68% of observations fall within one standard deviation from the mean, 95% of observations fall within two standard deviations from the mean, 99% of observatiosn fall within three standard deviations from the mean. This is important because it tells us the likeliness of observing a variable that is a certain number of standard deviataions away from the mean (for an approximately normally distributed variable). Drawing from this rule, we can infer that 68% of observations in the distribution have values between 45 and 55. 95% of the observations in the above distribution have values between 40 and 60 and 99% of observations in the above distribution have values between 35 and 65.
+
+\textcolor{red}{\textbf{/X}}    
+
+#### 2. Use the function we created `plot_distribution()` to plot the distribution of the variable `tuitfee_grad_nres` from the data frame `df_ipeds_pop`. 
+
+- Note: the data frame `df_ipeds_pop` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population.
 ```{r}
 plot_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, plot_title = "")
 ```
 
 Does this variable appear to have a normal, left-skewed, or right-skewed distribution? why?
 
-- YOUR ANSWER HERE: 
+- __YOUR ANSWER HERE__: The variable `tuitfee_grad_nres` appears to have a right-skewed distribution. It is right-skewed because the right tail is longer due to the presence of positive outliers and as such these outliers increase the value of the mean and therefore our mean is higher than our median (e.g., mean > median). From the distribution we can see that the median tuition + fees for out-of-state or nonresident graduate students is about 17552. However, there are some observations that far exceed that and are closer to 60K. 
 
-Use the function we created `plot_distribution()` to plot the distribution of the variable `tuitfee_grad_nres` from the data frame `df_ipeds_sample`
+\textcolor{red}{\textbf{/X}}   
 
-- Note: the data frame `df_ipeds_population` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population
+#### 3. Use the function we created `plot_distribution()` to plot the distribution of the variable `tuitfee_grad_nres` from the data frame `df_ipeds_sample`
+
+- Note: the data frame `df_ipeds_pop` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population.
 ```{r}
 plot_distribution(data_vec = df_ipeds_sample$tuitfee_grad_nres, plot_title = "")
 ```
 
 Does this variable appear to have a normal, left-skewed, or right-skewed distribution? why?
 
-- YOUR ANSWER HERE: 
+- __YOUR ANSWER HERE__: The variable `tuitfee_grad_nres` from `df_ipeds_sample` appears to have a right-skewed distribution. It is right-skewed because the right tail is longer due to the presence of positive outliers and as such these outliers increase the value of the mean and therefore our mean is higher than our median (e.g., mean > median). From the distribution we can see that the median tuition + fees for out-of-state or nonresident graduate students is about 16846. However, there are some observations that far exceed that and are closer to 50-60K. 
 
 
-What is a sampling distribution? what is a sampling distribution of a sample mean?
+\textcolor{red}{\textbf{/X}}   
 
-- YOUR ANSWER HERE: 
+#### 4. What is a sampling distribution? What is a sampling distribution of a sample mean?
 
+- __YOUR ANSWER HERE__: The sampling distribution is the distribution of a sample statistic (e.g., mean, median, min, max) that we obtain from a number of random samples of size n that we get from the population. The sampling distribution of a sample mean is the frequency distribution where each observation is the sample mean of a single random sample from a population.
 
-Run the following code, which does the following:
+\textcolor{red}{\textbf{/X}}   
 
-- takes 500 random samples of sample size n=200 from the data frame `df_ipeds_pop`
-- for each random sample, calculates the sample mean of variable `tuitfee_grad_nres`
-- plots the sampling distribution of the sample mean of variable  `tuitfee_grad_nres`
+#### 5. Run the following code, which does the following:
+
+- Takes 1000 random samples of sample size n=200 from the data frame `df_ipeds_pop`.
+- For each random sample, calculates the sample mean of variable `tuitfee_grad_nres`.
+- Plots the sampling distribution of the sample mean of variable  `tuitfee_grad_nres`.
 
 ```{r}
 set.seed(124)
 get_sampling_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, num_samples = 1000, sample_size = 200) %>%
-  plot_distribution(plot_title = "sampling distribution of sample mean of tuitfee_grad_nres")
+  plot_distribution(plot_title = "Sampling Distribution of the Sample mean of out-of-state graduate tuition and fees")
 
 #same as above
 #plot_distribution(get_sampling_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, num_samples = 1000, sample_size = 200),plot_title = "sampling distribution of sample mean of tuitfee_grad_nres")
 ```
+
 Answer the following questions with respect to the above plot (one sentence or less for each answer):
 
-- what does each observation in the above plot represent?
-  - ANSWER: a sample mean from one random sample
-- would you describe the shape of the above distribtuion as (approximately) normal, left-skwed, or right-skewed?
-  - ANSWER: 
-- Define what thethe concept "standard error" mean (referrring to sampling distribution of sample mean)?
-  - ANSWER: standard error refers to a sampling distribution and is the average distance between a sample mean from one random sample and the mean of all sample means
+- What does each observation in the above plot represent?
+  - __YOUR ANSWER HERE__: a sample mean from one random sample
+  
+- Would you describe the shape of the above distribtuion as (approximately) normal, left-skwed, or right-skewed?
+  - __YOUR ANSWER HERE__: normal
+  
+- Define what the concept "standard error" mean (referrring to sampling distribution of sample mean)?
+  - __YOUR ANSWER HERE__: The standard error refers to a sampling distribution and is the average distance between a sample mean from one random sample and the mean of all sample means.
+  
 - Why are the concepts "standard error" and "standard deviation of the sampling distribution" equivalent?
-  - ANSWER: standard error is standard deviation where each observation is a sample mean as opposed to a single data point
+  - __YOUR ANSWER HERE__: The standard error is the standard deviation where each observation is a sample mean as opposed to a single data point.
+  
 - Interpret the value of standard error in the above plot in words
-  - ANSWER: on average a sample mean from one random sample is about 581 away from the mean of all sample means
+  - __YOUR ANSWER HERE__: On average a sample mean from one random sample is about 581 away from the mean of all sample means.
+  
 - Write the formula for sample standard error and state what each component of the formula refers to (e.g., `n` refers to sample size)
-  - ANSWER:
+  - __YOUR ANSWER HERE__: The sample standard deviation is the average distance between a random observation and the sample mean. To get the standard deviation we get the square root of the sum of the difference betweeb a random observation and the sample mean squared divided by the sample size - 1. The sample standard error of the sample mean is the average distance between one random sample mean and the mean of all sample means. To get the sample standard error we divide the sample standard deviation by the square root of the sample size.  
+    - Sample standard deviation =  $\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^n (Y_i - \overline{Y})^2}{n-1}}$  
+    - Sample standard error = $\hat{\sigma}_{\bar{Y}} = \hat{\sigma}_{Y}/\sqrt{n}$
 
-Run the following code, which does the following:
 
-- takes 500 random samples of sample size n=20 from the data frame `df_ipeds_pop`
-- for each random sample, calculates the sample mean of variable `tuitfee_grad_nres`
-- plots the sampling distribution of the sample mean of variable  `tuitfee_grad_nres`
+\textcolor{red}{\textbf{/X}}   
+
+#### 6. Run the following code, which does the following:
+
+- Takes 1000 random samples of sample size n=20 from the data frame `df_ipeds_pop`
+- For each random sample, calculates the sample mean of variable `tuitfee_grad_nres`
+- Plots the sampling distribution of the sample mean of variable  `tuitfee_grad_nres`
 
 ```{r}
 set.seed(124)
 get_sampling_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, num_samples = 1000, sample_size = 20) %>%
-  plot_distribution(plot_title = "sampling distribution of sample mean of tuitfee_grad_nres")
+  plot_distribution(plot_title = "Sampling distribution of sample mean of tuitfee_grad_nres")
 #,plot_title = 'Sampling distribution')
 ```
+
 Answer the following questions with respect to the above plot (one sentence or less for each answer):
 
 - Interpret the value of standard error in words
-- why is the standard error from this sampling distribution (each sample has sample size n=20) larger than the sampling distribution from the previous example (each sample has sample size n=20)
+  - __YOUR ANSWER HERE__: On average, the sample mean from one random sample is 2112 away from the mean of all sample means. 
+  
+- Why is the standard error from this sampling distribution (each sample has sample size n=20) larger than the sampling distribution from the previous example (each sample has sample size n=20)?  
+  - __YOUR ANSWER HERE__: The standard error from the sampling distribution with a sample size of 20 is larger because the sample size for each random sample is smaller. The larger our sample size, the smaller our standard error is. Which means the smaller our standard error, the more precise our estimates.
 
-Run the following code, which does the following:
 
-- plots the population distribution of the variable `tuitfee_grad_nres`
-- plots the distribution of the variable  `tuitfee_grad_nres` from one sample
-- plots the sampling distribution of the sample mean for the variable `tuitfee_grad_nres`
+\textcolor{red}{\textbf{/X}}   
+
+#### 7. Run the following code, which does the following:
+
+- Plots the population distribution of the variable `tuitfee_grad_nres`
+- Plots the distribution of the variable  `tuitfee_grad_nres` from one sample
+- Plots the sampling distribution of the sample mean for the variable `tuitfee_grad_nres`
 ```{r}
 set.seed(124)
 plot_distribution(df_ipeds_pop$tuitfee_grad_nres, plot_title = 'Population distribution') +
@@ -393,22 +427,23 @@ plot_distribution(df_ipeds_pop$tuitfee_grad_nres, plot_title = 'Population distr
 
 State the central limit theorem in your own words and explain why it is important for hypothesis testing
 
-- ANSWER:
+- __YOUR ANSWER HERE__:
 
 
-# Hypothesis testing
+## Part II: Hypothesis testing
 
-In this section we will be testing a hypothesis about the variable off-campus room and board (`roomboard_off`)
+In this section we will be testing a hypothesis about the variable off-campus room and board (`roomboard_off`).
 
 Here is how IPEDS defines concepts related to room and board and other expenses, frome the IPEDS "Student Charges for Full Academic Year" 2019-20 academic year data dictionary [[LINK]](https://nces.ed.gov/ipeds/datacenter/data/IC2019_AY_Dict.zip):
 
 - "Room charges"
   - The charges for an academic year for rooming accommodations for a typical student sharing a room with one other student. 
+
 - "Board charges"
   - The charge for an academic year for meals, for a specified number of meals per week. 
 - "Other expenses"
   - The amount of money (estimated by the financial aid office) needed by a student to cover expenses such as laundry, transportation, entertainment, and furnishings. (For the purpose of this survey room and board and tuition and fees are not included.) 
-- Note that most of these variables seem to be defined for an academic year rather than a 12-month calendar year
+- _Note that most of these variables seem to be defined for an academic year rather than a 12-month calendar year._
 
 
 Here, We have included some code to help you get to know the data. Just run this code and take a look at the output
@@ -433,61 +468,73 @@ mean(df_ipeds_pop$roomboard_off, na.rm = TRUE)
 
 #alternative approach for calculating mean room and board
 df_ipeds_pop %>% summarize(mean_roomboard_off = mean(roomboard_off, na.rm = TRUE))
-  
 ```
+
 Average cost of off-campus room & board, separately for each value of `locale`
 ```{r}
-df_ipeds_pop %>% group_by(locale) %>%
+df_ipeds_pop %>% group_by(locale) %>% #creates a separate group for each locale
   summarize(
-    sample_size = n(),
-    mean_roomboard_off = mean(roomboard_off, na.rm = TRUE)
-    ) %>% as_factor()
+    sample_size = n(), #gets the count of colleges in each locale
+    mean_roomboard_off = mean(roomboard_off, na.rm = TRUE) #calculate the mean room and board costs for each locale
+    ) %>% as_factor() #return as factor
 ```
 
-What are the five steps in hypothesis testing? for each step, provide a one-sentence description
 
-- ANSWER
+\textcolor{red}{\textbf{/X}}   
 
-In the below questions, you will conduct hypothesis testing steps to answer the research question, "Is the population mean of off-campus room & board equal to $10,000?" You will be using the variable `roomboard_off` from the data frame `df_ipeds_sample`, which is a single random sample from the population data frame `df_ipeds_pop`. You will use a two-sided alternative hypothesis with an alpha level (rejection region) of `.05`
+#### 1. What are the five steps in hypothesis testing? for each step, provide a one-sentence description
+
+- __YOUR ANSWER HERE__:
 
 
-x. State the null and alternative (two-sided) hypothesis
 
-- YOUR ANSWER HERE
 
-x. use the `t.test()` function to calculate the test statistic
+
+\textcolor{red}{\textbf{/X}}   
+
+#### 2. Hypothesis testing steps
+
+In the below questions, you will conduct hypothesis testing steps to answer the research question, "Is the population mean of off-campus room & board equal to $10,000?" You will be using the variable `roomboard_off` from the data frame `df_ipeds_sample`, which is a single random sample from the population data frame `df_ipeds_pop`. You will use a two-sided alternative hypothesis with an alpha level (rejection region) of `.05`.
+
+- State the null and alternative (two-sided) hypothesis
+  - __YOUR ANSWER HERE__:
+
+\textcolor{red}{\textbf{/X}}   
+
+#### 3. Use the `t.test()` function to calculate the test statistic
 
 ```{r}
 t.test(x = df_ipeds_sample$roomboard_off, mu = 10000)
 ```
-use function `plot_t_distribution()` we created to plot the sampling distribution under the assumption that $H_0$ is true
+
+
+\textcolor{red}{\textbf{/X}}   
+
+#### 4. Use function `plot_t_distribution()` we created above to plot the sampling distribution under the assumption that $H_0$ is true.
 ```{r}
 plot_t_distribution(df_ipeds_sample$roomboard_off, mu = 10000)
 ```
-X. Interpret the t-value in words and interpret the p-value in words
 
-X. state the conclusion about your hypothesis test
+- Interpret the t-value in words and interpret the p-value in words.  
+  - __YOUR ANSWER HERE__:
 
-x. 
+- State the conclusion about your hypothesis test.  
+  - __YOUR ANSWER HERE__:
 
-# Post a comment/question
+## Part III: Post a comment/question
 
-PATRICIA - HAVE STUDENTS POST A QUESTION ON PS1 SLACK CHANNEL; SOMETHING THEY LEARNED; OR THEY CAN RESPOND TO COMMENT/QUESTION FROM ANOTHER STUDENT
+\textcolor{red}{\textbf{/X}}
 
-
-\textcolor{red}{\textbf{/2}}
-
-- Go to the [class repository](https://github.com/anyone-can-cook/rclass2_student_issues) and create a new issue.
+- Go to the class [#problemsets ](https://app.slack.com/client/T01S30RQY2E/C01SH5DSNEN) channel and create a new post.
 - You can either:
-  - Ask a question that you have about this problem set or the course in general. Make sure to assign the instructors (@ozanj, @mpatricia01, @cyouh95) and mention your team (e.g., @anyone-can-cook/your_team_name).
-  - Share something you learned from this problem set or the course. Please mention your team (e.g., @anyone-can-cook/your_team_name).
-- You are also required to respond to at least one issue posted by another student.
+  - Share something you learned from this problem set or the course. Make sure to mention the instructors (@ozanj, @Patricia Martín).
+  - Respond to a post made by another student.
 
-- Paste the url to your issue here: 
-- Paste the url to the issue you responded to here: 
 
-# Knit to pdf and submit problem set  
+# Knit to html and submit problem set  
 
-**Knit to pdf** by clicking the "Knit" button near the top of your RStudio window (icon with blue yarn ball) or drop down and select "Knit to PDF"
+**Knit to html** by clicking the "Knit" button near the top of your RStudio window (icon with blue yarn ball) or drop down and select "Knit to HTML"
 
-You will submit this problem set by pushing it to your repository. Follow the same steps you used above to add, commit, and push both the `.Rmd` and `.pdf` files.
+- Go to the [class website](https://anyone-can-cook.github.io/educ152/) and under the "Readings & Assignments" >> "Week 3" tab, click on the "Problem set 1 submission link"
+- Submit your .Rmd file 
+- Use this naming convention "lastname_firstname_ps#" for your .Rmd (e.g. martin_patricia_ps1.Rmd)

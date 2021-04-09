@@ -334,23 +334,22 @@ plot_t_distribution <- function(data_vec, mu, alpha = 0.05, alternative = 'two.s
 
 #### 1. Use the function we created in the code chunk above `plot_distribution()` to plot the distribution of the variable `norm_dist` from the data frame `df_generated_pop`
 ```{r}
-plot_distribution(data_vec = df_generated_pop$norm_dist, plot_title = "Distribution of variable norm_dist")
+
 ```
 
 What is the standard deviation and interpret this value in words
 
-- __YOUR ANSWER HERE__: The standard deviation is 4.99 and it reads as follows: on average, observations are 4.99 away from the mean of 49.99.
+- __YOUR ANSWER HERE__: 
 
 Does the distribution above have a normal, left-skewed, or right-skwed shape? Why?
 
-- __YOUR ANSWER HERE__: The distribution is a normal distribution. We can infer this because the distribution is symmetrical and gives us a "bell shape" and the mean and median are almost the same (e.g. mean = 49.99 and median = 50.01).
-
+- __YOUR ANSWER HERE__: 
 
 What is the "empirical rule"? Drawing from the empirical rule, what percentage of observations in the above distribution have values between 45 and 55? between 40 and 60? between 35 and 65?  
 
 - Note: Make sure you answer all parts of the question.
 
-- __YOUR ANSWER HERE__: The empirical rule states that if a variable is approximately normally distributed, then : 68% of observations fall within one standard deviation from the mean, 95% of observations fall within two standard deviations from the mean, 99% of observatiosn fall within three standard deviations from the mean. This is important because it tells us the likeliness of observing a variable that is a certain number of standard deviataions away from the mean (for an approximately normally distributed variable). Drawing from this rule, we can infer that 68% of observations in the distribution have values between 45 and 55. 95% of the observations in the above distribution have values between 40 and 60 and 99% of observations in the above distribution have values between 35 and 65.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/2<b></span> 
@@ -359,12 +358,12 @@ What is the "empirical rule"? Drawing from the empirical rule, what percentage o
 
 - Note: the data frame `df_ipeds_pop` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population.
 ```{r}
-plot_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, plot_title = "")
+
 ```
 
 Does this variable appear to have a normal, left-skewed, or right-skewed distribution? why?
 
-- __YOUR ANSWER HERE__: The variable `tuitfee_grad_nres` appears to have a right-skewed distribution. It is right-skewed because the right tail is longer due to the presence of positive outliers and as such these outliers increase the value of the mean and therefore our mean is higher than our median (e.g., mean > median). From the distribution we can see that the median tuition + fees for out-of-state or nonresident graduate students is about 17552. However, there are some observations that far exceed that and are closer to 60K. 
+- __YOUR ANSWER HERE__:  
 
 
 <span style="color:red"><b>/2<b></span>  
@@ -373,19 +372,19 @@ Does this variable appear to have a normal, left-skewed, or right-skewed distrib
 
 - Note: the data frame `df_ipeds_pop` contains data on the entire population of research/master's universities, whereas the data frame `df_ipeds_sample` contains data on a random sample of universities from that population.
 ```{r}
-plot_distribution(data_vec = df_ipeds_sample$tuitfee_grad_nres, plot_title = "")
+
 ```
 
 Does this variable appear to have a normal, left-skewed, or right-skewed distribution? why?
 
-- __YOUR ANSWER HERE__: The variable `tuitfee_grad_nres` from `df_ipeds_sample` appears to have a right-skewed distribution. It is right-skewed because the right tail is longer due to the presence of positive outliers and as such these outliers increase the value of the mean and therefore our mean is higher than our median (e.g., mean > median). From the distribution we can see that the median tuition + fees for out-of-state or nonresident graduate students is about 16846. However, there are some observations that far exceed that and are closer to 50-60K. 
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/2<b></span> 
 
 #### 4. What is a sampling distribution? What is a sampling distribution of a sample mean?
 
-- __YOUR ANSWER HERE__: The sampling distribution is the distribution of a sample statistic (e.g., mean, median, min, max) that we obtain from a number of random samples of size n that we get from the population. The sampling distribution of a sample mean is the frequency distribution where each observation is the sample mean of a single random sample from a population.
+- __YOUR ANSWER HERE__: 
 
 <span style="color:red"><b>/6<b></span>   
 
@@ -407,25 +406,23 @@ get_sampling_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, num_samples
 Answer the following questions with respect to the above plot (one sentence or less for each answer):
 
 - What does each observation in the above plot represent?
-  - __YOUR ANSWER HERE__: a sample mean from one random sample
+  - __YOUR ANSWER HERE__: 
   
 - Would you describe the shape of the above distribtuion as (approximately) normal, left-skwed, or right-skewed?
-  - __YOUR ANSWER HERE__: normal
+  - __YOUR ANSWER HERE__:
   
 - Define what the concept "standard error" mean (referrring to sampling distribution of sample mean)?
-  - __YOUR ANSWER HERE__: The standard error refers to a sampling distribution and is the average distance between a sample mean from one random sample and the mean of all sample means.
+  - __YOUR ANSWER HERE__: 
   
 - Why are the concepts "standard error" and "standard deviation of the sampling distribution" equivalent?
-  - __YOUR ANSWER HERE__: The standard error is the standard deviation where each observation is a sample mean as opposed to a single data point.
+  - __YOUR ANSWER HERE__: 
   
 - Interpret the value of standard error in the above plot in words
-  - __YOUR ANSWER HERE__: On average a sample mean from one random sample is about 581 away from the mean of all sample means.
+  - __YOUR ANSWER HERE__: 
   
 - Write the formula for sample standard error and state what each component of the formula refers to (e.g., `n` refers to sample size)
-  - __YOUR ANSWER HERE__: The sample standard deviation is the average distance between a random observation and the sample mean. To get the standard deviation we get the square root of the sum of the difference betweeb a random observation and the sample mean squared divided by the sample size - 1. The sample standard error of the sample mean is the average distance between one random sample mean and the mean of all sample means. To get the sample standard error we divide the sample standard deviation by the square root of the sample size.  
-    - Sample standard deviation =  $\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^n (Y_i - \overline{Y})^2}{n-1}}$  
-    - Sample standard error = $\hat{\sigma}_{\bar{Y}} = \hat{\sigma}_{Y}/\sqrt{n}$
-
+  - __YOUR ANSWER HERE__: 
+  
 
 <span style="color:red"><b>/2<b></span>    
 
@@ -445,10 +442,10 @@ get_sampling_distribution(data_vec = df_ipeds_pop$tuitfee_grad_nres, num_samples
 Answer the following questions with respect to the above plot (one sentence or less for each answer):
 
 - Interpret the value of standard error in words
-  - __YOUR ANSWER HERE__: On average, the sample mean from one random sample is 2112 away from the mean of all sample means. 
+  - __YOUR ANSWER HERE__: 
   
 - Why is the standard error from this sampling distribution (each sample has sample size n=20) larger than the sampling distribution from the previous example (each sample has sample size n=200)?  
-  - __YOUR ANSWER HERE__: The standard error from the sampling distribution with a sample size of 20 is larger because the sample size for each random sample is smaller. The larger our sample size, the smaller our standard error is. Which means the smaller our standard error, the more precise our estimates.
+  - __YOUR ANSWER HERE__:
 
 
 <span style="color:red"><b>/2<b></span>   
@@ -468,7 +465,7 @@ plot_distribution(df_ipeds_pop$tuitfee_grad_nres, plot_title = 'Population distr
 
 State the central limit theorem in your own words and explain why it is important for hypothesis testing
 
-- __YOUR ANSWER HERE__: The central limit theorem is important when conducting hypothesis tests about a population parameter (e.g., about a population mean, about a population regression coefficient), based on the sampling distribution of the relevant sample statistic. If the sampling distribution has a normal distribution, then we know the percent of the observations that we are a certain number of standard deviations from the mean.
+- __YOUR ANSWER HERE__: 
 
 
 ## Part II: Hypothesis testing
@@ -526,12 +523,7 @@ df_ipeds_pop %>% group_by(locale) %>% #creates a separate group for each locale
 #### 1. What are the five steps in hypothesis testing? for each step, provide a one-sentence description.
 
 - __YOUR ANSWER HERE__:
-  - 1. Hypothesis - You have to formally state your null and alternative hypothesis
-  - 2. Assumptions - Assumptions that we make based on our statistical test. If assumptions are met, we can make an inference about the population parameter by applying the statistical test to the sample data.  
-  - 3. Test statistic - A statistical analysis we use to test our hypothesis
-  - 4. p-value - We use the p-value to calculate the probability of observing a test statistic as large or larger as the one we calculate.
-  - 5. alpha level - Have to decide on the alpha level before running analysis and compare the alpha (e.g. .05) with the p-value to make a conclusion about our hypothesis test.  
-
+ 
 
 <span style="color:red"><b>/2<b></span>  
 
@@ -542,12 +534,6 @@ In the below questions, you will conduct hypothesis testing steps to answer the 
 - State the null and alternative (two-sided) hypothesis
   - __YOUR ANSWER HERE__:
   
-- Null hypothesis, $H_0$
-  - $H_0: \mu_Y = \mu_{Y0} = \$10,000$
-  - $H_0:$ population mean price of off-campus room & board is $10,000
-- Alternative hypothesis, $H_a$
-  - $H_a: \mu_Y \ne \$10,000$
-  - $H_a:$ population mean price of off-campus room & board is not equal to $10,000
   
 <span style="color:red"><b>/1<b></span> 
 
@@ -555,7 +541,7 @@ In the below questions, you will conduct hypothesis testing steps to answer the 
 
 
 ```{r}
-t.test(x = df_ipeds_sample$roomboard_off, mu = 10000)
+
 ```
 
 
@@ -563,14 +549,15 @@ t.test(x = df_ipeds_sample$roomboard_off, mu = 10000)
 
 #### 4. Use function `plot_t_distribution()` we created above to plot the sampling distribution under the assumption that $H_0$ is true.
 ```{r}
-plot_t_distribution(df_ipeds_sample$roomboard_off, mu = 10000)
+
 ```
 
 - Interpret the t-value in words and interpret the p-value in words.  
-  - __YOUR ANSWER HERE__: Our t-value (1.85) is less than our critical value (1.97) and so we won't reject the $H_0$. Our p-value of 0.06 is greater than our alpha level of .05 so we won't reject the $H_0$.
+  - __YOUR ANSWER HERE__: 
 
 - State the conclusion about your hypothesis test.  
-  - __YOUR ANSWER HERE__: We do not have sufficient evidence to reject the null hypothesis, $H_0$, that the population mean price of off-campus room & board is $10,000.
+  - __YOUR ANSWER HERE__: 
+  
 
 ## Part III: Post a comment/question
 

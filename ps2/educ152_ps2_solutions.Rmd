@@ -1,0 +1,378 @@
+---
+title: "EDUC152, Problem Set #2"
+# author: "INSERT YOUR NAME HERE"
+date: ""
+urlcolor: blue
+output: 
+  #pdf_document:
+    #pandoc_args: ["--extract-media", "."]
+    #keep_md: yes
+    #self_contained: true
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    self_contained: true
+    #theme: default
+    #highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", highlight = TRUE, warning = FALSE, message = FALSE)
+
+# remove scientific notation
+options(scipen=999)
+```
+
+<span style="color:red"><b>Grade: /35<b></span>
+
+# Overview
+
+In this problem set, you will work with data from the Tennessee Student Teacher Achievemnt Ratio (STAR) project. Tennessee STAR was a massive experiment that sought to identify the effect of class size on student learning. Elementary school children were randomly assigned to one of three kinds of classrooms: small class size; regular class size; and regular class size with a teacher aide. In the [lecture on causal inference and comparing two groups](https://anyone-can-cook.github.io/educ152/lectures/causal_inference_compare_groups/causal_inference_compare_groups.html), we deleted student observations assigned to the "regular class size with a teacher aid" condition so that you could compare "small class size" (treatment group) to "regular class size" (control group). In this problem set, we will delete observations assigned to the "regular class size" condition and you will compare "small class size" (treatment group) to "regular class size plus teacher aide" (control group). In addition to variables about random assignment to classroom, the Tennessee STAR data contains categorical and continuous variables about the characteristics of students and their teachers. We will use the continuous variable "years of teacher experience" to run a regression that examines the relationship between years of teacher experience ($X$) and Kindergarten reading score ($Y$).
+
+The problem set is divided into three parts: 
+
+- In part I, you will answer questions about fundamental concepts of causal inference
+- In part II, you will answer questions about experiments and you will test a hypothesis about whether average reading scores differ between the "small class size" vs. the "regular class size plus teacher aide" groups. 
+- In part III, you will answer questions about concepts in bivariate regression and you will run two regression models. The first bivariate regression model will examine the relationship between years of teacher experience ($X$) and reading score ($Y$). The second bivariate regression model will examine the relationship between classroom assignment (small vs. regular with teacher aide) ($X$) and reading score ($Y$).
+
+If you have any questions about the problem set, please also post them on the #problemsets slack channel. 
+
+## Tips on notation
+
+Some questions will ask you to write out notation and/or equations.
+
+You can write out notation/equations one of two ways: (1) using "inline equations," which begin with a dollar sign \$ and end with a dollar sign \$; *OR* (2) you can write out notation/equation in plain text without. We encourage you to try inline equations, but fine if you do not.
+
+Tips on writing notation/equations using "inline equations':
+
+- make sure there are no spaces after the dollar sign \$ that begins the equation and no spaces before the dollar sign that ends the equation. 
+  - For example, you would write out the notation for treated potential outcome like this: $Y_i(1)$
+  - But this wouldn't work: $ Y_i(1)$
+  - And this wouldn't work: $Y_i(1) $
+- Special characters -- like greek letters -- within inline equations are referred to using special symbols that start with a backslash
+  - e.g., "Beta" is `\beta`: $\beta$
+  - "Mu" (symbol for population mean) is `\mu`: $\mu$
+- subscripts after a character or sumbol are specified like this:
+  - e.g., "Beta subscript 1" is `beta_1`: $\beta_1$
+  - e.g., "Mu subscript Y" (referring to population mean of variable Y) is `\mu_Y`: $\mu_Y$
+- "hats" are specified by wrapping the character/symbol within `\hat{}` like this:
+  - e.g., "Beta hat" is `\hat{\beta}`: $\hat{\beta}$
+  - e.g., "Beta hat subscript 1" is `\hat{\beta}_1` (note that the subscript is not within the "hat"): $\hat{\beta}_1$
+- "bars" are specified by wrapping the character/symbol within `\bar{}` like this:
+  - e.g., "sample mean of Y" is `\bar{Y}`: $\bar{Y}$
+- Don't worry about getting it perfect and don't spend too much time trying to get it perfect; if you are trying, that is a great start! and fine to use inline equations for some notation/equations and plain text for others that you can't figure out.  
+
+<br>
+
+Tips on writing notation/equations in plain text
+
+- Instead of writing $Y_i(1)$, you could write this: Y_i(1)
+- Instead of writing $Y_i = \beta_0 + \beta_1X_i + u_i$, you could write this: Y_i = beta_0 + beta_1*X_i + u_i
+- Instead of writing $\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i$, you could write something like this: Y_hat_i = beta_hat_0 + beta_hat_1*X_i
+- don't worry if it doesn't look pretty!
+
+
+
+## load libraries and data
+
+Please run the code in the following chunk, which does the following:
+
+- Loads libraries
+- Loads and creates data frame from Tennessee STAR
+
+
+_Note: code chunk omitted from html document using include = FALSE_
+```{r, include= FALSE}
+#-----------------------------------------------------------------------------
+# Load libraries
+#-----------------------------------------------------------------------------
+
+  #install.packages('tidyverse') # if you haven't installed already
+  #install.packages('labelled') # if you haven't installed already
+  #install.packages('patchwork') # if you haven't installed already
+
+library(tidyverse) # load tidyverse package
+library(labelled) # load labelled package package
+library(patchwork)
+
+##########
+########## RUN SCRIPT THAT CREATES USER DEFINED FUNCTIONS
+##########
+
+source(file = url('https://github.com/anyone-can-cook/educ152/raw/main/scripts/user_defined_functions/create_inference_functions.R'))
+
+##########
+########## TENNESSEE STAR DATA
+##########
+
+# load star data
+load(file = url('https://github.com/anyone-can-cook/educ152/raw/main/data/star/star_panel_data.RData'))
+
+#df_star_panel %>% glimpse()
+
+#df_star_panel %>% count(star)
+#df_star_panel %>% count(star) %>% as_factor()
+
+# create data frame for STAR experiment, keeping only kindergarten
+df_stark <- df_star_panel %>% 
+  # keep only kindergarten year
+  filter(grade ==1) %>% 
+  # keep only observations with non-missing value for reading score
+  filter(!is.na(read)) %>%
+  # keep only observations with non-missing values for treatment assignment
+  filter(!is.na(star)) %>%
+  # drop observations where treatment status is "regular"
+    # remaining groups are "small" (star == 2) and "regular+aide" (star == 3)
+  filter(star !=1) %>%
+  # keep selected variables
+  select(id,grade,star,read,gender,ethnicity,lunch,school,degree,experience) %>%
+  # create a variable "treatment" that equals 1 if student receives treatment (small class) and equals 0 otherwise
+  mutate(
+    treatment = if_else(star==2,1,0)
+  )
+
+df_stark %>% glimpse()
+
+#rm(df_star_panel) # comment this line out if you want to keep data frame df_star_panel
+```
+
+<br>
+
+Run basic frquency tabulations on the variables `star` and `treatment`
+```{r}
+# frequency tabulation of the original classroom assignment variable named star
+df_stark %>% count(star)
+df_stark %>% count(star) %>% as_factor()
+
+# frequency tabulation of the variable named treatment, which we created from star
+df_stark %>% count(treatment)
+
+# two-way frequency tabulation of star and treatment
+  # basically, we run this to make sure that we created the variable treatment correctly
+df_stark %>% group_by(treatment) %>% count(star)
+  #df_stark %>% group_by(star) %>% count(treatment)
+
+# compare mean reading score by treatment status
+df_stark %>% group_by(treatment) %>% summarize(
+  n = n(),
+  n_nonmiss_read = sum(!is.na(read)),
+  read_mean = mean(read, na.rm = TRUE)
+)
+```
+
+
+# Part X: Fundamentals of causal inference and experiments
+
+<br>
+
+We introduce the following notation:
+
+- $i=1,\ldots,n$ refers to "units" or "subjects"
+  - in our data frame `df_stark`, each observation $i$ represents a kindergarten student
+- $Y_i$: actual observed outcome $Y$ (reading score) for unit $i$
+  - in `df_stark`, the variable `read`
+- $T_i$: actual observed treatment condition for unit $i$. $T_i=1$ is "treated" (small class size); $T_i=0$ is "untreated" or "control" (regular class size+teacher aide)
+  - in `df_stark`, the variable `treatment`
+
+
+
+<br>
+
+#### 1. Our analysis goal is to examine the causal effect of being in a small class size vs. a regular class size+teacher aide on the reading achievement of Kindergarten students. Write out a one-sentence research question associated with this analysis goal. This research question will help us guide our analyses.
+
+<br>
+
+- __YOUR ANSWER HERE__: What is the effect of being in a small class size ($T_i =1$) versus being in a regular class size with a teacher aid ($T_i=0$) on the reading achievement scores ($Y_i$) of Kindergarten students?
+
+#### 2. In general, what is the "treated potential outcome" $Y_i(1)$ for a unit $i$ and what is the "untreated potential outcome" $Y_i(0)$ for a unit $i$? write out the treated potential outcome and the untreated potential outcome for a unit $i$ for our research question.
+
+
+- __YOUR ANSWER HERE__: 
+
+#### X. In general, how does the value of the treatment assignment variable $T_i$ determine which potential outcome ($Y_i(1)$ or $Y_i(0)$) is the "observed outcome" ($Y_i$)? 
+
+- __YOUR ANSWER HERE__: 
+
+#### X. If student $i$ is assigned to small class size ($T_i$=1), which potential outcome do we observe as $Y_i$ and which potential outcome do we not observe? Explain why we observe the one potential outcome and not the other.
+
+- __YOUR ANSWER HERE__: 
+
+#### X. If student $i$ is assigned to regular class size + teacher aide ($T_i$=0), which potential outcome do we observe as $Y_i$ and which potential outcome do we not observe? Explain why we observe the one potential outcome and not the other.
+
+- __YOUR ANSWER HERE__: 
+
+#### X. Write out the formula for the "unit causal effect" $\tau_i$ and state what this formula means in words
+
+- __YOUR ANSWER HERE__: 
+
+#### X. Explain why it is not possible to calculate the unit causal effect in real life.
+
+- __YOUR ANSWER HERE__: 
+
+#### X. Imagine that we did know both the treated potential outcome and the untreated potential outcome for students $i=1$ through $i=5$ (see table below). Calculate the unit causal effect for each student. 
+
+But imagine we know treated $Y_i(1)$ and untreated $Y_i(0)$ potential outcomes for all $i$
+
+| $i$ | $Y_i(1)$ <br> Treated  | $Y_i(0)$ <br> Untreated | $\tau_i$ <br> Unit effect |
+|:---|--:|--:|--:|
+| 1  | 65  | 60  | ?  |
+| 2  | 30  | 35  | ?  |
+| 3  | 25  | 30  | ?  |
+| 4  | 80  | 70  | ?  |
+| 5  | 45  | 45  | ?  |
+
+#### X. For these same five students, calculate the average treatment effect two different ways: First, as the mean value of the treated potential outcome minus the mean value of the untreated potential outcome; Second, as the mean value of the unit causal effect. 
+
+- __YOUR ANSWER HERE__: 
+
+# Part X. Experiments
+
+- __YOUR ANSWER HERE__: 
+
+#### X. Write out the formula for $\hat{ATE}$, the "difference in means" estimator of the average treatment effect (ATE). Explain what this formula means in words
+
+- __YOUR ANSWER HERE__: 
+
+
+#### X. Below, we show the value for treatment assignment variable $T_i$ and the observed outcome reading score $Y_i$ for the first observations in `df_stark`. Calculate the value of $\hat{ATE}$ using the "difference in means" estimator for these 10 observations.
+
+```{r}
+df_stark %>% select(id, treatment,read) %>% head(10)
+```
+
+- __YOUR ANSWER HERE__: 
+
+#### X. In data frame `df_stark` the variable `lunch` identifies whether the student qualifies for free lunch (variable coded as: 1=non-free; 2=free). This variable was used as an indicator of household income because low-income students were elgible for free lunch at school. Below, we give a frequency distribution of `lunch` . We also show mean reading score by `lunch`, wich shows that students in the "non-free" lunch group have higher average reading scores than students in the "free" lunch group. Now, consider our treatment variable (1=small class; 0 = regular class + teacher aide). Imagine that, instead of being randomly assigned, students/parents self-selected into values of the treatment. Why might we be concerned that our estimator $\bar{Y}_{treatment} - bar{Y}_{control}$ does not capture the true average treatment effect?
+
+- __YOUR ANSWER HERE__: 
+
+
+```{r}
+# frequency count of lunch
+df_stark %>% count(lunch)
+df_stark %>% count(lunch) %>% as_factor()
+
+# mean reading score by lunch
+df_stark %>% group_by(lunch) %>% summarize(
+  mean_read = mean(read, na.rm = TRUE)
+)
+```
+
+#### X. Students in the Tennessee STAR experiment were randomly assigned to values of the treatment variable (instead of self-selection into the treatment). Imagine that prior research tells us that being from a high-income household has a positive causal effect on reading achievement. Given that students in Tennessee STAR were randomly assigned into the treatment, why are we not concerned that household income (measured by the variable `lunch`) affects our ability to estimate the average treatment effect?
+
+- __YOUR ANSWER HERE__: 
+
+
+#### X. Below, we list the steps in hypothesis testing. Restate the research question and conduct a hypothesis test about whether the population mean reading score for students in the treatment group is equal the the population mean reading score for students in the control group, using an alpha level of `0.05`.
+
+1. **Hypothesis**
+    - formally state your "null" and "alternative" hypothesis
+1. **Assumptions** [YOU CAN SKIP THIS STEP]
+    - state assumptions that are relied upon by the statistical test you are using to test your hypothesis
+1. **Test statistic**
+    - Using some appropriate statistical analysis, calculate the "test statistic" necessary to test your hypothesis
+1. **p-value (means probability value)**
+    - calculate the probability of observing a test statistic as large or larger as the one you calculated
+1. **Alpha level/rejection region and conclusion**
+    - compare the p-value you observed to the alpha level and make a conclusion about your hypothesis test
+
+- __YOUR ANSWER HERE__: 
+
+#### X. Below is the plot -- created by the user-defined function `plot_t_distribution()` -- of the samppling distribution assuming that $H_0: \mu_{treatment} = \mu_{control}$ is true. Explain in your own words what is happening in the below plot and explain what the different statistics, dotted lines, and shaded areas mean.
+
+
+```{r}
+#t.test(formula = read ~ treatment, data = df_stark)
+plot_t_distribution(data_df = df_stark, data_var = 'read',group_var = 'treatment', group_cat = c(1, 0), shade_pval = TRUE)
+```
+
+- __YOUR ANSWER HERE__: 
+
+# Part X: Bivariate regression
+
+Consider the research question, what is the relationship between teacher years of teaching experience ($X$) and Kindergarten reading score ($Y$)?
+
+In the data frame `df_stark`, teacher years of experience is measured by the variable `experience`. 
+
+Below is a scatterplot of the relationship between teacher years of experience $X$ and Kindergarten reading score ($Y$)? We have also added an linear ordinary least squares (OLS) prediction line
+
+```{r}
+df_stark %>%  ggplot(aes(x=experience, y=read)) + geom_point() + stat_smooth(method = 'lm')
+```
+
+
+#### X. Using the `lm()` function create an object named `mod1` that contains results from the bivariate regression of the relationship between years of teaching experience ($X$) and Kindergarten reading score ($Y$). Apply the `summarize()` function to the object `mod1` to print a summary of these regression results.
+
+
+- __YOUR ANSWER HERE__: 
+
+```{r}
+mod1 <- lm(formula = read ~ experience, data = df_stark)
+
+summary(mod1)
+```
+#### X. For your analysis of the relationship teacher years of experience $X$ and Kindergarten reading score ($Y$), do the following: write out the population linear regression model (label the symbols and write out what the variables $X$ and $Y$ actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_0$ in words; interpet the point estimate value of $\hat{\beta}_1$ in words;
+
+<br>
+
+*note: you can always use general approach for interpreting $\hat{\beta}_1$ in words:
+
+- "On average, a one-unit increase in $X$ is associated with a $\hat{\beta}_1$ increase (or decrease if $\hat{\beta}_1$ is negative) in the value of $Y$"
+- when interpreting $\hat{\beta}_1$ in words, replace the generic "one-unit increase in $X$" with text that is specific to your analysis (e.g., "a one-year increase in years of teacher experience $X$); and do the same thing for "the value of $Y$"
+
+- __YOUR ANSWER HERE__: 
+
+
+#### X. What is the predicted reading score for a student taught by a teacher who has: 5 years of experience? 20 years of experience? show your work
+
+- __YOUR ANSWER HERE__: 
+
+
+#### X. Returning to our original research question (what is the effect of being in a small class size ($X_i =1$) versus being in a regular class size with a teacher aid ($X_i=0$) on the reading achievement scores ($Y_i$) of Kindergarten students?) do the following: run the regression in R (using `lm()` and `summary()`); write out the population linear regression model; write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_1$ in words;
+
+<br>
+
+*note: you can always use general approach for interpreting $\hat{\beta}_1$ in words:
+
+- "On average, a one-unit increase in $X$ is associated with a $\hat{\beta}_1$ increase (or decrease if $\hat{\beta}_1$ is negative) in the value of $Y$"
+- this general approach is written with the idea of $X$ being a continuous variable (e.g,. teacher years of experience), but it can also work with $X$ is a dichotomous variable because going from $X_i=0$ (control) to $X_i=1$ (treatment) is still a one-unit increase in X
+- modifying the general approach when $X$ is a dichotomous variable:
+  - instead of this: "a one-unit increase in $X$ is associated with a ..."
+  - you can write this: "being assigned to the $X_i=1$ as opposed to $X_i=0$ is associated with a..."
+
+<br>
+
+- __YOUR ANSWER HERE__: 
+
+```{r}
+mod2 <- lm(formula = read ~ treatment, data = df_stark)
+
+summary(mod2)
+```
+
+
+# Part X: Post a comment/question
+
+<span style="color:red"><b>/2<b></span> 
+
+- Go to the class [#problemsets ](https://app.slack.com/client/T01S30RQY2E/C01SH5DSNEN) channel and create a new post.
+- You can either:
+  - Share something you _learned_ or a _question_ from this problem set. Make sure to mention the instructors (@ozanj, @Patricia Martín).
+  - Respond to a post made by another student.
+
+
+
+
+
+# Knit to html and submit problem set  
+
+**Knit to html** by clicking the "Knit" button near the top of your RStudio window (icon with blue yarn ball) or drop down and select "Knit to HTML"
+
+- Go to the [class website](https://anyone-can-cook.github.io/educ152/) and under the "Readings & Assignments" >> "Week 3" tab, click on the "Problem set 1 submission link"
+- Submit both your html and .Rmd files 
+- Use this naming convention "lastname_firstname_ps#" for your .Rmd (e.g. martin_patricia_ps1.Rmd)

@@ -174,12 +174,11 @@ We introduce the following notation:
 
 - $i=1,\ldots,n$ refers to "units" or "subjects"
   - in our data frame `df_stark`, each observation $i$ represents a kindergarten student
-  
 - $Y_i$: actual observed outcome $Y$ (reading score) for unit $i$ (kindergarten student)
   - in `df_stark`, the variable `read`
-  
 - $T_i$: actual observed treatment condition for unit $i$ (kindergarten student). $T_i=1$ is "treated" (small class size); $T_i=0$ is "untreated" or "control" (regular class size+teacher aide)
   - in `df_stark`, the variable `treatment`
+
 
 
 <br>
@@ -190,50 +189,50 @@ We introduce the following notation:
 
 <br>
 
-- __YOUR ANSWER HERE__: What is the effect of being in a small class size ($T_i =1$) versus being in a regular class size with a teacher aid ($T_i=0$) on the reading achievement scores ($Y_i$) of kindergarten students?
+- __YOUR ANSWER HERE__: 
+
 
 <span style="color:red"><b>/2<b></span>
 
 #### 2. In general, what is the "treated potential outcome" $Y_i(1)$ for a unit $i$ and what is the "untreated potential outcome" $Y_i(0)$ for a unit $i$? write out the treated potential outcome and the untreated potential outcome for a unit $i$ for our research question.
 
 
-- __YOUR ANSWER HERE__: The treated potential outcome $Y_i(1)$ for a unit $i$ = the reading score of a kindergarten student in a small class size ($T_i = 1$). The untreated potential outcome $Y_i(0)$ for a unit $i$ = the reading score of a kindergarten student in a regular class size with a teacher aide ($T_i= (0)$).
+- __YOUR ANSWER HERE__:
 
 
 <span style="color:red"><b>/1<b></span>
 
 #### 3. In general, how does the value of the treatment assignment variable $T_i$ determine which potential outcome ($Y_i(1)$ or $Y_i(0)$) is the "observed outcome" ($Y_i$)? 
 
-- __YOUR ANSWER HERE__: We imagine that for every kindergarten student $i$, there exists two potential outcomes-- the treated potential outcome $Y_i(1)$ and the untreated potential outcome $Y_i(0)$. The observed value of the treatment variable $T_i$ just determines which of the two potential outcomes we actually get to observe.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/2<b></span>
 
 #### 4. If student $i$ is assigned to small class size ($T_i$=1), which potential outcome do we observe as $Y_i$ and which potential outcome do we not observe? Explain why we observe the one potential outcome and not the other.
 
-- __YOUR ANSWER HERE__: If student $i$ is assigned to the small class size $T_i$ = 1, then we observe the treated potential outcome, $Y_i(1)$ and we do not observe the untreated potential outcome, $Y_i(0)$. The value of $T_i$ determines which potential outcome we observe. If a student is assigned to a small class (treatment), then we observe their treated potential outcome. We cannot observe the untreated potential outcome $Y_i(0)$ for someone that received the treatment (i.e., was assigned to a small class size).
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/2<b></span>
 
 #### 5. If student $i$ is assigned to regular class size + teacher aide ($T_i$=0), which potential outcome do we observe as $Y_i$ and which potential outcome do we not observe? Explain why we observe the one potential outcome and not the other.
 
-- __YOUR ANSWER HERE__: If student $i$ is assigned to the regular class size with a teacher aide $T_i$ = 0, then we observe the untreated potential outcome, $Y_i(0)$ and we do not observe the treated potential outcome, $Y_i(1)$. The value of $T_i$ determines which potential outcome we observe. If a student is assigned to a regular class size with a teacher aide (control), then we observe their untreated potential outcome. We cannot observe the treated potential outcome $Y_i(1)$ for someone that did not receive the treatment (i.e., was assigned to a regular class size with teacher aide).
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/2<b></span>
 
 #### 6. Write out the formula for the "unit causal effect" $\tau_i$ and state what this formula means in words
 
-- __YOUR ANSWER HERE__: $\tau_i = Y_i(1) - Y_i(0)$
-The causal effect for unit $i$ is the treated potential outcome $Y_i(1)$, outcome had they received the treatment, minus the untreated potential outcome $Y_i(0)$, outcome had they received the control.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/1<b></span>
 
 #### 7. Explain why it is not possible to calculate the unit causal effect in real life.
 
-- __YOUR ANSWER HERE__: It is not possible to calculate the unit causal effect in real life because we do not get to observe both the treated potential outcome $Y_i(1)$ and the untreated potential outcome $Y_i(1)$ for a unit $i$. 
+- __YOUR ANSWER HERE__:  
 
 
 <span style="color:red"><b>/2<b></span>
@@ -244,11 +243,11 @@ Assume we know treated $Y_i(1)$ and untreated $Y_i(0)$ potential outcomes for al
 
 | $i$ | $Y_i(1)$ <br> Treated  | $Y_i(0)$ <br> Untreated | $\tau_i$ <br> Unit effect |
 |:---|--:|--:|--:|
-| 1  | 65  | 60  | 5  |
-| 2  | 30  | 35  | -5 |
-| 3  | 25  | 30  | -5 |
-| 4  | 80  | 70  | 10 |
-| 5  | 45  | 45  | 0  |
+| 1  | 65  | 60  | ?  |
+| 2  | 30  | 35  | ?  |
+| 3  | 25  | 30  | ?  |
+| 4  | 80  | 70  | ?  |
+| 5  | 45  | 45  | ?  |
 
 
 <span style="color:red"><b>/2<b></span>
@@ -256,8 +255,6 @@ Assume we know treated $Y_i(1)$ and untreated $Y_i(0)$ potential outcomes for al
 #### 9. For these same five students, calculate the average treatment effect two different ways: First, as the mean value of the treated potential outcome minus the mean value of the untreated potential outcome; Second, as the mean value of the unit causal effect. 
 
 - __YOUR ANSWER HERE__: 
-1. Average treatment effect = `r mean(c(65,30,25,80,45))` - `r mean(c(60,35,30,70,45))` = `r mean(c(65,30,25,80,45)) - mean(c(60,35,30,70,45))`
-2. Average treatment effect = Mean of $\tau_i$ =`r mean(c(5, -5, -5, 10,0))`
 
 
 # Part 2. Experiments
@@ -266,9 +263,7 @@ Assume we know treated $Y_i(1)$ and untreated $Y_i(0)$ potential outcomes for al
 
 #### 1. Write out the formula for $\hat{ATE}$, the "difference in means" estimator of the average treatment effect (ATE). Explain what this formula means in words
 
-- __YOUR ANSWER HERE__: $\hat{ATE}$ = $\hat\tau$ = $\bar{Y}_{treatment} - \bar{Y}_{control}$
-
-The estimator of the average treatment effect (ATE) is equal to the sample mean for treated units minus the sample mean for untreated units.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/3<b></span>
@@ -281,21 +276,6 @@ df_stark %>% select(id, treatment,read) %>% head(10)
 
 - __YOUR ANSWER HERE__:  
 
-$\hat{ATE}$ = ($\bar{Y}_{treatment}$) `r mean(c(447, 450, 447, 478, 455, 474, 424))` - 
-($\bar{Y}_{control}$) `r mean(c(439, 395, 437))`  
-
-$\hat{ATE}$ = $\hat\tau$ =  `r mean(c(447, 450, 447, 478, 455, 474, 424)) - mean(c(439, 395, 437))`
-
-```{r}
-
-Y_treat = mean(head(df_stark$read,10)[df_stark$treatment==1], na.rm = T) #sample mean for treated units from the first 10 observations
-
-Y_control = mean(head(df_stark$read,10)[df_stark$treatment==0], na.rm = T) #sample mean for untreated units from the first 10 observations
-
-ate <- Y_treat - Y_control
-
-ate
-```
 
 
 <span style="color:red"><b>/1<b></span>
@@ -313,69 +293,37 @@ df_stark %>% group_by(lunch) %>% summarize(
 )
 ```
 
-- __YOUR ANSWER HERE__: If students/parents self-selected into the values of treatment (e.g., small class size), then we would be concerned that our estimator $\bar{Y}_{treatment} - \bar{Y}_{control}$ does not capture the true average treatment effect because it is likely that people with certain characteristics (e.g., non-free lunch group = higher income) are more likely to select into the treatment and this could have an affect on the potential outcomes.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/1<b></span>
 
 #### 4. Students in the Tennessee STAR experiment were randomly assigned to values of the treatment variable (instead of self-selection into the treatment). Imagine that prior research tells us that being from a high-income household has a positive causal effect on reading achievement. Given that students in Tennessee STAR were randomly assigned into the treatment, why are we not concerned that household income (measured by the variable `lunch`) affects our ability to estimate the average treatment effect?
 
-- __YOUR ANSWER HERE__: We would not be concerned that household income affects our ability to estimate the average treatment effect because students were randomly assigned and that means their treatment assignment does not affect the value of potential outcomes.
+- __YOUR ANSWER HERE__:
 
 
 <span style="color:red"><b>/5<b></span>
 
 #### 5. Below, we list the steps in hypothesis testing. Restate the research question and conduct a hypothesis test about whether the population mean reading score for students in the treatment group is equal the the population mean reading score for students in the control group, using an alpha level of `0.05`.
 
+Research Question:
+
 1. **Hypothesis**
     - formally state your "null" and "alternative" hypothesis
-    - Null hypothesis, $H_0$
-        - $H_0: \mu_{Y_{{treated}}} = \mu_{Y_{{control}}}$
-        - $H_0:$ the population mean reading score for kindergarten students assigned to the treatment, $\mu_{Y_{{treated}}}$, is the same as the population mean reading score for kindergarten students assigned to the control $\mu_{Y_{{control}}}$.
-   - Alternative hypothesis, $H_a$
-      - $H_a: \mu_{Y_{{treated}}} \ne \mu_{Y_{{control}}}$
-      - $H_a:$ the population mean reading score for kindergarten students assigned to the treatment, $\mu_{Y_{{treated}}}$, is different than the population mean reading score for kindergarten students assigned to the control $\mu_{Y_{{control}}}$.
-  
+    
 1. **Assumptions** [YOU CAN SKIP THIS STEP]
     - state assumptions that are relied upon by the statistical test you are using to test your hypothesis
     
 1. **Test statistic**
     - Using some appropriate statistical analysis, calculate the "test statistic" necessary to test your hypothesis
     
-    - Test statistic, two population means
-$t = \frac{(\bar{Y}_2 - \bar{Y}_1)- 0}{\hat{\sigma}_{\bar{Y}_2 - \bar{Y}_1}} = \frac{sample\_estimate - value\_associated\_with\_H_0}{sample\_standard\_error}$
-
-```{r echo=FALSE}
-# by hand
-df_stark %>% group_by(treatment) %>%
-  summarize(n = n(),
-            n_non_miss = sum(!is.na(read)),
-            mean = mean(read, na.rm = TRUE),
-            sd = sd(read, na.rm = TRUE))
-
-#point estimate - H_0 value (Null hypothesis)
-(440.5474 - 435.4295) - 0
-
-#standard error
-sqrt(32.49738^2/1739 + 31.50247^2/2044)
-
-#t test
-((440.5474 - 435.4295) - 0) / sqrt(32.49738^2/1739 + 31.50247^2/2044)
-
-#use the t.test function
-t.test(formula = read ~ treatment, mu = 0, data = df_stark)
-```
 1. **p-value (means probability value)**
     - calculate the probability of observing a test statistic as large or larger as the one you calculated
-    
-    - p-value, t.test above
-      - .000001
 
 1. **Alpha level/rejection region and conclusion**
     - compare the p-value you observed to the alpha level and make a conclusion about your hypothesis test
 
-    - alpha level = 0.05
-        - p-value of 0.00 is less than alpha level of .05 so we reject $H_0$ and accept $H_a$
 
 - __YOUR ANSWER HERE__: 
 
@@ -384,13 +332,12 @@ t.test(formula = read ~ treatment, mu = 0, data = df_stark)
 
 #### 6. Below is the plot -- created by the user-defined function `plot_t_distribution()` -- of the sampling distribution assuming that $H_0: \mu_{treatment} = \mu_{control}$ is true. Explain in your own words what is happening in the below plot and explain what the different statistics, dotted lines, and shaded areas mean.
 
-
 ```{r}
 #t.test(formula = read ~ treatment, data = df_stark)
 plot_t_distribution(data_df = df_stark, data_var = 'read',group_var = 'treatment', group_cat = c(1, 0), shade_pval = TRUE)
 ```
 
-- __YOUR ANSWER HERE__: The plot above is the sampling distribution assuming the $H_0$ is true. The blue dotted line shows us the t-statistic/p-value and the red line shows us the threshold for the critical value/alpha level to reject $H_0$. The p-value of 0.00 is less than the alpha level of .05 and therefore we reject the $H_0$ hypothesis. This tells us that the population mean reading scores for students assigned to the treatment (small class) is different than the population mean for students assigned to the control (regular class with aide). 
+- __YOUR ANSWER HERE__:  
 
 
 
@@ -412,9 +359,7 @@ df_stark %>%  ggplot(aes(x=experience, y=read)) + geom_point() + stat_smooth(met
 #### 1. Using the `lm()` function create an object named `mod1` that contains results from the bivariate regression of the relationship between years of teaching experience ($X$) and Kindergarten reading score ($Y$). Apply the `summary()` function to the object `mod1` to print a summary of these regression results.
 
 ```{r}
-mod1 <- lm(formula = read ~ experience, data = df_stark)
 
-summary(mod1)
 ```
 
 
@@ -431,22 +376,6 @@ summary(mod1)
 
 - __YOUR ANSWER HERE__: 
 
-- Population linear regression model: $Y_i = \beta_0 + \beta_1X_i + u_i$
-- where:
-  - subscript $i$ refers to kindergarten students
-  - $Y_i$ = reading scores for kindergarten student $i$
-  - $X_i$ = the number of years the teacher of student $i$ has been teaching 
-  - $\beta_0$ = population intercept"), which represents average reading scores for kindergarten students in a class with a teacher who has no prior teaching experience X=0 (teaching experience = 0)
-  - $\beta_1$ = population regression coefficient, which represents average effect of a one-unit increase in years of teacher experience $X$ on kindergarten student reading scores $Y$
- 
-
-- OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$
-
-- OLS prediction line (with estimates): $\hat{Y_i} =$  `r round(summary(mod1)$coefficients[1,1], digits =2)` + `r round(summary(mod1)$coefficients[2,1], digits =2)` $\times X_i$
-
-- Interpret point estimate value of $\hat{\beta}_0$ & $\hat{\beta}_1$:
-  - interpretation of $\hat{\beta_0}=$ `r round(summary(mod1)$coefficients[1,1], digits =2)`: the predicted kindergarten reading scores for a student in a class with a teacher with no prior teaching experience is `0` is `r round(summary(mod1)$coefficients[1,1], digits =2)`
-  - interpretation of $\hat{\beta_1}=$ `r round(summary(mod1)$coefficients[2,1], digits =2)`: a one-year increase in years of teacher experience is associated with a `r round(summary(mod1)$coefficients[2,1], digits =2)` point increase in student's reading score.
 
 
 <span style="color:red"><b>/2<b></span>
@@ -454,8 +383,7 @@ summary(mod1)
 #### 3. What is the predicted reading score for a student taught by a teacher who has: 5 years of experience? 20 years of experience? Show your work.
 
 - __YOUR ANSWER HERE__: 
-  - $E(\hat{Y_i}|X=5) = \hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i=$ `r round(summary(mod1)$coefficients[1,1], digits =2)` + `r round(summary(mod1)$coefficients[2,1], digits =2)` $\times 5$ = `r round(summary(mod1)$coefficients[1,1] + summary(mod1)$coefficients[2,1]*5, digits=0)`
-  - $E(\hat{Y_i}|X=20) = \hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i=$ `r round(summary(mod1)$coefficients[1,1], digits =2)` + `r round(summary(mod1)$coefficients[2,1], digits =2)` $\times 20$ = `r round(summary(mod1)$coefficients[1,1] + summary(mod1)$coefficients[2,1]*20, digits=0)`
+
 
 
 <span style="color:red"><b>/7<b></span>
@@ -475,29 +403,12 @@ summary(mod1)
 <br>
 
 ```{r}
-mod2 <- lm(formula = read ~ treatment, data = df_stark)
 
-summary(mod2)
 ```
 
 - __YOUR ANSWER HERE__: 
 
-- Population linear regression model: $Y_i = \beta_0 + \beta_1X_i + u_i$
-- where:
-  - subscript $i$ refers to kindergarten students
-  - $Y_i$ = reading scores for kindergarten student $i$
-  - $X_i$ = treatment assignment of student $i$
-  - $\beta_0$ = population intercept"), which represents average reading scores for kindergarten students who are assigned to the treatment X=0 (regular class size + aide = 0)
-  - $\beta_1$ = population regression coefficient, which represents average effect of treatment assignment $X_i$ =1 on kindergarten student reading scores $Y$
- 
-- OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$
 
-- OLS prediction line (with estimates): $\hat{Y_i} =$  `r round(summary(mod2)$coefficients[1,1], digits =2)` + `r round(summary(mod2)$coefficients[2,1], digits =2)` $\times X_i$
-
-- Interpret point estimate value of $\hat{\beta}_0$ & $\hat{\beta}_1$:
-  - interpretation of $\hat{\beta_0}=$ `r round(summary(mod2)$coefficients[1,1], digits =2)`: the predicted kindergarten reading scores for a student who was assigned to a regular sized class with a teacher aide $X_i$=`0` is `r round(summary(mod2)$coefficients[1,1], digits =2)`
-  - interpretation of $\hat{\beta_1}=$ `r round(summary(mod2)$coefficients[2,1], digits =2)`: being assigned to the $X_i=1$ as opposed to $X_i=0$ is associated with `r round(summary(mod2)$coefficients[2,1], digits =2)` point increase in student's reading score.
-  
   
 # Part 4: Post a comment/question
 

@@ -437,7 +437,7 @@ summary(mod1)
   - $Y_i$ = reading scores for kindergarten student $i$
   - $X_i$ = the number of years the teacher of student $i$ has been teaching 
   - $\beta_0$ = population intercept"), which represents average reading scores for kindergarten students in a class with a teacher who has no prior teaching experience X=0 (teaching experience = 0)
-  - $\beta_1$ = population regression coefficient, which represents average effect of a one-unit increase in years of teacher experience $X$ on kindergarten student reading scores $Y$
+  - $\beta_1$ = population regression coefficient, which represents average effect of a one-year increase in teacher experience $X$ on kindergarten student reading scores $Y$
  
 
 - OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$

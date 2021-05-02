@@ -488,7 +488,7 @@ summary(mod2)
   - $Y_i$ = reading scores for kindergarten student $i$
   - $X_i$ = treatment assignment of student $i$
   - $\beta_0$ = population intercept"), which represents average reading scores for kindergarten students who are assigned to the treatment X=0 (regular class size + aide = 0)
-  - $\beta_1$ = population regression coefficient, which represents average effect of treatment assignment $X_i$ =1 on kindergarten student reading scores $Y$
+  - $\beta_1$ = population regression coefficient, which represents average effect of treatment $X_i$ =1 on kindergarten student reading scores $Y$
  
 - OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$
 

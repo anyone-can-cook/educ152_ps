@@ -442,6 +442,11 @@ summary(mod1)
 
 - OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$
 
+- Where:
+  - $\hat{Y_i}$ = predicted value of kindergarten reading score for student $i$
+  - $\hat{\beta_0}$ = predicted average kindergarden student reading score when Xi = 0(when teacher experience, Xi = 0).
+  - $\hat{\beta_1}$= estimate of change in Yi(kindergarden reading score) associated with a one unit change in Xi (teacher years of experience).
+
 - OLS prediction line (with estimates): $\hat{Y_i} =$  `r round(summary(mod1)$coefficients[1,1], digits =2)` + `r round(summary(mod1)$coefficients[2,1], digits =2)` $\times X_i$
 
 - Interpret point estimate value of $\hat{\beta}_0$ & $\hat{\beta}_1$:
@@ -491,6 +496,12 @@ summary(mod2)
   - $\beta_1$ = population regression coefficient, which represents average effect of treatment $X_i$ =1 on kindergarten student reading scores $Y$
  
 - OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i$
+
+- Where:
+  - $\hat{Y_i}$ = predicted value of kindergarten reading score for student $i$
+  - $\hat{\beta_0}$ = predicted average kindergarden student reading score when Xi = 0(when students assigned to regular classroom with teacher aid).
+  - $\hat{\beta_1}$= average effect of treatment  $X_i$ =1 on kindergarten student reading scores $Y_i$.
+
 
 - OLS prediction line (with estimates): $\hat{Y_i} =$  `r round(summary(mod2)$coefficients[1,1], digits =2)` + `r round(summary(mod2)$coefficients[2,1], digits =2)` $\times X_i$
 

@@ -1,0 +1,42 @@
+---
+title: "EDUC152, Problem Set #3"
+# author: "INSERT YOUR NAME HERE"
+date: ""
+urlcolor: blue
+output: 
+  #pdf_document:
+    #pandoc_args: ["--extract-media", "."]
+    #keep_md: yes
+    #self_contained: true
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    self_contained: true
+    #theme: default
+    #highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", highlight = TRUE, warning = FALSE, message = FALSE)
+
+# remove scientific notation
+options(scipen=999)
+```
+
+<span style="color:red"><b>Grade: /50<b></span>
+
+# Overview
+
+## Load libraries and data
+
+# Part I: Measures of model fit
+
+# Part II: Categorical X variables
+
+# Part III: Confidence interval about $\beta_k$
+

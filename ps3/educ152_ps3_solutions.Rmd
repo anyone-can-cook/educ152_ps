@@ -32,7 +32,50 @@ options(scipen=999)
 
 # Overview
 
+## Tips on notation
+
+Some questions will ask you to write out notation and/or equations.
+
+You can write out notation/equations one of two ways: (1) using "inline equations," which begin with a dollar sign \$ and end with a dollar sign \$; *OR* (2) you can write out notation/equation in plain text without. We encourage you to try inline equations, but fine if you do not.
+
+Tips on writing notation/equations using "inline equations':
+
+- Make sure there are no spaces after the dollar sign \$ that begins the equation and no spaces before the dollar sign that ends the equation. 
+  - For example, you would write out the notation for treated potential outcome like this: $Y_i(1)$
+  - But this wouldn't work: $ Y_i(1)$
+  - And this wouldn't work: $Y_i(1) $
+- Special characters -- like greek letters -- within inline equations are referred to using special symbols that start with a backslash
+  - e.g., "Beta" is `\beta`: $\beta$
+  - "Mu" (symbol for population mean) is `\mu`: $\mu$
+- Subscripts after a character or symbol are specified like this:
+  - e.g., "Beta subscript 1" is `beta_1`: $\beta_1$
+  - e.g., "Mu subscript Y" (referring to population mean of variable Y) is `\mu_Y`: $\mu_Y$
+- "hats" are specified by wrapping the character/symbol within curly brackets `\hat{}` like this:
+  - e.g., "Beta hat" is `\hat{\beta}`: $\hat{\beta}$
+  - e.g., "Beta hat subscript 1" is `\hat{\beta}_1` (note that the subscript is not within the "hat"): $\hat{\beta}_1$
+- "bars" are specified by wrapping the character/symbol within curly brackets `\bar{}` like this:
+  - e.g., "sample mean of Y" is `\bar{Y}`: $\bar{Y}$
+- Don't worry about getting it perfect and don't spend too much time trying to get it perfect; if you are trying, that is a great start! and fine to use inline equations for some notation/equations and plain text for others that you can't figure out.  
+
+<br>
+
+Tips on writing notation/equations in plain text
+
+- Instead of writing $Y_i(1)$, you could write this: Y_i(1)
+- Instead of writing $Y_i = \beta_0 + \beta_1X_i + u_i$, you could write this: Y_i = beta_0 + beta_1*X_i + u_i
+- Instead of writing $\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i$, you could write something like this: Y_hat_i = beta_hat_0 + beta_hat_1*X_i
+- don't worry if it doesn't look pretty!
+
+
 ## Load libraries and data
+
+Please run the code in the following chunk, which does the following:
+
+- Loads libraries
+- Loads and creates data frame from IPEDS/College Scorecard Masters degrees in Education 
+
+
+_Note: code chunk omitted from html document using include = FALSE_
 
 ```{r, include=FALSE}
 #-----------------------------------------------------------------------------
@@ -226,13 +269,112 @@ rm(df_scorecard) # comment this line out if you want to keep scorecard data fram
   # data structure: variables that uniquely identify obs
     df_score_ipeds %>% group_by(opeid6,cipcode) %>% summarise(n_per_key=n()) %>% ungroup() %>% count(n_per_key)
   
-  # number of observations (universities) for each 4-digit cip code (degree code)
-    #df_score_ipeds %>% count(cipcode)
-    df_score_ipeds %>% filter(cipcode=='4407') %>% count(cipcode) # social work
+  ##### create data frame that only contains observations for MAs in education
+  
+  #particularly the degree "Education General", which is associated with general Education programs
+    
+df_score_ipeds %>% filter(cipdig2=="13") %>% count(cipcode)
+df_score_ipeds %>% filter(cipdig2=="13") %>% count(cipdesc)
+
+  df_edu <- df_score_ipeds %>% 
+    filter(cipcode=='1301') %>%
+    # remove observations with missing values of cost of attendance (better for teaching concepts)
+    filter(!is.na(coa_grad_res))    
+
+df_edu %>% glimpse()
+
 ```
 
 
 # Part I: Measures of model fit
+
+<br>
+
+<span style="color:red"><b>/X<b></span>
+
+#### 1. Define $R^2$ in words. Write out the mathematical formula for $R^2$ using both ways discussed in lecture.
+
+
+- __YOUR ANSWER HERE__:  
+
+
+<span style="color:red"><b>/X<b></span>  
+
+#### 2. Using the code from below to guide you, write out the formula for TSS and explain what it means in words. Do the same for ESS and SSR. 
+
+Consider the research question, what is the relationship between cost of attendance ($X$) and earnings  ($Y$) (2 years after graduation)?
+
+Below we use the `lm()` function and create an object named `mod1` that contains results from the bivariate regression of the relationship between cost of attendance ($X$) and earnings 2 years after graduation ($Y$). We run the `anova()` function to get the values of ESS, SSR, TSS. 
+
+- X= `coa_grad_res`
+- Y= `earn_mdn_hi_2yr`
+
+```{r}
+mod1 <- lm(formula = earn_mdn_hi_2yr ~ coa_grad_res, data = df_edu)
+
+summary(mod1)
+
+anova(mod1)
+
+#ESS
+anova(mod1)$"Sum Sq"[1]
+
+#SSR
+anova(mod1)$"Sum Sq"[2]
+```
+
+Estimated sum of squares (ESS) = 323638309  
+Sum of Squared Residuals (SSR) = 10633742116  
+Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425
+
+
+- __YOUR ANSWER HERE: TSS__: 
+
+- __YOUR ANSWER HERE: ESS__:
+
+- __YOUR ANSWER HERE: SSR__: 
+
+
+<span style="color:red"><b>/X<b></span>   
+
+#### 3. Using the values for ESS, SSR, and TSS from above, calculate $R^2$ in both ways discussed in lecture. Interpret the value of $R^2$ in words. 
+
+- __YOUR ANSWER HERE__: 
+
+
+<span style="color:red"><b>/X<b></span> 
+
+#### 4. Explain what sample standard deviation of a variable means in words and write out the formula. Explain what standard error of the regression (SER) means in words and write out the formula for SER (in terms of SSR). 
+
+- __YOUR ANSWER HERE__: 
+
+
+<span style="color:red"><b>/X<b></span> 
+
+#### 5. Run the analysis of the relationship between cost of attendance ($X$) and debt ($Y$)., do the following: run the regression in R (using `lm()` and `summary()`) and assign it to the object `mod2`; report the SER; and calculate the standard deviation of the independent variable, debt `debt_all_stgp_eval_mean`, in the regression model. 
+
+- X= `coa_grad_res`
+- Y= `debt_all_stgp_eval_mean`
+
+```{r}
+mod2 <- lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
+
+summary(mod2)
+
+#SER
+summary(mod2)$sigma
+
+#Standard deviation of debt
+sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
+```
+
+<span style="color:red"><b>/X<b></span> 
+
+#### 6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make out prediction substantially better? 
+
+
+- __YOUR ANSWER HERE__:
+
 
 # Part II: Categorical X variables
 

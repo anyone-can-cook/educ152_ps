@@ -1529,12 +1529,184 @@ div.tocify {
 <p><span style="color:red"><b>Grade: /50<b></span></p>
 <div id="overview" class="section level1">
 <h1>Overview</h1>
+<div id="tips-on-notation" class="section level2">
+<h2>Tips on notation</h2>
+<p>Some questions will ask you to write out notation and/or equations.</p>
+<p>You can write out notation/equations one of two ways: (1) using “inline equations,” which begin with a dollar sign $ and end with a dollar sign $; <em>OR</em> (2) you can write out notation/equation in plain text without. We encourage you to try inline equations, but fine if you do not.</p>
+<p>Tips on writing notation/equations using &quot;inline equations’:</p>
+<ul>
+<li>Make sure there are no spaces after the dollar sign $ that begins the equation and no spaces before the dollar sign that ends the equation.
+<ul>
+<li>For example, you would write out the notation for treated potential outcome like this: <span class="math inline">\(Y_i(1)\)</span></li>
+<li>But this wouldn’t work: $ Y_i(1)$</li>
+<li>And this wouldn’t work: $Y_i(1) $</li>
+</ul></li>
+<li>Special characters – like greek letters – within inline equations are referred to using special symbols that start with a backslash
+<ul>
+<li>e.g., “Beta” is <code>\beta</code>: <span class="math inline">\(\beta\)</span></li>
+<li>“Mu” (symbol for population mean) is <code>\mu</code>: <span class="math inline">\(\mu\)</span></li>
+</ul></li>
+<li>Subscripts after a character or symbol are specified like this:
+<ul>
+<li>e.g., “Beta subscript 1” is <code>beta_1</code>: <span class="math inline">\(\beta_1\)</span></li>
+<li>e.g., “Mu subscript Y” (referring to population mean of variable Y) is <code>\mu_Y</code>: <span class="math inline">\(\mu_Y\)</span></li>
+</ul></li>
+<li>“hats” are specified by wrapping the character/symbol within curly brackets <code>\hat{}</code> like this:
+<ul>
+<li>e.g., “Beta hat” is <code>\hat{\beta}</code>: <span class="math inline">\(\hat{\beta}\)</span></li>
+<li>e.g., “Beta hat subscript 1” is <code>\hat{\beta}_1</code> (note that the subscript is not within the “hat”): <span class="math inline">\(\hat{\beta}_1\)</span></li>
+</ul></li>
+<li>“bars” are specified by wrapping the character/symbol within curly brackets <code>\bar{}</code> like this:
+<ul>
+<li>e.g., “sample mean of Y” is <code>\bar{Y}</code>: <span class="math inline">\(\bar{Y}\)</span></li>
+</ul></li>
+<li>Don’t worry about getting it perfect and don’t spend too much time trying to get it perfect; if you are trying, that is a great start! and fine to use inline equations for some notation/equations and plain text for others that you can’t figure out.</li>
+</ul>
+<p><br></p>
+<p>Tips on writing notation/equations in plain text</p>
+<ul>
+<li>Instead of writing <span class="math inline">\(Y_i(1)\)</span>, you could write this: Y_i(1)</li>
+<li>Instead of writing <span class="math inline">\(Y_i = \beta_0 + \beta_1X_i + u_i\)</span>, you could write this: Y_i = beta_0 + beta_1*X_i + u_i</li>
+<li>Instead of writing <span class="math inline">\(\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i\)</span>, you could write something like this: Y_hat_i = beta_hat_0 + beta_hat_1*X_i</li>
+<li>don’t worry if it doesn’t look pretty!</li>
+</ul>
+</div>
 <div id="load-libraries-and-data" class="section level2">
 <h2>Load libraries and data</h2>
+<p>Please run the code in the following chunk, which does the following:</p>
+<ul>
+<li>Loads libraries</li>
+<li>Loads and creates data frame from IPEDS/College Scorecard Masters degrees in Education</li>
+</ul>
+<p><em>Note: code chunk omitted from html document using include = FALSE</em></p>
 </div>
 </div>
 <div id="part-i-measures-of-model-fit" class="section level1">
 <h1>Part I: Measures of model fit</h1>
+<p><br></p>
+<p><span style="color:red"><b>/X<b></span></p>
+<div id="define-r2-in-words.-write-out-the-mathematical-formula-for-r2-using-both-ways-discussed-in-lecture." class="section level4">
+<h4>1. Define <span class="math inline">\(R^2\)</span> in words. Write out the mathematical formula for <span class="math inline">\(R^2\)</span> using both ways discussed in lecture.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="using-the-code-from-below-to-guide-you-write-out-the-formula-for-tss-and-explain-what-it-means-in-words.-do-the-same-for-ess-and-ssr." class="section level4">
+<h4>2. Using the code from below to guide you, write out the formula for TSS and explain what it means in words. Do the same for ESS and SSR.</h4>
+<p>Consider the research question, what is the relationship between cost of attendance (<span class="math inline">\(X\)</span>) and earnings (<span class="math inline">\(Y\)</span>) (2 years after graduation)?</p>
+<p>Below we use the <code>lm()</code> function and create an object named <code>mod1</code> that contains results from the bivariate regression of the relationship between cost of attendance (<span class="math inline">\(X\)</span>) and earnings 2 years after graduation (<span class="math inline">\(Y\)</span>). We run the <code>anova()</code> function to get the values of ESS, SSR, TSS.</p>
+<ul>
+<li>X= <code>coa_grad_res</code></li>
+<li>Y= <code>earn_mdn_hi_2yr</code></li>
+</ul>
+<pre class="r"><code>mod1 &lt;- lm(formula = earn_mdn_hi_2yr ~ coa_grad_res, data = df_edu)
+
+summary(mod1)
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = earn_mdn_hi_2yr ~ coa_grad_res, data = df_edu)
+#&gt; 
+#&gt; Residuals:
+#&gt;    Min     1Q Median     3Q    Max 
+#&gt; -15606  -6503  -1050   4781  25120 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                 Estimate  Std. Error t value            Pr(&gt;|t|)    
+#&gt; (Intercept)  45387.19970  2211.72127  20.521 &lt;0.0000000000000002 ***
+#&gt; coa_grad_res     0.16138     0.07383   2.186              0.0303 *  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; Residual standard error: 8230 on 157 degrees of freedom
+#&gt;   (37 observations deleted due to missingness)
+#&gt; Multiple R-squared:  0.02954,    Adjusted R-squared:  0.02335 
+#&gt; F-statistic: 4.778 on 1 and 157 DF,  p-value: 0.0303
+
+anova(mod1)
+#&gt; Analysis of Variance Table
+#&gt; 
+#&gt; Response: earn_mdn_hi_2yr
+#&gt;               Df      Sum Sq   Mean Sq F value Pr(&gt;F)  
+#&gt; coa_grad_res   1   323638309 323638309  4.7783 0.0303 *
+#&gt; Residuals    157 10633742116  67730842                 
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+#ESS
+anova(mod1)$&quot;Sum Sq&quot;[1]
+#&gt; [1] 323638309
+
+#SSR
+anova(mod1)$&quot;Sum Sq&quot;[2]
+#&gt; [1] 10633742116</code></pre>
+<p>Estimated sum of squares (ESS) = 323638309<br />
+Sum of Squared Residuals (SSR) = 10633742116<br />
+Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425</p>
+<ul>
+<li><p><strong>YOUR ANSWER HERE: TSS</strong>:</p></li>
+<li><p><strong>YOUR ANSWER HERE: ESS</strong>:</p></li>
+<li><p><strong>YOUR ANSWER HERE: SSR</strong>:</p></li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="using-the-values-for-ess-ssr-and-tss-from-above-calculate-r2-in-both-ways-discussed-in-lecture.-interpret-the-value-of-r2-in-words." class="section level4">
+<h4>3. Using the values for ESS, SSR, and TSS from above, calculate <span class="math inline">\(R^2\)</span> in both ways discussed in lecture. Interpret the value of <span class="math inline">\(R^2\)</span> in words.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="explain-what-sample-standard-deviation-of-a-variable-means-in-words-and-write-out-the-formula.-explain-what-standard-error-of-the-regression-ser-means-in-words-and-write-out-the-formula-for-ser-in-terms-of-ssr." class="section level4">
+<h4>4. Explain what sample standard deviation of a variable means in words and write out the formula. Explain what standard error of the regression (SER) means in words and write out the formula for SER (in terms of SSR).</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="run-the-analysis-of-the-relationship-between-cost-of-attendance-x-and-debt-y.-do-the-following-run-the-regression-in-r-using-lm-and-summary-and-assign-it-to-the-object-mod2-report-the-ser-and-calculate-the-standard-deviation-of-the-independent-variable-debt-debt_all_stgp_eval_mean-in-the-regression-model." class="section level4">
+<h4>5. Run the analysis of the relationship between cost of attendance (<span class="math inline">\(X\)</span>) and debt (<span class="math inline">\(Y\)</span>)., do the following: run the regression in R (using <code>lm()</code> and <code>summary()</code>) and assign it to the object <code>mod2</code>; report the SER; and calculate the standard deviation of the independent variable, debt <code>debt_all_stgp_eval_mean</code>, in the regression model.</h4>
+<ul>
+<li>X= <code>coa_grad_res</code></li>
+<li>Y= <code>debt_all_stgp_eval_mean</code></li>
+</ul>
+<pre class="r"><code>mod2 &lt;- lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
+
+summary(mod2)
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
+#&gt; 
+#&gt; Residuals:
+#&gt;    Min     1Q Median     3Q    Max 
+#&gt; -25546  -6318   -871   5284  37328 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                 Estimate  Std. Error t value           Pr(&gt;|t|)    
+#&gt; (Intercept)  19973.20978  2454.30056   8.138 0.0000000000000474 ***
+#&gt; coa_grad_res     0.37583     0.08293   4.532 0.0000102021359435 ***
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; Residual standard error: 9931 on 194 degrees of freedom
+#&gt; Multiple R-squared:  0.09574,    Adjusted R-squared:  0.09108 
+#&gt; F-statistic: 20.54 on 1 and 194 DF,  p-value: 0.0000102
+
+#SER
+summary(mod2)$sigma
+#&gt; [1] 9931.327
+
+#Standard deviation of debt
+sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
+#&gt; [1] 10417.01</code></pre>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="interpret-the-ser-from-the-above-model-in-words.-interpret-sample-standard-deviation-from-above-model-in-words.-does-our-model-make-out-prediction-substantially-better" class="section level4">
+<h4>6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make out prediction substantially better?</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
 </div>
 <div id="part-ii-categorical-x-variables" class="section level1">
 <h1>Part II: Categorical X variables</h1>

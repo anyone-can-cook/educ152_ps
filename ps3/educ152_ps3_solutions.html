@@ -1529,11 +1529,9 @@ div.tocify {
 <p><span style="color:red"><b>Grade: /50<b></span></p>
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<div id="tips-on-notation" class="section level2">
-<h2>Tips on notation</h2>
 <details>
 <summary>
-<b>Click here for [Tips of notation]</b>
+<span style="color:red"><b>Click here for tips on notation</b></span>
 </summary>
 <p><br></p>
 <p>Some questions will ask you to write out notation and/or equations.</p>
@@ -1576,7 +1574,6 @@ div.tocify {
 <li>don’t worry if it doesn’t look pretty!</li>
 </ul>
 </details>
-</div>
 <div id="load-libraries-and-data" class="section level2">
 <h2>Load libraries and data</h2>
 <p>Please run the code in the following chunk, which does the following:</p>
@@ -1763,24 +1760,28 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 </ul>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
-<div id="section" class="section level4">
-<h4>3.</h4>
-<pre class="r"><code>df_edu %&gt;% glimpse()
+<div id="for-your-analysis-of-the-relationship-between-the-level-of-urbanization-by-institution-x-and-institution-level-student-earnings-y-for-graduates-of-ma-programs-in-education-do-the-following-write-out-the-population-linear-regression-model-label-the-symbols-and-write-out-what-the-variables-x-and-y-actually-represent-write-out-the-ols-prediction-line-without-estimate-values-write-out-the-ols-prediction-line-with-estimate-values-interpet-the-point-estimate-value-of-hatbeta_0-in-words-interpret-the-predicted-average-value-for-observations-that-have-reference-group-for-x." class="section level4">
+<h4>3. For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span> in words; interpret the predicted average value for observations that have reference group for <span class="math inline">\(X\)</span>.</h4>
+<ul>
+<li>Some investigations of the variable categorical <span class="math inline">\(X\)</span> variable <code>urban</code></li>
+</ul>
+<pre class="r"><code>df_edu_fac %&gt;% glimpse()
 #&gt; Rows: 196
-#&gt; Columns: 35
+#&gt; Columns: 36
 #&gt; $ opeid6                        &lt;chr&gt; &quot;001009&quot;, &quot;001020&quot;, &quot;001016&quot;, &quot;011462&quot;,…
 #&gt; $ unitid                        &lt;dbl&gt; 100858, 101480, 101879, 102553, 104179,…
 #&gt; $ instnm                        &lt;chr&gt; &quot;Auburn University&quot;, &quot;Jacksonville Stat…
-#&gt; $ control                       &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1,…
-#&gt; $ ccbasic                       &lt;dbl+lbl&gt; 15, 18, 18, 18, 15, 18, 17, 16, 17,…
+#&gt; $ control                       &lt;fct&gt; Public, Public, Public, Public, Public,…
+#&gt; $ ccbasic                       &lt;fct&gt; Doctoral Universities: Very High Resear…
 #&gt; $ stabbr                        &lt;chr&gt; &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AK&quot;, &quot;AZ&quot;, &quot;AR&quot;, &quot;AR…
-#&gt; $ region                        &lt;dbl+lbl&gt; 5, 5, 5, 8, 6, 5, 5, 8, 8, 8, 8, 8,…
+#&gt; $ region                        &lt;fct&gt; &quot;Southeast (AL, AR, FL, GA, KY, LA, MS,…
 #&gt; $ city                          &lt;chr&gt; &quot;Auburn&quot;, &quot;Jacksonville&quot;, &quot;Florence&quot;, &quot;…
-#&gt; $ locale                        &lt;dbl+lbl&gt; 13, 23, 13, 11, 11, 33, 13, 21, 21,…
+#&gt; $ locale                        &lt;fct&gt; &quot;City: Small (population less than 100,…
+#&gt; $ urban                         &lt;fct&gt; med/small city, suburb, med/small city,…
 #&gt; $ cipdig2                       &lt;chr&gt; &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13…
 #&gt; $ cipcode                       &lt;chr&gt; &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;,…
 #&gt; $ cipdesc                       &lt;chr&gt; &quot;Education, General.&quot;, &quot;Education, Gene…
-#&gt; $ credlev                       &lt;dbl+lbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,…
+#&gt; $ credlev                       &lt;fct&gt; Master&#39;s Degree, Master&#39;s Degree, Maste…
 #&gt; $ creddesc                      &lt;chr&gt; &quot;Master&#39;s Degree&quot;, &quot;Master&#39;s Degree&quot;, &quot;…
 #&gt; $ ipedscount1                   &lt;chr&gt; &quot;NULL&quot;, &quot;NULL&quot;, &quot;NULL&quot;, &quot;19&quot;, &quot;65&quot;, &quot;12…
 #&gt; $ ipedscount2                   &lt;chr&gt; &quot;NULL&quot;, &quot;NULL&quot;, &quot;NULL&quot;, &quot;25&quot;, &quot;41&quot;, &quot;21…
@@ -1802,11 +1803,158 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 #&gt; $ tuitfee_grad_res              &lt;dbl&gt; 10696, 9204, 6824, 11192, 12383, 5958, …
 #&gt; $ tuitfee_grad_nres             &lt;dbl&gt; 28840, 18108, 12422, 21712, 32135, 1089…
 #&gt; $ coa_grad_res                  &lt;dbl&gt; 30458, 27512, 18408, 32096, 29683, 2476…
-#&gt; $ coa_grad_nres                 &lt;dbl&gt; 48602, 36416, 24006, 42616, 49435, 2970…</code></pre>
+#&gt; $ coa_grad_nres                 &lt;dbl&gt; 48602, 36416, 24006, 42616, 49435, 2970…
+
+#value labels associated with variable urban
+attr(df_edu$urban, which = &#39;labels&#39;)
+#&gt; large city (250k+)     med/small city             suburb         town/rural 
+#&gt;                  1                  2                  3                  4
+
+attributes(df_edu_fac$urban)
+#&gt; $levels
+#&gt; [1] &quot;large city (250k+)&quot; &quot;med/small city&quot;     &quot;suburb&quot;            
+#&gt; [4] &quot;town/rural&quot;        
+#&gt; 
+#&gt; $class
+#&gt; [1] &quot;factor&quot;
+
+df_edu_fac %&gt;% count(urban)
+#&gt; # A tibble: 4 x 2
+#&gt;   urban                  n
+#&gt;   &lt;fct&gt;              &lt;int&gt;
+#&gt; 1 large city (250k+)    54
+#&gt; 2 med/small city        44
+#&gt; 3 suburb                60
+#&gt; 4 town/rural            38</code></pre>
+<ul>
+<li>X= <code>urban</code></li>
+<li>Y= <code>earn_mdn_hi_2yr</code></li>
+</ul>
+<pre class="r"><code>mod3 &lt;- lm(formula = earn_mdn_hi_2yr ~ urban, data = df_edu_fac)
+summary(mod3)
+#&gt; 
+#&gt; Call:
+#&gt; lm(formula = earn_mdn_hi_2yr ~ urban, data = df_edu_fac)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -15263.4  -4941.4   -911.6   3792.2  28087.9 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                     Estimate Std. Error t value             Pr(&gt;|t|)    
+#&gt; (Intercept)            53853       1106  48.677 &lt; 0.0000000000000002 ***
+#&gt; urbanmed/small city    -7364       1687  -4.366            0.0000230 ***
+#&gt; urbansuburb            -2725       1599  -1.704               0.0903 .  
+#&gt; urbantown/rural        -7728       1835  -4.212            0.0000427 ***
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; Residual standard error: 7744 on 155 degrees of freedom
+#&gt;   (37 observations deleted due to missingness)
+#&gt; Multiple R-squared:  0.1516, Adjusted R-squared:  0.1352 
+#&gt; F-statistic: 9.234 on 3 and 155 DF,  p-value: 0.00001175</code></pre>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="interpret-hatbeta_k-in-words-for-each-non-reference-category-of-x." class="section level4">
+<h4>4. Interpret <span class="math inline">\(\hat{\beta}_k\)</span> in words for each non-reference category of <span class="math inline">\(X\)</span>.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="use-ols-prediction-line-to-predict-the-value-of-y-for-each-value-of-x-show-work." class="section level4">
+<h4>5. Use OLS prediction line to predict the value of <span class="math inline">\(Y\)</span> for each value of <span class="math inline">\(X\)</span> [show work].</h4>
+<pre><code>- Reference group  
+- Non reference group 1  
+- Non reference group 2  
+- Non reference group 3  </code></pre>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="write-out-the-null-and-alternative-hypotheses-for-each-non-reference-group-category-of-variable-x." class="section level4">
+<h4>6. Write out the null and alternative hypotheses for each non-reference group category of variable <span class="math inline">\(X\)</span>.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="write-out-the-formula-for-the-t-statistic-of-hatbeta_k." class="section level4">
+<h4>7. Write out the formula for the t-statistic of <span class="math inline">\(\hat{\beta}_k\)</span>.</h4>
+<p>What does <span class="math inline">\(SE\hat{\beta}_k\)</span> mean in words; some question where they have to convey that they know it is about sampling distribution of Beta_hat_k; how value varies from one random sample to another</p>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="for-one-of-the-non-reference-group-categories-of-x-do-the-following" class="section level4">
+<h4>8. For one of the non-reference group categories of <span class="math inline">\(X\)</span> do the following:</h4>
+<ul>
+<li><p>Solve for value of t using information from the regression output<br />
+</p></li>
+<li><p>Using <code>plot_t_distribution</code> function created above, plot the sampling distribution assuming H_0</p>
+<ul>
+<li>[we can give them heavy hints on the code]</li>
+</ul></li>
+<li><p>Explain using their own words what is happening in the sampling distribution and what key statistics refer to; (e.g., t-score, p-value; critical value)<br />
+</p></li>
+<li><p>Make a conclusion about hypothesis test</p></li>
+<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
+</ul>
 </div>
 </div>
 <div id="part-iii-confidence-interval-about-beta_k" class="section level1">
 <h1>Part III: Confidence interval about <span class="math inline">\(\beta_k\)</span></h1>
+<div id="in-words-what-is-a-confidence-interval" class="section level4">
+<h4>1. In words, what is a confidence interval?</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="what-is-the-formula-for-a-confidence-interval-about-some-population-parameter" class="section level4">
+<h4>2. What is the formula for a confidence interval about some population parameter?</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="what-is-the-formula-for-a-95-confidence-interval-about-a-population-regression-coefficient-hatbeta" class="section level4">
+<h4>3. What is the formula for a 95% confidence interval about a population regression coefficient <span class="math inline">\(\hat{\beta}\)</span></h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+<div id="for-a-non-reference-group-category-of-variable-x-a-different-category-than-the-one-they-chose-for-previous-set-of-questions-do-the-following" class="section level4">
+<h4>4. For a non-reference group category of variable <span class="math inline">\(X\)</span> (a different category than the one they chose for previous set of questions), do the following:</h4>
+<ul>
+<li>Interpret _k in words<br />
+</li>
+<li>Calculate the 95% confidence interval<br />
+</li>
+<li>Interpret the 95% confidence interval in words</li>
+</ul>
+<p><br></p>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+</div>
+</div>
+<div id="part-iv-post-a-commentquestion" class="section level1">
+<h1>Part IV: Post a comment/question</h1>
+<p><span style="color:red"><b>/2<b></span></p>
+<ul>
+<li>Go to the class <a href="https://app.slack.com/client/T01S30RQY2E/C01SH5DSNEN">#problemsets</a> channel and create a new post.</li>
+<li>You can either:
+<ul>
+<li>Share something you <em>learned</em> or a <em>question</em> from this problem set. Make sure to mention the instructors (<span class="citation">@ozanj</span>, <span class="citation">@Patricia</span> Martín).</li>
+<li>Respond to a post made by another student.</li>
+</ul></li>
+</ul>
+</div>
+<div id="knit-to-html-and-submit-problem-set" class="section level1">
+<h1>Knit to html and submit problem set</h1>
+<p><strong>Knit to html</strong> by clicking the “Knit” button near the top of your RStudio window (icon with blue yarn ball) or drop down and select “Knit to HTML”</p>
+<ul>
+<li>Go to the <a href="https://anyone-can-cook.github.io/educ152/">class website</a> and under the “Readings &amp; Assignments” &gt;&gt; “Week 7” tab, click on the “Problem set 3 submission link”</li>
+<li>Submit both your html and .Rmd files</li>
+<li>Use this naming convention “lastname_firstname_ps#” for your .Rmd (e.g. martin_patricia_ps3.Rmd)</li>
+</ul>
 </div>
 
 

@@ -32,9 +32,7 @@ options(scipen=999)
 
 # Overview
 
-## Tips on notation
-
-<details><summary><b>Click here for [Tips of notation]</b></summary>
+<details><summary><span style="color:red"><b>Click here for tips on notation</b></span></summary>
 
 <br>
 
@@ -261,9 +259,28 @@ rm(df_debt_earn_panel_labelled) # comment this line out if you want to keep data
     filter(control !=3) %>%
     # drop tuition/coa vars for law and md
     select(-one,-contains('law'),-contains('md_')) %>%
-    relocate(opeid6,unitid,instnm,control,ccbasic,stabbr,region,city,locale,cipdig2,cipcode,cipdesc,credlev,creddesc,
+    mutate(
+      urban = case_when(
+        locale %in% c(11) ~ 1, # city
+        locale %in% c(12,13) ~ 2, # city
+        locale %in% c(21,22,23) ~ 3, # suburb
+        locale %in% c(31,32,33,41,42,43) ~ 4 # town/rural
+        )
+      ) %>% 
+    # create value labels for level of urbanization
+    set_value_labels(
+      urban = c(
+        'large city (250k+)' = 1,
+        'med/small city' = 2,
+        'suburb' = 3,
+        'town/rural' = 4
+        )
+      ) %>%
+    # change variable order
+    relocate(opeid6,unitid,instnm,control,ccbasic,stabbr,region,city,locale,urban,cipdig2,cipcode,cipdesc,credlev,creddesc,
       contains('ipeds'),starts_with('debt'),starts_with('earn'))
-    
+
+ 
   df_score_ipeds %>% glimpse()
 
 rm(df_ipeds_pop) # comment this line out if you want to keep ipeds data frame
@@ -287,6 +304,9 @@ df_score_ipeds %>% filter(cipdig2=="13") %>% count(cipdesc)
     filter(!is.na(coa_grad_res))    
 
 df_edu %>% glimpse()
+
+# create version of data frame df_edu that turns class=labelled variables to factor variables
+  df_edu_fac <- as_factor(df_edu, only_labelled = TRUE) %>% glimpse()
 
 ```
 
@@ -443,13 +463,111 @@ Interpretation of sample standard deviation: On average, observations of $Y_i$ a
 
 <span style="color:red"><b>/X<b></span> 
 
-#### 3. 
+#### 3.  For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables $X$ and $Y$ actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_0$ in words; interpret the predicted average value for observations that have reference group for $X$.
+
+- Some investigations of the variable categorical $X$ variable `urban`
+```{r}
+df_edu_fac %>% glimpse()
+
+#value labels associated with variable urban
+attr(df_edu$urban, which = 'labels')
+
+attributes(df_edu_fac$urban)
+
+df_edu_fac %>% count(urban)
+```
+
+- X= `urban`
+- Y= `earn_mdn_hi_2yr`
 
 ```{r}
-df_edu %>% glimpse()
+mod3 <- lm(formula = earn_mdn_hi_2yr ~ urban, data = df_edu_fac)
+summary(mod3)
 ```
 
 
+<span style="color:red"><b>/X<b></span> 
 
-# Part III: Confidence interval about $\beta_k$
+#### 4. Interpret $\hat{\beta}_k$ in words for each non-reference category of $X$.   
+
+- __YOUR ANSWER HERE__:
+
+
+#### 5. Use OLS prediction line to predict the value of $Y$ for each value of $X$ [show work].  
+    - Reference group  
+    - Non reference group 1  
+    - Non reference group 2  
+    - Non reference group 3  
+    
+- __YOUR ANSWER HERE__:
+    
+#### 6. Write out the null and alternative hypotheses for each non-reference group category of variable $X$.   
+
+- __YOUR ANSWER HERE__:
+
+
+#### 7. Write out the formula for the t-statistic of $\hat{\beta}_k$. 
+What does $SE\hat{\beta}_k$ mean in words; some question where they have to convey that they know it is about sampling distribution of Beta_hat_k; how value varies from one random sample to another  
+
+- __YOUR ANSWER HERE__:
+
+#### 8. For one of the non-reference group categories of $X$ do the following:  
+  - Solve for value of t using information from the regression output  
+  - Using `plot_t_distribution` function created above, plot the sampling distribution assuming H_0  
+      - [we can give them heavy hints on the code]
+  - Explain using their own words what is happening in the sampling distribution and what key statistics refer to; (e.g., t-score, p-value; critical value)  
+  - Make a conclusion about hypothesis test
+
+- __YOUR ANSWER HERE__:
+
+```{r}
+
+```
+
+# Part III: Confidence interval about $\beta_k$  
+
+#### 1.  In words, what is a confidence interval?  
+
+- __YOUR ANSWER HERE__:  
+
+#### 2. What is the formula for a confidence interval about some population parameter?  
+
+- __YOUR ANSWER HERE__:  
+
+#### 3. What is the formula for a 95% confidence interval about a population regression coefficient $\hat{\beta}$  
+
+- __YOUR ANSWER HERE__:  
+
+#### 4. For a non-reference group category of variable $X$ (a different category than the one they chose for previous set of questions), do the following:  
+- Interpret \hat{\beta}_k in words  
+- Calculate the 95% confidence interval  
+- Interpret the 95% confidence interval in words  
+  
+<br>
+
+- __YOUR ANSWER HERE__:  
+
+```{r}
+
+```
+
+
+# Part IV: Post a comment/question
+
+<span style="color:red"><b>/2<b></span> 
+
+- Go to the class [#problemsets ](https://app.slack.com/client/T01S30RQY2E/C01SH5DSNEN) channel and create a new post.
+- You can either:
+  - Share something you _learned_ or a _question_ from this problem set. Make sure to mention the instructors (@ozanj, @Patricia Martín).
+  - Respond to a post made by another student.
+
+
+
+# Knit to html and submit problem set  
+
+**Knit to html** by clicking the "Knit" button near the top of your RStudio window (icon with blue yarn ball) or drop down and select "Knit to HTML"
+
+- Go to the [class website](https://anyone-can-cook.github.io/educ152/) and under the "Readings & Assignments" >> "Week 7" tab, click on the "Problem set 3 submission link"
+- Submit both your html and .Rmd files 
+- Use this naming convention "lastname_firstname_ps#" for your .Rmd (e.g. martin_patricia_ps3.Rmd)
 

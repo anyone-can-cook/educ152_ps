@@ -34,6 +34,10 @@ options(scipen=999)
 
 ## Tips on notation
 
+<details><summary><b>Click here for [Tips of notation]</b></summary>
+
+<br>
+
 Some questions will ask you to write out notation and/or equations.
 
 You can write out notation/equations one of two ways: (1) using "inline equations," which begin with a dollar sign \$ and end with a dollar sign \$; *OR* (2) you can write out notation/equation in plain text without. We encourage you to try inline equations, but fine if you do not.
@@ -66,6 +70,7 @@ Tips on writing notation/equations in plain text
 - Instead of writing $\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i$, you could write something like this: Y_hat_i = beta_hat_0 + beta_hat_1*X_i
 - don't worry if it doesn't look pretty!
 
+</details>
 
 ## Load libraries and data
 
@@ -295,7 +300,11 @@ df_edu %>% glimpse()
 #### 1. Define $R^2$ in words. Write out the mathematical formula for $R^2$ using both ways discussed in lecture.
 
 
-- __YOUR ANSWER HERE__:  
+- __YOUR ANSWER HERE__:  $R^2$ is the fraction of variance in Y explained by X (and is not already explained by sample mean, $\bar{Y}$). 
+
+$R^2 = \frac{\text{variance in Y that is explained by X}}{\text{total variance in Y}} = \frac{ESS}{TSS}$
+
+$R^2 = 1 - \frac{\text{variance in Y not explained by X}}{\text{total variance in Y}} = 1 - \frac{SSR}{TSS}$
 
 
 <span style="color:red"><b>/X<b></span>  
@@ -316,11 +325,6 @@ summary(mod1)
 
 anova(mod1)
 
-#ESS
-anova(mod1)$"Sum Sq"[1]
-
-#SSR
-anova(mod1)$"Sum Sq"[2]
 ```
 
 Estimated sum of squares (ESS) = 323638309  
@@ -330,16 +334,46 @@ Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425
 
 - __YOUR ANSWER HERE: TSS__: 
 
+$TSS = \sum_{i=1}^{n} (Y_i-\bar{Y})^2$
+
+Total sum of squares measures the total variance in Y, in terms of $\bar{Y}$
+
 - __YOUR ANSWER HERE: ESS__:
 
+$ESS = \sum_{i=1}^{n} (\hat{Y_i}-\bar{Y})^2$  
+
+Explained sum of squares measures the amount of variation in Y explained by X.
+
 - __YOUR ANSWER HERE: SSR__: 
+
+$SSR = \sum_{i=1}^{n} (Y_i-\hat{Y})^2$   
+
+The sum of squared residuals measures the amount of variation in Y not explained by X.
 
 
 <span style="color:red"><b>/X<b></span>   
 
-#### 3. Using the values for ESS, SSR, and TSS from above, calculate $R^2$ in both ways discussed in lecture. Interpret the value of $R^2$ in words. 
+#### 3. Using the values for ESS, SSR, and TSS from above, calculate $R^2$ in both ways discussed in lecture (can do it by hand below or in a code chunk). Interpret the value of $R^2$ in words. 
 
-- __YOUR ANSWER HERE__: 
+- __YOUR ANSWER HERE__: The model explains 2.9% of the variation in Y (that is not already explained by sample mean, $\bar{Y}$)
+
+```{r}
+#ESS
+anova(mod1)$"Sum Sq"[1]
+
+#SSR
+anova(mod1)$"Sum Sq"[2]
+
+#TSS
+anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2]
+
+#R2, ESS/TSS
+anova(mod1)$"Sum Sq"[1] / (anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2])
+
+#R2, 1 - SSR/TSS
+1 - anova(mod1)$"Sum Sq"[2] / (anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2])
+```
+
 
 
 <span style="color:red"><b>/X<b></span> 
@@ -348,10 +382,19 @@ Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425
 
 - __YOUR ANSWER HERE__: 
 
+Sample standard deviation = The sample standard deviation of Y $\hat{\sigma}_Y$ measures the average distance between a random observation $Y_i$ and the sample mean $\bar{Y_i}$. 
+
+$\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\bar{Y})^2}{n -1}}$  
+
+Standard error of the regression (SER) = The standard error of the regression is an estimate of how far away, on average, an actual observed value of $Y_i$ is from the predicted value of $\hat{Y_i}$ of $Y_i$ for a random observation, $i$. 
+
+$SER = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\hat{Y_i})^2}{n -2}} = \sqrt{\frac{\sum_{i=1}^{n} (\hat{\mu_i})^2}{n -2}}$  
+
+
 
 <span style="color:red"><b>/X<b></span> 
 
-#### 5. Run the analysis of the relationship between cost of attendance ($X$) and debt ($Y$)., do the following: run the regression in R (using `lm()` and `summary()`) and assign it to the object `mod2`; report the SER; and calculate the standard deviation of the independent variable, debt `debt_all_stgp_eval_mean`, in the regression model. 
+#### 5. Run the analysis of the relationship between cost of attendance ($X$) and debt ($Y$)., do the following: run the regression in R (using `lm()` and `summary()`) and assign it to the object `mod2`; report the SER; and calculate the standard deviation of the dependent variable `sd()`, debt `debt_all_stgp_eval_mean`, in the regression model. 
 
 - X= `coa_grad_res`
 - Y= `debt_all_stgp_eval_mean`
@@ -368,15 +411,45 @@ summary(mod2)$sigma
 sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 ```
 
+
 <span style="color:red"><b>/X<b></span> 
 
-#### 6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make out prediction substantially better? 
+#### 6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make our prediction substantially better? 
 
+
+- __YOUR ANSWER HERE__: 
+
+Interpretation of SER: On average, observed values of institution-level student debt ($Y_i$) are 9,931.327 dollars away from predicted values of institution-level student debt $\hat{Y_i}$.
+
+Interpretation of sample standard deviation: On average, observations of $Y_i$ are 10,417.01 dollars away from the sample mean $\bar{Y_i}$ of Y.
+
+- Yes, the model makes our prediction better. 
+
+
+# Part II: Categorical X variables
+
+<span style="color:red"><b>/X<b></span> 
+
+#### 1. Explain what a reference group is in words.  
 
 - __YOUR ANSWER HERE__:
 
 
-# Part II: Categorical X variables
+<span style="color:red"><b>/X<b></span> 
+
+#### 2. What is a factor variable and why is it important for running a regression?  
+
+- __YOUR ANSWER HERE__:
+
+<span style="color:red"><b>/X<b></span> 
+
+#### 3. 
+
+```{r}
+df_edu %>% glimpse()
+```
+
+
 
 # Part III: Confidence interval about $\beta_k$
 

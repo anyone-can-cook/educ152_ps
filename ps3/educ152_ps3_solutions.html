@@ -1531,6 +1531,11 @@ div.tocify {
 <h1>Overview</h1>
 <div id="tips-on-notation" class="section level2">
 <h2>Tips on notation</h2>
+<details>
+<summary>
+<b>Click here for [Tips of notation]</b>
+</summary>
+<p><br></p>
 <p>Some questions will ask you to write out notation and/or equations.</p>
 <p>You can write out notation/equations one of two ways: (1) using “inline equations,” which begin with a dollar sign $ and end with a dollar sign $; <em>OR</em> (2) you can write out notation/equation in plain text without. We encourage you to try inline equations, but fine if you do not.</p>
 <p>Tips on writing notation/equations using &quot;inline equations’:</p>
@@ -1570,6 +1575,7 @@ div.tocify {
 <li>Instead of writing <span class="math inline">\(\hat{Y_i} = \hat{\beta}_0 + \hat{\beta}_1X_i\)</span>, you could write something like this: Y_hat_i = beta_hat_0 + beta_hat_1*X_i</li>
 <li>don’t worry if it doesn’t look pretty!</li>
 </ul>
+</details>
 </div>
 <div id="load-libraries-and-data" class="section level2">
 <h2>Load libraries and data</h2>
@@ -1588,8 +1594,10 @@ div.tocify {
 <div id="define-r2-in-words.-write-out-the-mathematical-formula-for-r2-using-both-ways-discussed-in-lecture." class="section level4">
 <h4>1. Define <span class="math inline">\(R^2\)</span> in words. Write out the mathematical formula for <span class="math inline">\(R^2\)</span> using both ways discussed in lecture.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(R^2\)</span> is the fraction of variance in Y explained by X (and is not already explained by sample mean, <span class="math inline">\(\bar{Y}\)</span>).</li>
 </ul>
+<p><span class="math inline">\(R^2 = \frac{\text{variance in Y that is explained by X}}{\text{total variance in Y}} = \frac{ESS}{TSS}\)</span></p>
+<p><span class="math inline">\(R^2 = 1 - \frac{\text{variance in Y not explained by X}}{\text{total variance in Y}} = 1 - \frac{SSR}{TSS}\)</span></p>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="using-the-code-from-below-to-guide-you-write-out-the-formula-for-tss-and-explain-what-it-means-in-words.-do-the-same-for-ess-and-ssr." class="section level4">
@@ -1631,30 +1639,51 @@ anova(mod1)
 #&gt; coa_grad_res   1   323638309 323638309  4.7783 0.0303 *
 #&gt; Residuals    157 10633742116  67730842                 
 #&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-#ESS
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Estimated sum of squares (ESS) = 323638309<br />
+Sum of Squared Residuals (SSR) = 10633742116<br />
+Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425</p>
+<ul>
+<li><strong>YOUR ANSWER HERE: TSS</strong>:</li>
+</ul>
+<p><span class="math inline">\(TSS = \sum_{i=1}^{n} (Y_i-\bar{Y})^2\)</span></p>
+<p>Total sum of squares measures the total variance in Y, in terms of <span class="math inline">\(\bar{Y}\)</span></p>
+<ul>
+<li><strong>YOUR ANSWER HERE: ESS</strong>:</li>
+</ul>
+<p><span class="math inline">\(ESS = \sum_{i=1}^{n} (\hat{Y_i}-\bar{Y})^2\)</span></p>
+<p>Explained sum of squares measures the amount of variation in Y explained by X.</p>
+<ul>
+<li><strong>YOUR ANSWER HERE: SSR</strong>:</li>
+</ul>
+<p><span class="math inline">\(SSR = \sum_{i=1}^{n} (Y_i-\hat{Y})^2\)</span></p>
+<p>The sum of squared residuals measures the amount of variation in Y not explained by X.</p>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="using-the-values-for-ess-ssr-and-tss-from-above-calculate-r2-in-both-ways-discussed-in-lecture-can-do-it-by-hand-below-or-in-a-code-chunk.-interpret-the-value-of-r2-in-words." class="section level4">
+<h4>3. Using the values for ESS, SSR, and TSS from above, calculate <span class="math inline">\(R^2\)</span> in both ways discussed in lecture (can do it by hand below or in a code chunk). Interpret the value of <span class="math inline">\(R^2\)</span> in words.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>: The model explains 2.9% of the variation in Y (that is not already explained by sample mean, <span class="math inline">\(\bar{Y}\)</span>)</li>
+</ul>
+<pre class="r"><code>#ESS
 anova(mod1)$&quot;Sum Sq&quot;[1]
 #&gt; [1] 323638309
 
 #SSR
 anova(mod1)$&quot;Sum Sq&quot;[2]
-#&gt; [1] 10633742116</code></pre>
-<p>Estimated sum of squares (ESS) = 323638309<br />
-Sum of Squared Residuals (SSR) = 10633742116<br />
-Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425</p>
-<ul>
-<li><p><strong>YOUR ANSWER HERE: TSS</strong>:</p></li>
-<li><p><strong>YOUR ANSWER HERE: ESS</strong>:</p></li>
-<li><p><strong>YOUR ANSWER HERE: SSR</strong>:</p></li>
-</ul>
-<p><span style="color:red"><b>/X<b></span></p>
-</div>
-<div id="using-the-values-for-ess-ssr-and-tss-from-above-calculate-r2-in-both-ways-discussed-in-lecture.-interpret-the-value-of-r2-in-words." class="section level4">
-<h4>3. Using the values for ESS, SSR, and TSS from above, calculate <span class="math inline">\(R^2\)</span> in both ways discussed in lecture. Interpret the value of <span class="math inline">\(R^2\)</span> in words.</h4>
-<ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
-</ul>
+#&gt; [1] 10633742116
+
+#TSS
+anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2]
+#&gt; [1] 10957380425
+
+#R2, ESS/TSS
+anova(mod1)$&quot;Sum Sq&quot;[1] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2])
+#&gt; [1] 0.0295361
+
+#R2, 1 - SSR/TSS
+1 - anova(mod1)$&quot;Sum Sq&quot;[2] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2])
+#&gt; [1] 0.0295361</code></pre>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="explain-what-sample-standard-deviation-of-a-variable-means-in-words-and-write-out-the-formula.-explain-what-standard-error-of-the-regression-ser-means-in-words-and-write-out-the-formula-for-ser-in-terms-of-ssr." class="section level4">
@@ -1662,10 +1691,14 @@ Total Sum of Squares (TSS) = ESS + SSR = 10,957,380,425</p>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
+<p>Sample standard deviation = The sample standard deviation of Y <span class="math inline">\(\hat{\sigma}_Y\)</span> measures the average distance between a random observation <span class="math inline">\(Y_i\)</span> and the sample mean <span class="math inline">\(\bar{Y_i}\)</span>.</p>
+<p><span class="math inline">\(\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\bar{Y})^2}{n -1}}\)</span></p>
+<p>Standard error of the regression (SER) = The standard error of the regression is an estimate of how far away, on average, an actual observed value of <span class="math inline">\(Y_i\)</span> is from the predicted value of <span class="math inline">\(\hat{Y_i}\)</span> of <span class="math inline">\(Y_i\)</span> for a random observation, <span class="math inline">\(i\)</span>.</p>
+<p><span class="math inline">\(SER = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\hat{Y_i})^2}{n -2}} = \sqrt{\frac{\sum_{i=1}^{n} (\hat{\mu_i})^2}{n -2}}\)</span></p>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
-<div id="run-the-analysis-of-the-relationship-between-cost-of-attendance-x-and-debt-y.-do-the-following-run-the-regression-in-r-using-lm-and-summary-and-assign-it-to-the-object-mod2-report-the-ser-and-calculate-the-standard-deviation-of-the-independent-variable-debt-debt_all_stgp_eval_mean-in-the-regression-model." class="section level4">
-<h4>5. Run the analysis of the relationship between cost of attendance (<span class="math inline">\(X\)</span>) and debt (<span class="math inline">\(Y\)</span>)., do the following: run the regression in R (using <code>lm()</code> and <code>summary()</code>) and assign it to the object <code>mod2</code>; report the SER; and calculate the standard deviation of the independent variable, debt <code>debt_all_stgp_eval_mean</code>, in the regression model.</h4>
+<div id="run-the-analysis-of-the-relationship-between-cost-of-attendance-x-and-debt-y.-do-the-following-run-the-regression-in-r-using-lm-and-summary-and-assign-it-to-the-object-mod2-report-the-ser-and-calculate-the-standard-deviation-of-the-dependent-variable-sd-debt-debt_all_stgp_eval_mean-in-the-regression-model." class="section level4">
+<h4>5. Run the analysis of the relationship between cost of attendance (<span class="math inline">\(X\)</span>) and debt (<span class="math inline">\(Y\)</span>)., do the following: run the regression in R (using <code>lm()</code> and <code>summary()</code>) and assign it to the object <code>mod2</code>; report the SER; and calculate the standard deviation of the dependent variable <code>sd()</code>, debt <code>debt_all_stgp_eval_mean</code>, in the regression model.</h4>
 <ul>
 <li>X= <code>coa_grad_res</code></li>
 <li>Y= <code>debt_all_stgp_eval_mean</code></li>
@@ -1701,15 +1734,76 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 #&gt; [1] 10417.01</code></pre>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
-<div id="interpret-the-ser-from-the-above-model-in-words.-interpret-sample-standard-deviation-from-above-model-in-words.-does-our-model-make-out-prediction-substantially-better" class="section level4">
-<h4>6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make out prediction substantially better?</h4>
+<div id="interpret-the-ser-from-the-above-model-in-words.-interpret-sample-standard-deviation-from-above-model-in-words.-does-our-model-make-our-prediction-substantially-better" class="section level4">
+<h4>6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make our prediction substantially better?</h4>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p>Interpretation of SER: On average, observed values of institution-level student debt (<span class="math inline">\(Y_i\)</span>) are 9,931.327 dollars away from predicted values of institution-level student debt <span class="math inline">\(\hat{Y_i}\)</span>.</p>
+<p>Interpretation of sample standard deviation: On average, observations of <span class="math inline">\(Y_i\)</span> are 10,417.01 dollars away from the sample mean <span class="math inline">\(\bar{Y_i}\)</span> of Y.</p>
+<ul>
+<li>Yes, the model makes our prediction better.</li>
 </ul>
 </div>
 </div>
 <div id="part-ii-categorical-x-variables" class="section level1">
 <h1>Part II: Categorical X variables</h1>
+<p><span style="color:red"><b>/X<b></span></p>
+<div id="explain-what-a-reference-group-is-in-words." class="section level4">
+<h4>1. Explain what a reference group is in words.</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="what-is-a-factor-variable-and-why-is-it-important-for-running-a-regression" class="section level4">
+<h4>2. What is a factor variable and why is it important for running a regression?</h4>
+<ul>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span style="color:red"><b>/X<b></span></p>
+</div>
+<div id="section" class="section level4">
+<h4>3.</h4>
+<pre class="r"><code>df_edu %&gt;% glimpse()
+#&gt; Rows: 196
+#&gt; Columns: 35
+#&gt; $ opeid6                        &lt;chr&gt; &quot;001009&quot;, &quot;001020&quot;, &quot;001016&quot;, &quot;011462&quot;,…
+#&gt; $ unitid                        &lt;dbl&gt; 100858, 101480, 101879, 102553, 104179,…
+#&gt; $ instnm                        &lt;chr&gt; &quot;Auburn University&quot;, &quot;Jacksonville Stat…
+#&gt; $ control                       &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1,…
+#&gt; $ ccbasic                       &lt;dbl+lbl&gt; 15, 18, 18, 18, 15, 18, 17, 16, 17,…
+#&gt; $ stabbr                        &lt;chr&gt; &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AK&quot;, &quot;AZ&quot;, &quot;AR&quot;, &quot;AR…
+#&gt; $ region                        &lt;dbl+lbl&gt; 5, 5, 5, 8, 6, 5, 5, 8, 8, 8, 8, 8,…
+#&gt; $ city                          &lt;chr&gt; &quot;Auburn&quot;, &quot;Jacksonville&quot;, &quot;Florence&quot;, &quot;…
+#&gt; $ locale                        &lt;dbl+lbl&gt; 13, 23, 13, 11, 11, 33, 13, 21, 21,…
+#&gt; $ cipdig2                       &lt;chr&gt; &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13&quot;, &quot;13…
+#&gt; $ cipcode                       &lt;chr&gt; &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;, &quot;1301&quot;,…
+#&gt; $ cipdesc                       &lt;chr&gt; &quot;Education, General.&quot;, &quot;Education, Gene…
+#&gt; $ credlev                       &lt;dbl+lbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,…
+#&gt; $ creddesc                      &lt;chr&gt; &quot;Master&#39;s Degree&quot;, &quot;Master&#39;s Degree&quot;, &quot;…
+#&gt; $ ipedscount1                   &lt;chr&gt; &quot;NULL&quot;, &quot;NULL&quot;, &quot;NULL&quot;, &quot;19&quot;, &quot;65&quot;, &quot;12…
+#&gt; $ ipedscount2                   &lt;chr&gt; &quot;NULL&quot;, &quot;NULL&quot;, &quot;NULL&quot;, &quot;25&quot;, &quot;41&quot;, &quot;21…
+#&gt; $ debt_all_stgp_eval_n          &lt;dbl&gt; NA, NA, NA, 16, 58, 27, 14, 620, 39, 34…
+#&gt; $ debt_all_stgp_eval_mean       &lt;dbl&gt; 51292, 61404, 19866, 26777, 20823, 3763…
+#&gt; $ debt_all_stgp_eval_mdn        &lt;dbl&gt; NA, 67250, 16500, NA, 20500, 40080, NA,…
+#&gt; $ debt_all_stgp_eval_mdn10yrpay &lt;dbl&gt; NA, 691, 169, NA, 210, 412, NA, 476, 18…
+#&gt; $ earn_count_wne_hi_1yr         &lt;dbl&gt; 15, 26, 27, 15, 71, 26, 14, 544, 42, 34…
+#&gt; $ earn_mdn_hi_1yr               &lt;dbl&gt; 57318, 60399, 63005, 50105, 41813, 3909…
+#&gt; $ earn_count_wne_hi_2yr         &lt;dbl&gt; NA, 31, NA, 22, 75, 21, 11, 533, 19, 28…
+#&gt; $ earn_mdn_hi_2yr               &lt;dbl&gt; NA, 59576, NA, 52107, 40821, 38649, 460…
+#&gt; $ tuit_grad_res                 &lt;dbl&gt; 9072, 8904, 5598, 9768, 11372, 4932, 45…
+#&gt; $ fee_grad_res                  &lt;dbl&gt; 1624, 300, 1226, 1424, 1011, 1026, 1287…
+#&gt; $ tuit_grad_nres                &lt;dbl&gt; 27216, 17808, 11196, 19954, 31124, 9864…
+#&gt; $ fee_grad_nres                 &lt;dbl&gt; 1624, 300, 1226, 1758, 1011, 1026, 1287…
+#&gt; $ books_supplies                &lt;dbl&gt; 1200, 1596, 1500, 1608, 800, 1410, 1200…
+#&gt; $ roomboard_off                 &lt;dbl&gt; 12898, 9296, 7284, 11728, 11300, 12634,…
+#&gt; $ oth_expense_off               &lt;dbl&gt; 5664, 7416, 2800, 7568, 5200, 4766, 547…
+#&gt; $ tuitfee_grad_res              &lt;dbl&gt; 10696, 9204, 6824, 11192, 12383, 5958, …
+#&gt; $ tuitfee_grad_nres             &lt;dbl&gt; 28840, 18108, 12422, 21712, 32135, 1089…
+#&gt; $ coa_grad_res                  &lt;dbl&gt; 30458, 27512, 18408, 32096, 29683, 2476…
+#&gt; $ coa_grad_nres                 &lt;dbl&gt; 48602, 36416, 24006, 42616, 49435, 2970…</code></pre>
+</div>
 </div>
 <div id="part-iii-confidence-interval-about-beta_k" class="section level1">
 <h1>Part III: Confidence interval about <span class="math inline">\(\beta_k\)</span></h1>

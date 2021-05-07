@@ -264,6 +264,12 @@ rm(df_debt_earn_panel_labelled) # comment this line out if you want to keep data
         locale %in% c(12,13) ~ 2, # city
         locale %in% c(21,22,23) ~ 3, # suburb
         locale %in% c(31,32,33,41,42,43) ~ 4 # town/rural
+        ),
+      carnegie = case_when(
+        ccbasic %in% c(15) ~ 1, # research 1
+        ccbasic %in% c(16,17) ~ 2, # research 2
+        ccbasic %in% c(18) ~ 3, # master's 1
+        ccbasic %in% c(19,20) ~ 4 # master's 2
         )
       ) %>% 
     # create value labels for level of urbanization
@@ -273,10 +279,16 @@ rm(df_debt_earn_panel_labelled) # comment this line out if you want to keep data
         'med/small city' = 2,
         'suburb' = 3,
         'town/rural' = 4
-        )
+        ),
+      carnegie = c(
+        'research 1' = 1,
+        'research 2' = 2,
+        'masters 1' = 3,
+        'masters 2' = 4
+        )      
       ) %>%
     # change variable order
-    relocate(opeid6,unitid,instnm,control,ccbasic,stabbr,region,city,locale,urban,cipdig2,cipcode,cipdesc,credlev,creddesc,
+    relocate(opeid6,unitid,instnm,control,ccbasic,carnegie,stabbr,region,city,locale,urban,cipdig2,cipcode,cipdesc,credlev,creddesc,
       contains('ipeds'),starts_with('debt'),starts_with('earn'))
 
  
@@ -298,7 +310,10 @@ df_score_ipeds %>% filter(cipdig2=="13") %>% count(cipcode)
 df_score_ipeds %>% filter(cipdig2=="13") %>% count(cipdesc)
 
   df_edu <- df_score_ipeds %>% 
-    filter(cipcode=='1301') %>%
+    #filter(cipcode=='1301') %>% # 1301 = education, general
+    filter(cipcode=='1304') %>% # 1304 = Educational Administration and Supervision."          403
+    #filter(cipdesc=='Teacher Education and Professional Development, Sp') %>%
+    #filter(cipdig2=="13") %>% # all education
     # remove observations with missing values of cost of attendance (better for teaching concepts)
     filter(!is.na(coa_grad_res))    
 
@@ -449,6 +464,14 @@ Interpretation of sample standard deviation: On average, observations of $Y_i$ a
 
 <span style="color:red"><b>/X<b></span> 
 
+ADD A SENTENCE OR TWO ABOUT THE MODEL THEY WILL BE RUNNING; WHAT IS THE X VARIABLE; WHAT IS THE Y VAR
+
+I'D LIKE YOU TO CHANGE OUT THE X VARIABLE BECAUSE WE DID Y=EARNINGS AND X = URBAN FOR THE LECTURE; HOW ABOUT DO X=CARNEGIE CLASSIFICATION
+
+```{r}
+df_edu_fac %>% count(ccbasic)
+```
+
 #### 1. Explain what a reference group is in words.  
 
 - __YOUR ANSWER HERE__: The reference group is the group in our model that all other groups will be compared to. 
@@ -462,7 +485,15 @@ Interpretation of sample standard deviation: On average, observations of $Y_i$ a
 
 <span style="color:red"><b>/X<b></span> 
 
+PATRICIA - ADD A QUESTION SOMETHING ALONG THE LINES OF: IN REGRESSION OF RELATIONSHIP BETWEEN CARNEGIE (X) AND EARNINGS (Y), WHICH CATEGORY OF CARNEGIE WILL BE THE REFERENCE GROUP? WHY WILL THIS CATEGORY BE THE REFERENCE GROUP? CAN PROVIDE THEM SOME RELEVANT CODE/OUTPUT FROM R TO GIVE THEM HINT
+
 #### 3.  For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables $X$ and $Y$ actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_0$ in words; interpet the point estimate value(s) of $\hat{\beta}_1$, $\hat{\beta}_2$, $\hat{\beta}_3$ in words.
+
+PATRICIA - MAKE THIS A SEPARATE QUESTION; interpet the point estimate value(s) of $\hat{\beta}_1$, $\hat{\beta}_2$, $\hat{\beta}_3$ in words.
+
+AND MAKE THIS A SEPARATE QUESTION: interpet the point estimate value of $\hat{\beta}_0$ in words;
+
+
 
 - Some investigations of the variable categorical $X$ variable `urban`
 ```{r}
@@ -524,6 +555,14 @@ summary(mod3)
 <span style="color:red"><b>/X<b></span>   
 
 #### 4. Use the OLS prediction line to predict the value of $Y$ for each value of $X$ [show work].    
+
+MODIFY QUESTION ALONG THESE LINES. WHAT IS THE PREDICTED VALUE OF Y FOR EACH OF THE FOLLOWING UNIVERSITY TYPES. SHOW WORK (OLS PREDICTION LINE W/ ESTIMATES; THEN RESULT OF CALCULATION); GIVE STUDENTS THE ANSWER FOR RESEARCH2
+
+- RESEARCH 2: OLS LINE WITHOUT ESTIMATES; OLS LINE WITH ESTIMATES; CALCULATION
+- MASTER'S 1
+- MASTER'S 2
+- RESEARCH 1
+
 - **Hint**: If all other values of the independent variable are 0 ($X_1$, $X_2$,$X_3$), the OLS prediction line would look something like this: $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$  
 - And we would predict the value of $Y$ for the reference group to look like: $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')`   
 

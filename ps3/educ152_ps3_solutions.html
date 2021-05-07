@@ -1749,19 +1749,19 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 <div id="explain-what-a-reference-group-is-in-words." class="section level4">
 <h4>1. Explain what a reference group is in words.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: The reference group is the group in our model that all other groups will be compared to.</li>
 </ul>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="what-is-a-factor-variable-and-why-is-it-important-for-running-a-regression" class="section level4">
 <h4>2. What is a factor variable and why is it important for running a regression?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: A factor variable is a vector of integer values. When running a regression with a categorical variable (X), the variable should be class factor as values are stored as integers (e.g., 1,0) rather than strings (e.g., “Married”, “Single”, etc).</li>
 </ul>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
-<div id="for-your-analysis-of-the-relationship-between-the-level-of-urbanization-by-institution-x-and-institution-level-student-earnings-y-for-graduates-of-ma-programs-in-education-do-the-following-write-out-the-population-linear-regression-model-label-the-symbols-and-write-out-what-the-variables-x-and-y-actually-represent-write-out-the-ols-prediction-line-without-estimate-values-write-out-the-ols-prediction-line-with-estimate-values-interpet-the-point-estimate-value-of-hatbeta_0-in-words-interpret-the-predicted-average-value-for-observations-that-have-reference-group-for-x." class="section level4">
-<h4>3. For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span> in words; interpret the predicted average value for observations that have reference group for <span class="math inline">\(X\)</span>.</h4>
+<div id="for-your-analysis-of-the-relationship-between-the-level-of-urbanization-by-institution-x-and-institution-level-student-earnings-y-for-graduates-of-ma-programs-in-education-do-the-following-write-out-the-population-linear-regression-model-label-the-symbols-and-write-out-what-the-variables-x-and-y-actually-represent-write-out-the-ols-prediction-line-without-estimate-values-write-out-the-ols-prediction-line-with-estimate-values-interpet-the-point-estimate-value-of-hatbeta_0-in-words-interpet-the-point-estimate-values-of-hatbeta_1-hatbeta_2-hatbeta_3-in-words." class="section level4">
+<h4>3. For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span> in words; interpet the point estimate value(s) of <span class="math inline">\(\hat{\beta}_1\)</span>, <span class="math inline">\(\hat{\beta}_2\)</span>, <span class="math inline">\(\hat{\beta}_3\)</span> in words.</h4>
 <ul>
 <li>Some investigations of the variable categorical <span class="math inline">\(X\)</span> variable <code>urban</code></li>
 </ul>
@@ -1853,39 +1853,103 @@ summary(mod3)
 #&gt;   (37 observations deleted due to missingness)
 #&gt; Multiple R-squared:  0.1516, Adjusted R-squared:  0.1352 
 #&gt; F-statistic: 9.234 on 3 and 155 DF,  p-value: 0.00001175</code></pre>
+<ul>
+<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
+<li><p>Population linear regression model: <span class="math inline">\(Y_i = \beta_0 + \beta_1X_{1i} + \beta_2X_{2i} + \beta_3X_{3i} + u_i\)</span></p></li>
+<li><p>where:</p>
+<ul>
+<li>subscript <span class="math inline">\(i\)</span> refers to university <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(Y_i\)</span> = institution-level student earnings (in dollars) at university i (measured by variable <code>earn_mdn_hi_2yr</code>)</li>
+<li><span class="math inline">\(X_i\)</span> = level of urbanization (measured by <code>urban</code>), which has the following four categories: large city (250k+) [refrence group]; med/small city; suburb; town/rural
+<ul>
+<li><span class="math inline">\(X_{1i}\)</span>: 0/1 “med/small city”<br />
+</li>
+<li><span class="math inline">\(X_{2i}\)</span>: 0/1 “suburb”</li>
+<li><span class="math inline">\(X_{3i}\)</span>: 0/1 “town/rural”</li>
+</ul></li>
+<li><span class="math inline">\(\beta_0\)</span> = (“population intercept”), average value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X\)</span> is the reference group category (that is <span class="math inline">\(X_{1i}\)</span>=0,<span class="math inline">\(X_{2i}\)</span>=0,<span class="math inline">\(X_{3i}\)</span>=0</li>
+<li><span class="math inline">\(\beta_1\)</span> = population regression coefficient associated with being a “med/small city” rather than reference group<br />
+</li>
+<li><span class="math inline">\(\beta_2\)</span> = population regression coefficient associated with being a “suburb” rather than reference group<br />
+</li>
+<li><span class="math inline">\(\beta_3\)</span> = population regression coefficient associated with being a “town/rural” rather than reference group</li>
+</ul></li>
+<li><p>OLS prediction line (without estimates): <span class="math inline">\(\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2}X_{2i} + \hat{\beta_3}X_{3i}\)</span></p></li>
+<li><p>where:</p>
+<ul>
+<li><span class="math inline">\(\hat{Y_i}\)</span> = predicted value of institution-level student earnings (in dollars) at university i (measured by variable <code>earn_mdn_hi_2yr</code>)</li>
+<li><span class="math inline">\(\hat{\beta_0}\)</span> = predicted value of <span class="math inline">\(Y\)</span> when all independent variables in the model (<span class="math inline">\(X_1\)</span>,<span class="math inline">\(X_2\)</span>,…<span class="math inline">\(X_k\)</span>) are equal to 0.</li>
+<li><span class="math inline">\(\hat{\beta_1}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1\)</span> = 1 “med/small city”.<br />
+</li>
+<li><span class="math inline">\(\hat{\beta_2}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_2\)</span> = 1 “suburb”.<br />
+</li>
+<li><span class="math inline">\(\hat{\beta_3}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_3\)</span> = 1 “town/rural”.</li>
+</ul></li>
+<li><p>OLS prediction line (with estimates): <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55 + -7,364.42 <span class="math inline">\(\times X_{1i}\)</span> + -2,725.2 <span class="math inline">\(\times X_{2i}\)</span> + -7,728.34 <span class="math inline">\(\times X_{3i}\)</span></p></li>
+<li><p>Interpret point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span> &amp; <span class="math inline">\(\hat{\beta}_1\)</span>:</p>
+<ul>
+<li>interpretation of <span class="math inline">\(\hat{\beta_0}=\)</span> 53,853 is the predicted institution-level student earnings for MA graduates of education programs who attended a university located in a large city.</li>
+<li>Interpretation of <span class="math inline">\(\hat{\beta_1}=\)</span> -7,364.42 (med/small city)</li>
+<li>“being located in a medium/small city as opposed to large city is, on average, associated with a -7,364.42 dollar change in institution-level student earnings for MA graduates of education programs”</li>
+</ul></li>
+<li><p>Interpretation of <span class="math inline">\(\hat{\beta_2}=\)</span> -2,725.2 (suburb)</p>
+<ul>
+<li>“being located in a suburb as opposed to large city is, on average, associated with a -2,725.2 dollar change in institution-level student earnings for for MA graduates of education programs”</li>
+</ul></li>
+<li><p>Interpretation of <span class="math inline">\(\hat{\beta_3}=\)</span> -7,728.34 (town/rural)</p>
+<ul>
+<li>&quot;being located in a town/rural area as opposed to large city is, on average, associated with a -7,728.34 dollar change in institution-level student earnings for MA graduates of education programs.</li>
+</ul></li>
+</ul>
 <p><span style="color:red"><b>/X<b></span></p>
 </div>
-<div id="interpret-hatbeta_k-in-words-for-each-non-reference-category-of-x." class="section level4">
-<h4>4. Interpret <span class="math inline">\(\hat{\beta}_k\)</span> in words for each non-reference category of <span class="math inline">\(X\)</span>.</h4>
+<div id="use-the-ols-prediction-line-to-predict-the-value-of-y-for-each-value-of-x-show-work." class="section level4">
+<h4>4. Use the OLS prediction line to predict the value of <span class="math inline">\(Y\)</span> for each value of <span class="math inline">\(X\)</span> [show work].</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>Hint</strong>: If all other values of the independent variable are 0 (<span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,<span class="math inline">\(X_3\)</span>), the OLS prediction line would look something like this: <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55 + -7,364.42 <span class="math inline">\(\times 0\)</span> + -2,725.2 <span class="math inline">\(\times 0\)</span> + -7,728.34 <span class="math inline">\(\times 0\)</span><br />
+</li>
+<li>And we would predict the value of <span class="math inline">\(Y\)</span> for the reference group to look like: <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55</li>
 </ul>
-</div>
-<div id="use-ols-prediction-line-to-predict-the-value-of-y-for-each-value-of-x-show-work." class="section level4">
-<h4>5. Use OLS prediction line to predict the value of <span class="math inline">\(Y\)</span> for each value of <span class="math inline">\(X\)</span> [show work].</h4>
-<pre><code>- Reference group  
-- Non reference group 1  
-- Non reference group 2  
-- Non reference group 3  </code></pre>
+<p>Now do the following for each value of X</p>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><p>Reference group (given above)</p></li>
+<li><p>Non reference group 1 (<span class="math inline">\(X_1\)</span>) = (med/small city)</p></li>
+<li><p>Non reference group 2 (<span class="math inline">\(X_2\)</span>) = (suburb)</p></li>
+<li><p>Non reference group 3 (<span class="math inline">\(X_3\)</span>) = (town/rural)</p></li>
+<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
 </ul>
+<p>Non reference group 1 (<span class="math inline">\(X_1\)</span>) = <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55 + -7,364.42 <span class="math inline">\(\times X_{1i}\)</span> + -2,725.2 <span class="math inline">\(\times 0\)</span> + -7,728.34 <span class="math inline">\(\times 0\)</span></p>
+<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 46488.1351351</p>
+<p>Non reference group 2 (<span class="math inline">\(X_2\)</span>) = <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55 + -7,364.42 <span class="math inline">\(\times 0\)</span> + -2,725.2 <span class="math inline">\(\times X_{2i}\)</span> + -7,728.34 <span class="math inline">\(\times 0\)</span></p>
+<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 51127.3555556</p>
+<p>Non reference group 3 (<span class="math inline">\(X_3\)</span>) = <span class="math inline">\(\hat{Y_i} =\)</span> 53,852.55 + -7,364.42 <span class="math inline">\(\times 0\)</span> + -2,725.2 <span class="math inline">\(\times 0\)</span> + -7,728.34 <span class="math inline">\(\times X_{3i}\)</span></p>
+<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 46124.2142857</p>
+<p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="write-out-the-null-and-alternative-hypotheses-for-each-non-reference-group-category-of-variable-x." class="section level4">
-<h4>6. Write out the null and alternative hypotheses for each non-reference group category of variable <span class="math inline">\(X\)</span>.</h4>
+<h4>5. Write out the null and alternative hypotheses for each non-reference group category of variable <span class="math inline">\(X\)</span>.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><p><strong>YOUR ANSWER HERE</strong>:</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_1 =0; H_a: \beta_1 \ne 0\)</span><br />
+</li>
+<li><span class="math inline">\(H_0: \beta_2 =0; H_a: \beta_2 \ne 0\)</span><br />
+</li>
+<li><span class="math inline">\(H_0: \beta_3 =0; H_a: \beta_3 \ne 0\)</span></li>
+</ul></li>
 </ul>
+<p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="write-out-the-formula-for-the-t-statistic-of-hatbeta_k." class="section level4">
-<h4>7. Write out the formula for the t-statistic of <span class="math inline">\(\hat{\beta}_k\)</span>.</h4>
+<h4>6. Write out the formula for the t-statistic of <span class="math inline">\(\hat{\beta}_k\)</span>.</h4>
 <p>What does <span class="math inline">\(SE\hat{\beta}_k\)</span> mean in words; some question where they have to convey that they know it is about sampling distribution of Beta_hat_k; how value varies from one random sample to another</p>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
+<p><span style="color:red"><b>/X<b></span></p>
 </div>
 <div id="for-one-of-the-non-reference-group-categories-of-x-do-the-following" class="section level4">
-<h4>8. For one of the non-reference group categories of <span class="math inline">\(X\)</span> do the following:</h4>
+<h4>7. For one of the non-reference group categories of <span class="math inline">\(X\)</span> do the following:</h4>
 <ul>
 <li><p>Solve for value of t using information from the regression output<br />
 </p></li>
@@ -1905,25 +1969,25 @@ summary(mod3)
 <div id="in-words-what-is-a-confidence-interval" class="section level4">
 <h4>1. In words, what is a confidence interval?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: A confidence interval gives us a range of values that contain the true value of a parameter with a prespecified probability.</li>
 </ul>
 </div>
 <div id="what-is-the-formula-for-a-confidence-interval-about-some-population-parameter" class="section level4">
 <h4>2. What is the formula for a confidence interval about some population parameter?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(\bar{Y} \pm z*SE(\bar{Y})\)</span></li>
 </ul>
 </div>
 <div id="what-is-the-formula-for-a-95-confidence-interval-about-a-population-regression-coefficient-hatbeta" class="section level4">
 <h4>3. What is the formula for a 95% confidence interval about a population regression coefficient <span class="math inline">\(\hat{\beta}\)</span></h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>:</li>
+<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)\)</span></li>
 </ul>
 </div>
-<div id="for-a-non-reference-group-category-of-variable-x-a-different-category-than-the-one-they-chose-for-previous-set-of-questions-do-the-following" class="section level4">
-<h4>4. For a non-reference group category of variable <span class="math inline">\(X\)</span> (a different category than the one they chose for previous set of questions), do the following:</h4>
+<div id="for-a-non-reference-group-category-of-variable-x-a-different-category-than-the-one-you-chose-for-previous-set-of-questions-do-the-following" class="section level4">
+<h4>4. For a non-reference group category of variable <span class="math inline">\(X\)</span> (a different category than the one you chose for previous set of questions), do the following:</h4>
 <ul>
-<li>Interpret _k in words<br />
+<li>Interpret <span class="math inline">\(\hat{\beta}_k\)</span> in words<br />
 </li>
 <li>Calculate the 95% confidence interval<br />
 </li>
@@ -1932,6 +1996,20 @@ summary(mod3)
 <p><br></p>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
+</ul>
+<p><span class="math inline">\(\hat{\beta}_1\)</span> = “being located in a medium/small city as opposed to large city is, on average, associated with a -7,364.42 dollar change in institution-level student earnings for MA graduates of education programs”</p>
+<ul>
+<li>Formula: <span class="math inline">\(\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)\)</span>
+<ul>
+<li><span class="math inline">\(\hat{\beta_1}=\)</span> -7364.4159</li>
+<li><span class="math inline">\(SE(\hat{\beta_1})=\)</span> 1686.6788</li>
+<li>lower bound: = <span class="math inline">\(\hat{\beta}_k - 1.96*SE(\hat{\beta}_k)=\)</span> -10670.31</li>
+<li>upper bound: = <span class="math inline">\(\hat{\beta}_k + 1.96*SE(\hat{\beta}_k)=\)</span> -4058.53</li>
+</ul></li>
+<li>Interpretation:
+<ul>
+<li>We are 95% confident that the population parameter <span class="math inline">\(\beta_1\)</span> lies somewhere between -10670.31 and -4058.53</li>
+</ul></li>
 </ul>
 </div>
 </div>

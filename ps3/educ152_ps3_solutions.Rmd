@@ -99,7 +99,6 @@ library(patchwork)
 
 source(file = url('https://github.com/anyone-can-cook/educ152/raw/main/scripts/user_defined_functions/create_inference_functions.R'))
 
-
 ##########
 ########## IPEDS
 ##########
@@ -452,18 +451,18 @@ Interpretation of sample standard deviation: On average, observations of $Y_i$ a
 
 #### 1. Explain what a reference group is in words.  
 
-- __YOUR ANSWER HERE__:
+- __YOUR ANSWER HERE__: The reference group is the group in our model that all other groups will be compared to. 
 
 
 <span style="color:red"><b>/X<b></span> 
 
 #### 2. What is a factor variable and why is it important for running a regression?  
 
-- __YOUR ANSWER HERE__:
+- __YOUR ANSWER HERE__: A factor variable is a vector of integer values. When running a regression with a categorical variable (X), the variable should be class factor as values are stored as integers (e.g., 1,0) rather than strings (e.g., "Married", "Single", etc). 
 
 <span style="color:red"><b>/X<b></span> 
 
-#### 3.  For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables $X$ and $Y$ actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_0$ in words; interpret the predicted average value for observations that have reference group for $X$.
+#### 3.  For your analysis of the relationship between the level of urbanization by institution (X) and institution-level student earnings (Y) for graduates of MA programs in Education, do the following: write out the population linear regression model (label the symbols and write out what the variables $X$ and $Y$ actually represent); write out the OLS prediction line (without estimate values); write out the OLS prediction line (with estimate values); interpet the point estimate value of $\hat{\beta}_0$ in words; interpet the point estimate value(s) of $\hat{\beta}_1$, $\hat{\beta}_2$, $\hat{\beta}_3$ in words.
 
 - Some investigations of the variable categorical $X$ variable `urban`
 ```{r}
@@ -485,33 +484,91 @@ mod3 <- lm(formula = earn_mdn_hi_2yr ~ urban, data = df_edu_fac)
 summary(mod3)
 ```
 
+- __YOUR ANSWER HERE__:  
 
-<span style="color:red"><b>/X<b></span> 
+- Population linear regression model: $Y_i = \beta_0 + \beta_1X_{1i} + \beta_2X_{2i} + \beta_3X_{3i} + u_i$
+- where:
+  - subscript $i$ refers to university $i$
+  - $Y_i$ = institution-level student earnings (in dollars) at university i (measured by variable `earn_mdn_hi_2yr`)
+  - $X_i$ = level of urbanization (measured by `urban`), which has the following four categories: large city (250k+) [refrence group]; med/small city; suburb; town/rural  
+    - $X_{1i}$: 0/1 “med/small city”  
+    - $X_{2i}$: 0/1 “suburb”
+    - $X_{3i}$: 0/1 “town/rural”
+  - $\beta_0$ = ("population intercept"), average value of $Y$ when $X$ is the reference group category (that is $X_{1i}$=0,$X_{2i}$=0,$X_{3i}$=0
+  - $\beta_1$ = population regression coefficient associated with being a “med/small city” rather than reference group  
+  - $\beta_2$ = population regression coefficient associated with being a “suburb” rather than reference group  
+  - $\beta_3$ = population regression coefficient associated with being a “town/rural” rather than reference group
+ 
+- OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2}X_{2i} + \hat{\beta_3}X_{3i}$
 
-#### 4. Interpret $\hat{\beta}_k$ in words for each non-reference category of $X$.   
+- where:
+  - $\hat{Y_i}$ = predicted value of institution-level student earnings (in dollars) at university i (measured by variable `earn_mdn_hi_2yr`)
+  - $\hat{\beta_0}$ = predicted value of $Y$ when all independent variables in the model ($X_1$,$X_2$,…$X_k$) are equal to 0. 
+  - $\hat{\beta_1}$= predicted value of $Y$ when $X_1$ = 1 “med/small city”.  
+  - $\hat{\beta_2}$= predicted value of $Y$ when $X_2$ = 1 “suburb”.    
+  - $\hat{\beta_3}$= predicted value of $Y$ when $X_3$ = 1 “town/rural”.
 
-- __YOUR ANSWER HERE__:
+
+- OLS prediction line (with estimates): $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$
+
+- Interpret point estimate value of $\hat{\beta}_0$ & $\hat{\beta}_1$:
+  - interpretation of $\hat{\beta_0}=$ 53,853 is the predicted institution-level student earnings for MA graduates of education programs who attended a university located in a large city.
+  - Interpretation of $\hat{\beta_1}=$ `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` (med/small city)
+  - "being located in a medium/small city as opposed to large city is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
+- Interpretation of $\hat{\beta_2}=$ `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` (suburb)
+  - "being located in a suburb as opposed to large city is, on average, associated with a `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for for MA graduates of education programs"
+- Interpretation of $\hat{\beta_3}=$ `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` (town/rural)
+  - "being located in a town/rural area as opposed to large city is, on average, associated with a `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs.
+  
+
+<span style="color:red"><b>/X<b></span>   
+
+#### 4. Use the OLS prediction line to predict the value of $Y$ for each value of $X$ [show work].    
+- **Hint**: If all other values of the independent variable are 0 ($X_1$, $X_2$,$X_3$), the OLS prediction line would look something like this: $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$  
+- And we would predict the value of $Y$ for the reference group to look like: $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')`   
+
+Now do the following for each value of X  
+
+  - Reference group (given above) 
+  - Non reference group 1 ($X_1$) =  (med/small city) 
+  - Non reference group 2 ($X_2$) =  (suburb)
+  - Non reference group 3 ($X_3$) =  (town/rural)
+  
+- __YOUR ANSWER HERE__:  
+
+Non reference group 1 ($X_1$) = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$   
+
+= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + (summary(mod3)$coefficients[2,1])`   
+
+Non reference group 2 ($X_2$) = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$   
+
+= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + (summary(mod3)$coefficients[3,1])`   
 
 
-#### 5. Use OLS prediction line to predict the value of $Y$ for each value of $X$ [show work].  
-    - Reference group  
-    - Non reference group 1  
-    - Non reference group 2  
-    - Non reference group 3  
+Non reference group 3 ($X_3$) = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$   
+
+= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + summary(mod3)$coefficients[4,1]`   
     
-- __YOUR ANSWER HERE__:
+<span style="color:red"><b>/X<b></span>   
+
+#### 5. Write out the null and alternative hypotheses for each non-reference group category of variable $X$.   
+
+- __YOUR ANSWER HERE__:  
+
+    - $H_0: \beta_1 =0; H_a: \beta_1 \ne 0$  
+    - $H_0: \beta_2 =0; H_a: \beta_2 \ne 0$   
+    - $H_0: \beta_3 =0; H_a: \beta_3 \ne 0$ 
     
-#### 6. Write out the null and alternative hypotheses for each non-reference group category of variable $X$.   
+<span style="color:red"><b>/X<b></span>   
 
-- __YOUR ANSWER HERE__:
-
-
-#### 7. Write out the formula for the t-statistic of $\hat{\beta}_k$. 
+#### 6. Write out the formula for the t-statistic of $\hat{\beta}_k$. 
 What does $SE\hat{\beta}_k$ mean in words; some question where they have to convey that they know it is about sampling distribution of Beta_hat_k; how value varies from one random sample to another  
 
 - __YOUR ANSWER HERE__:
 
-#### 8. For one of the non-reference group categories of $X$ do the following:  
+<span style="color:red"><b>/X<b></span>   
+
+#### 7. For one of the non-reference group categories of $X$ do the following:  
   - Solve for value of t using information from the regression output  
   - Using `plot_t_distribution` function created above, plot the sampling distribution assuming H_0  
       - [we can give them heavy hints on the code]
@@ -528,28 +585,34 @@ What does $SE\hat{\beta}_k$ mean in words; some question where they have to conv
 
 #### 1.  In words, what is a confidence interval?  
 
-- __YOUR ANSWER HERE__:  
+- __YOUR ANSWER HERE__: A confidence interval gives us a range of values that contain the true value of a parameter with a prespecified probability.
 
 #### 2. What is the formula for a confidence interval about some population parameter?  
 
-- __YOUR ANSWER HERE__:  
+- __YOUR ANSWER HERE__: $\bar{Y} \pm z*SE(\bar{Y})$ 
 
 #### 3. What is the formula for a 95% confidence interval about a population regression coefficient $\hat{\beta}$  
 
-- __YOUR ANSWER HERE__:  
+- __YOUR ANSWER HERE__:  $\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)$
 
-#### 4. For a non-reference group category of variable $X$ (a different category than the one they chose for previous set of questions), do the following:  
-- Interpret \hat{\beta}_k in words  
+#### 4. For a non-reference group category of variable $X$ (a different category than the one you chose for previous set of questions), do the following:  
+- Interpret $\hat{\beta}_k$ in words  
 - Calculate the 95% confidence interval  
 - Interpret the 95% confidence interval in words  
   
 <br>
 
-- __YOUR ANSWER HERE__:  
+- __YOUR ANSWER HERE__:    
 
-```{r}
+$\hat{\beta}_1$ = "being located in a medium/small city as opposed to large city is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
 
-```
+- Formula: $\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)$
+  - $\hat{\beta_1}=$ `r round(summary(mod3)$coefficients[2,1], digits =4)`
+  - $SE(\hat{\beta_1})=$ `r round(summary(mod3)$coefficients[2,2], digits =4)`
+  - lower bound: = $\hat{\beta}_k - 1.96*SE(\hat{\beta}_k)=$  `r round(summary(mod3)$coefficients[2,1]-1.96*summary(mod3)$coefficients[2,2], digits =2)`
+  - upper bound: = $\hat{\beta}_k + 1.96*SE(\hat{\beta}_k)=$ `r round(summary(mod3)$coefficients[2,1]+1.96*summary(mod3)$coefficients[2,2], digits =2)`
+- Interpretation:
+  - We are 95% confident that the population parameter $\beta_1$ lies somewhere between `r round(summary(mod3)$coefficients[2,1]-1.96*summary(mod3)$coefficients[2,2], digits =2)` and `r round(summary(mod3)$coefficients[2,1]+1.96*summary(mod3)$coefficients[2,2], digits =2)`
 
 
 # Part IV: Post a comment/question

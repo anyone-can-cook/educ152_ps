@@ -1599,10 +1599,8 @@ div.tocify {
 <div id="define-r2-in-words.-write-out-the-mathematical-formula-for-r2-using-both-ways-discussed-in-lecture." class="section level4">
 <h4>1. Define <span class="math inline">\(R^2\)</span> in words. Write out the mathematical formula for <span class="math inline">\(R^2\)</span> using both ways discussed in lecture.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(R^2\)</span> is the fraction of variance in Y explained by X (and is not already explained by sample mean, <span class="math inline">\(\bar{Y}\)</span>).</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
-<p><span class="math inline">\(R^2 = \frac{\text{variance in Y that is explained by X}}{\text{total variance in Y}} = \frac{ESS}{TSS}\)</span></p>
-<p><span class="math inline">\(R^2 = 1 - \frac{\text{variance in Y not explained by X}}{\text{total variance in Y}} = 1 - \frac{SSR}{TSS}\)</span></p>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
 <div id="using-the-code-from-below-to-guide-you-write-out-the-formula-for-tss-and-explain-what-it-means-in-words.-do-the-same-for-ess-and-ssr." class="section level4">
@@ -1645,50 +1643,18 @@ anova(mod1)
 #&gt; Residuals    338 51807412707  153276369                       
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Estimated sum of squares (ESS) = 2,876,756,208<br />
-Sum of Squared Residuals (SSR) = 51,807,412,707<br />
-Total Sum of Squares (TSS) = ESS + SSR = 54,684,168,915</p>
 <ul>
-<li><strong>YOUR ANSWER HERE: TSS</strong>:</li>
+<li><p><strong>YOUR ANSWER HERE: TSS</strong>:</p></li>
+<li><p><strong>YOUR ANSWER HERE: ESS</strong>:</p></li>
+<li><p><strong>YOUR ANSWER HERE: SSR</strong>:</p></li>
 </ul>
-<p><span class="math inline">\(TSS = \sum_{i=1}^{n} (Y_i-\bar{Y})^2\)</span></p>
-<p>Total sum of squares measures the total variance in Y, in terms of <span class="math inline">\(\bar{Y}\)</span></p>
-<ul>
-<li><strong>YOUR ANSWER HERE: ESS</strong>:</li>
-</ul>
-<p><span class="math inline">\(ESS = \sum_{i=1}^{n} (\hat{Y_i}-\bar{Y})^2\)</span></p>
-<p>Explained sum of squares measures the amount of variation in Y explained by X.</p>
-<ul>
-<li><strong>YOUR ANSWER HERE: SSR</strong>:</li>
-</ul>
-<p><span class="math inline">\(SSR = \sum_{i=1}^{n} (Y_i-\hat{Y})^2\)</span></p>
-<p>The sum of squared residuals measures the amount of variation in Y not explained by X.</p>
 <p><span style="color:red"><b>/2<b></span></p>
 </div>
 <div id="using-the-values-for-ess-ssr-and-tss-from-above-calculate-r2-in-both-ways-discussed-in-lecture-can-do-it-by-hand-below-or-in-a-code-chunk.-interpret-the-value-of-r2-in-words." class="section level4">
 <h4>3. Using the values for ESS, SSR, and TSS from above, calculate <span class="math inline">\(R^2\)</span> in both ways discussed in lecture (can do it by hand below or in a code chunk). Interpret the value of <span class="math inline">\(R^2\)</span> in words.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: The model explains 5.2% of the variation in Y (that is not already explained by sample mean, <span class="math inline">\(\bar{Y}\)</span>)</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
-<pre class="r"><code>#ESS
-anova(mod1)$&quot;Sum Sq&quot;[1]
-#&gt; [1] 2876756208
-
-#SSR
-anova(mod1)$&quot;Sum Sq&quot;[2]
-#&gt; [1] 51807412707
-
-#TSS
-anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2]
-#&gt; [1] 54684168915
-
-#R2, ESS/TSS
-anova(mod1)$&quot;Sum Sq&quot;[1] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2])
-#&gt; [1] 0.05260675
-
-#R2, 1 - SSR/TSS
-1 - anova(mod1)$&quot;Sum Sq&quot;[2] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(mod1)$&quot;Sum Sq&quot;[2])
-#&gt; [1] 0.05260675</code></pre>
 <p><span style="color:red"><b>/4<b></span></p>
 </div>
 <div id="explain-what-sample-standard-deviation-of-a-variable-means-in-words-and-write-out-the-formula.-explain-what-standard-error-of-the-regression-ser-means-in-words-and-write-out-the-formula-for-ser-in-terms-of-ssr." class="section level4">
@@ -1696,10 +1662,6 @@ anova(mod1)$&quot;Sum Sq&quot;[1] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(m
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
-<p>Sample standard deviation = The sample standard deviation of Y <span class="math inline">\(\hat{\sigma}_Y\)</span> measures the average distance between a random observation <span class="math inline">\(Y_i\)</span> and the sample mean <span class="math inline">\(\bar{Y_i}\)</span>.</p>
-<p><span class="math inline">\(\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\bar{Y})^2}{n -1}}\)</span></p>
-<p>Standard error of the regression (SER) = The standard error of the regression is an estimate of how far away, on average, an actual observed value of <span class="math inline">\(Y_i\)</span> is from the predicted value of <span class="math inline">\(\hat{Y_i}\)</span> of <span class="math inline">\(Y_i\)</span> for a random observation, <span class="math inline">\(i\)</span>.</p>
-<p><span class="math inline">\(SER = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\hat{Y_i})^2}{n -2}} = \sqrt{\frac{\sum_{i=1}^{n} (\hat{\mu_i})^2}{n -2}}\)</span></p>
 <p><span style="color:red"><b>/2<b></span></p>
 </div>
 <div id="run-the-analysis-of-the-relationship-between-cost-of-attendance-x-and-debt-y.-do-the-following-run-the-regression-in-r-using-lm-and-summary-and-assign-it-to-the-object-mod2-report-the-ser-and-calculate-the-standard-deviation-of-the-dependent-variable-sd-debt-debt_all_stgp_eval_mean-in-the-regression-model." class="section level4">
@@ -1708,46 +1670,12 @@ anova(mod1)$&quot;Sum Sq&quot;[1] / (anova(mod1)$&quot;Sum Sq&quot;[1] + anova(m
 <li>X= <code>coa_grad_res</code></li>
 <li>Y= <code>debt_all_stgp_eval_mean</code></li>
 </ul>
-<pre class="r"><code>mod2 &lt;- lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
-
-summary(mod2)
-#&gt; 
-#&gt; Call:
-#&gt; lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
-#&gt; 
-#&gt; Residuals:
-#&gt;    Min     1Q Median     3Q    Max 
-#&gt; -25356  -5537  -1466   4930  29968 
-#&gt; 
-#&gt; Coefficients:
-#&gt;                Estimate Std. Error t value            Pr(&gt;|t|)    
-#&gt; (Intercept)  18258.3119  1347.8901  13.546 &lt;0.0000000000000002 ***
-#&gt; coa_grad_res     0.4527     0.0465   9.737 &lt;0.0000000000000002 ***
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#&gt; 
-#&gt; Residual standard error: 8378 on 393 degrees of freedom
-#&gt; Multiple R-squared:  0.1943, Adjusted R-squared:  0.1923 
-#&gt; F-statistic:  94.8 on 1 and 393 DF,  p-value: &lt; 0.00000000000000022
-
-#SER
-summary(mod2)$sigma
-#&gt; [1] 8377.512
-
-#Standard deviation of debt
-sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
-#&gt; [1] 9321.583</code></pre>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
 <div id="interpret-the-ser-from-the-above-model-in-words.-interpret-sample-standard-deviation-from-above-model-in-words.-does-our-model-make-our-prediction-substantially-better" class="section level4">
 <h4>6. Interpret the SER from the above model in words. Interpret sample standard deviation from above model in words. Does our model make our prediction substantially better?</h4>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
-</ul>
-<p>Interpretation of SER: On average, observed values of institution-level student debt (<span class="math inline">\(Y_i\)</span>) are 8,377.51 dollars away from predicted values of institution-level student debt <span class="math inline">\(\hat{Y_i}\)</span>.</p>
-<p>Interpretation of sample standard deviation: On average, observations of <span class="math inline">\(Y_i\)</span> are 9,321.58 dollars away from the sample mean <span class="math inline">\(\bar{Y_i}\)</span> of Y.</p>
-<ul>
-<li>Yes, the model makes our prediction better.</li>
 </ul>
 </div>
 </div>
@@ -1763,7 +1691,7 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 <div id="explain-what-a-reference-group-is-in-words." class="section level4">
 <h4>1. Explain what a reference group is in words.</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: The reference group is the group in our model that all other groups will be compared to.</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/1<b></span></p>
 </div>
@@ -1787,14 +1715,14 @@ df_edu_fac %&gt;% count(as.integer(carnegie))
 #&gt; 3                      3   135
 #&gt; 4                      4    45</code></pre>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: Research 1 institutions will be the reference group in our model because R automatically assigns the lowest value of <span class="math inline">\(X\)</span> as the reference group.</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/2<b></span></p>
 </div>
 <div id="what-is-a-factor-variable-and-why-is-it-important-for-running-a-regression" class="section level4">
 <h4>3. What is a factor variable and why is it important for running a regression?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: A factor variable is a vector of integer values. When running a regression with a categorical variable (X), the variable should be class factor as values are stored as integers (e.g., 1,0) rather than strings (e.g., “Married”, “Single”, etc).</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/6<b></span></p>
 </div>
@@ -1804,93 +1732,21 @@ df_edu_fac %&gt;% count(as.integer(carnegie))
 <li><p>Some investigations of the variable categorical <span class="math inline">\(X\)</span> variable <code>urban</code></p></li>
 <li><p>X= <code>carnegie</code></p></li>
 <li><p>Y= <code>earn_mdn_hi_2yr</code></p></li>
-</ul>
-<pre class="r"><code>mod3 &lt;- lm(formula = earn_mdn_hi_2yr ~ carnegie, data = df_edu_fac)
-summary(mod3)
-#&gt; 
-#&gt; Call:
-#&gt; lm(formula = earn_mdn_hi_2yr ~ carnegie, data = df_edu_fac)
-#&gt; 
-#&gt; Residuals:
-#&gt;    Min     1Q Median     3Q    Max 
-#&gt; -32770  -7465  -1999   4321  62838 
-#&gt; 
-#&gt; Coefficients:
-#&gt;                    Estimate Std. Error t value             Pr(&gt;|t|)    
-#&gt; (Intercept)           51988       1519  34.228 &lt; 0.0000000000000002 ***
-#&gt; carnegieresearch 2     2745       1898   1.446             0.149064    
-#&gt; carnegiemasters 1      6346       1904   3.333             0.000955 ***
-#&gt; carnegiemasters 2      5450       2685   2.030             0.043189 *  
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#&gt; 
-#&gt; Residual standard error: 12530 on 336 degrees of freedom
-#&gt;   (55 observations deleted due to missingness)
-#&gt; Multiple R-squared:  0.03607,    Adjusted R-squared:  0.02746 
-#&gt; F-statistic: 4.191 on 3 and 336 DF,  p-value: 0.006241</code></pre>
-<ul>
 <li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
-<li><p>Population linear regression model: <span class="math inline">\(Y_i = \beta_0 + \beta_1X_{1i} + \beta_2X_{2i} + \beta_3X_{3i} + u_i\)</span></p></li>
-<li><p>where:</p>
-<ul>
-<li>subscript <span class="math inline">\(i\)</span> refers to university <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(Y_i\)</span> = institution-level student earnings (in dollars) at university i (measured by variable <code>earn_mdn_hi_2yr</code>)</li>
-<li><span class="math inline">\(X_i\)</span> = type of institution (measured by <code>carnegie</code>), which has the following four categories: Research 1 [refrence group]; Research 2; Masters 1; Masters 2
-<ul>
-<li><span class="math inline">\(X_{1i}\)</span>: 0/1 “research 2”<br />
-</li>
-<li><span class="math inline">\(X_{2i}\)</span>: 0/1 “masters 1”</li>
-<li><span class="math inline">\(X_{3i}\)</span>: 0/1 “masters 2”</li>
-</ul></li>
-<li><span class="math inline">\(\beta_0\)</span> = (“population intercept”), average value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X\)</span> is the reference group category (that is <span class="math inline">\(X_{1i}\)</span>=0,<span class="math inline">\(X_{2i}\)</span>=0,<span class="math inline">\(X_{3i}\)</span>=0</li>
-<li><span class="math inline">\(\beta_1\)</span> = population regression coefficient associated with being a “research 2” rather than reference group<br />
-</li>
-<li><span class="math inline">\(\beta_2\)</span> = population regression coefficient associated with being a “masters 1” rather than reference group<br />
-</li>
-<li><span class="math inline">\(\beta_3\)</span> = population regression coefficient associated with being a “masters 2” rather than reference group</li>
-</ul></li>
-<li><p>OLS prediction line (without estimates): <span class="math inline">\(\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2}X_{2i} + \hat{\beta_3}X_{3i}\)</span></p></li>
-<li><p>where:</p>
-<ul>
-<li><span class="math inline">\(\hat{Y_i}\)</span> = predicted value of institution-level student earnings (in dollars) at university i (measured by variable <code>earn_mdn_hi_2yr</code>)</li>
-<li><span class="math inline">\(\hat{\beta_0}\)</span> = predicted value of <span class="math inline">\(Y\)</span> when all independent variables in the model (<span class="math inline">\(X_1\)</span>,<span class="math inline">\(X_2\)</span>,…<span class="math inline">\(X_k\)</span>) are equal to 0.</li>
-<li><span class="math inline">\(\hat{\beta_1}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1\)</span> = 1 “research 2”.<br />
-</li>
-<li><span class="math inline">\(\hat{\beta_2}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_2\)</span> = 1 “masters 1”.<br />
-</li>
-<li><span class="math inline">\(\hat{\beta_3}\)</span>= predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_3\)</span> = 1 “masters 2”.</li>
-</ul></li>
-<li><p>OLS prediction line (with estimates): <span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times X_{1i}\)</span> + 6,346.29 <span class="math inline">\(\times X_{2i}\)</span> + 5,449.51 <span class="math inline">\(\times X_{3i}\)</span></p></li>
 </ul>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
 <div id="interpet-the-point-estimate-values-of-hatbeta_1-hatbeta_2-hatbeta_3-in-words." class="section level4">
 <h4>5. Interpet the point estimate value(s) of <span class="math inline">\(\hat{\beta}_1\)</span>, <span class="math inline">\(\hat{\beta}_2\)</span>, <span class="math inline">\(\hat{\beta}_3\)</span> in words.</h4>
 <ul>
-<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
-<li><p>Interpretation of <span class="math inline">\(\hat{\beta_1}=\)</span> 2,745.27 (Research 2)</p>
-<ul>
-<li>“Graduating from a Research 2 university as opposed to a Research 1 city is, on average, associated with a 2,745.27 dollar change in institution-level student earnings for MA graduates of education programs”</li>
-</ul></li>
-<li><p>Interpretation of <span class="math inline">\(\hat{\beta_2}=\)</span> 6,346.29 (suburb)</p>
-<ul>
-<li>“Graduating from a Masters 1 university as opposed to a Research 1 city is, on average, associated with a 6,346.29 dollar change in institution-level student earnings for for MA graduates of education programs”</li>
-</ul></li>
-<li><p>Interpretation of <span class="math inline">\(\hat{\beta_3}=\)</span> 5,449.51 (town/rural)</p>
-<ul>
-<li>&quot;Graduating from a Masters 2 university as opposed to a Research 1 city is, on average, associated with a 5,449.51 dollar change in institution-level student earnings for MA graduates of education programs.</li>
-</ul></li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/1<b></span></p>
 </div>
 <div id="interpet-the-point-estimate-value-of-hatbeta_0-in-words." class="section level4">
 <h4>6. Interpet the point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span> in words.</h4>
 <ul>
-<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
-<li><p>Interpret point estimate value of <span class="math inline">\(\hat{\beta}_0\)</span>:</p>
-<ul>
-<li>interpretation of <span class="math inline">\(\hat{\beta_0}=\)</span> 51,988 is the predicted institution-level student earnings for MA graduates of education programs who attended a Research 1 university.</li>
-</ul></li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
@@ -1898,14 +1754,15 @@ summary(mod3)
 <h4>7. What is the predicted value of <span class="math inline">\(Y\)</span> for each of the following university types. <strong>Show work</strong> (OLS prediction line w/ estimates; then result of calculation).</h4>
 <p><strong>OLS line with estimates</strong></p>
 <ul>
-<li><strong>Hint</strong>: Our OLS prediction line looks something like this:<span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times X_{1i}\)</span> + 6,346.29 <span class="math inline">\(\times X_{2i}\)</span> + 5,449.51 <span class="math inline">\(\times X_{3i}\)</span></li>
+<li><strong>Hint</strong>: Our OLS prediction line looks something like this:<span class="math inline">\(\hat{Y_i} =\)</span> <span class="math inline">\(51,988.34 + 2745*X_{1i} + 6346 *X_{2i} + 5450*X_{3i}\)</span></li>
 </ul>
 <p><strong>Calculation:</strong></p>
 <ul>
 <li><p>If all other values of the independent variable are 0 (<span class="math inline">\(X_2\)</span>,<span class="math inline">\(X_3\)</span>) except <span class="math inline">\(X_1\)</span>, then our OLS prediction line looks like this:</p>
 <ul>
-<li><p><span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times X_{1i}\)</span> + 6,346.29 <span class="math inline">\(\times 0\)</span> + 5,449.51 <span class="math inline">\(\times 0\)</span></p></li>
-<li><p><span class="math inline">\(\hat{Y_i} =\)</span> 54733.6033058</p></li>
+<li><p><span class="math inline">\(\hat{Y_i} =\)</span> <span class="math inline">\(51,988.34 + 2745*X_{1i} + 6346 *0 + 5450*0\)</span></p></li>
+<li><p><span class="math inline">\(\hat{Y_i} =\)</span> <span class="math inline">\(51,988.34 + 2745\)</span></p></li>
+<li><p><span class="math inline">\(\hat{Y_i} =\)</span> <span class="math inline">\(54,733.34\)</span></p></li>
 </ul></li>
 </ul>
 <p>Now do the following for each value of X</p>
@@ -1916,12 +1773,6 @@ summary(mod3)
 <li><p>Reference group = Research 1</p></li>
 <li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
 </ul>
-<p>Non reference group 2 (<span class="math inline">\(X_2\)</span>) = <span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times 0\)</span> + 6,346.29 <span class="math inline">\(\times X_{2i}\)</span> + 5,449.51 <span class="math inline">\(\times 0\)</span></p>
-<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 58334.6302521</p>
-<p>Non reference group 3 (<span class="math inline">\(X_3\)</span>) = <span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times 0\)</span> + 6,346.29 <span class="math inline">\(\times 0\)</span> + 5,449.51 <span class="math inline">\(\times X_{3i}\)</span></p>
-<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 57437.84375</p>
-<p>Reference group = <span class="math inline">\(\hat{Y_i} =\)</span> 51,988.34 + 2,745.27 <span class="math inline">\(\times 0\)</span> + 6,346.29 <span class="math inline">\(\times 0\)</span> + 5,449.51 <span class="math inline">\(\times 0\)</span></p>
-<p>= <span class="math inline">\(\hat{Y_i} =\)</span> 51988.3382353</p>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
 <div id="for-one-of-the-non-reference-group-categories-of-x-e.g.-research-2-masters-1-masters-2-do-the-following" class="section level4">
@@ -1933,22 +1784,6 @@ summary(mod3)
 <li><p>Using the output from the model, interpret the p-value in words and make a conclusion.</p></li>
 <li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
 </ul>
-<p>Hypothesis - <span class="math inline">\(H_0: \beta_1 = 0\)</span> - <span class="math inline">\(H_a: \beta_1 \ne 0\)</span></p>
-<p>T-value</p>
-<ul>
-<li>calculate t-statistic
-<ul>
-<li><span class="math inline">\(\hat{\beta}_1\)</span>: 2745.2651</li>
-<li><span class="math inline">\(SE(\hat{\beta}_1)\)</span>: 1898.3124</li>
-<li><span class="math inline">\(t = \frac{\hat{\beta}_1}{SE(\hat{\beta}_1)}=\)</span> (2745.2651)/(1898.3124) = 1.4462</li>
-</ul></li>
-<li>p-value associated with <span class="math inline">\(t\)</span>: 0.1491
-<ul>
-<li>interpretation: Under the assumption that <span class="math inline">\(H_0: \beta_1 =0\)</span> is true, there is a 14.9 percent chance of obtaining a point estimate <span class="math inline">\(\hat{\beta_1}\)</span> as far away from the hypothesized value (<span class="math inline">\(\beta_1 =0\)</span>) as the one we observed.<br />
-</li>
-<li>p-value of 0.1491 is greater than the alpha-level of <code>0.05</code>, so we do not reject <span class="math inline">\(H_0\)</span>.</li>
-</ul></li>
-</ul>
 </div>
 </div>
 <div id="part-iii-confidence-interval-about-beta_k" class="section level1">
@@ -1957,21 +1792,21 @@ summary(mod3)
 <div id="in-words-what-is-a-confidence-interval" class="section level4">
 <h4>1. In words, what is a confidence interval?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: A confidence interval gives us a range of values that contain the true value of a parameter with a prespecified probability.</li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/1<b></span></p>
 </div>
 <div id="what-is-the-formula-for-a-confidence-interval-about-some-population-parameter" class="section level4">
 <h4>2. What is the formula for a confidence interval about some population parameter?</h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(\bar{Y} \pm z*SE(\bar{Y})\)</span></li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/1<b></span></p>
 </div>
 <div id="what-is-the-formula-for-a-95-confidence-interval-about-a-population-regression-coefficient-hatbeta" class="section level4">
 <h4>3. What is the formula for a 95% confidence interval about a population regression coefficient <span class="math inline">\(\hat{\beta}\)</span></h4>
 <ul>
-<li><strong>YOUR ANSWER HERE</strong>: <span class="math inline">\(\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)\)</span></li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b>/3<b></span></p>
 </div>
@@ -1987,20 +1822,6 @@ summary(mod3)
 <p><br></p>
 <ul>
 <li><strong>YOUR ANSWER HERE</strong>:</li>
-</ul>
-<p><span class="math inline">\(\hat{\beta}_1\)</span> = “being located in a medium/small city as opposed to large city is, on average, associated with a 2,745.27 dollar change in institution-level student earnings for MA graduates of education programs”</p>
-<ul>
-<li>Formula: <span class="math inline">\(\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)\)</span>
-<ul>
-<li><span class="math inline">\(\hat{\beta_1}=\)</span> 2745.2651</li>
-<li><span class="math inline">\(SE(\hat{\beta_1})=\)</span> 1898.3124</li>
-<li>lower bound: = <span class="math inline">\(\hat{\beta}_k - 1.96*SE(\hat{\beta}_k)=\)</span> -975.43</li>
-<li>upper bound: = <span class="math inline">\(\hat{\beta}_k + 1.96*SE(\hat{\beta}_k)=\)</span> 6465.96</li>
-</ul></li>
-<li>Interpretation:
-<ul>
-<li>We are 95% confident that the population parameter <span class="math inline">\(\beta_1\)</span> lies somewhere between -975.43 and 6465.96</li>
-</ul></li>
 </ul>
 </div>
 </div>

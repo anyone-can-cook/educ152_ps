@@ -345,11 +345,7 @@ df_edu %>% glimpse()
 #### 1. Define $R^2$ in words. Write out the mathematical formula for $R^2$ using both ways discussed in lecture.
 
 
-- __YOUR ANSWER HERE__:  $R^2$ is the fraction of variance in Y explained by X (and is not already explained by sample mean, $\bar{Y}$). 
-
-$R^2 = \frac{\text{variance in Y that is explained by X}}{\text{total variance in Y}} = \frac{ESS}{TSS}$
-
-$R^2 = 1 - \frac{\text{variance in Y not explained by X}}{\text{total variance in Y}} = 1 - \frac{SSR}{TSS}$
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/3<b></span>  
@@ -372,51 +368,23 @@ anova(mod1)
 
 ```
 
-Estimated sum of squares (ESS) = 2,876,756,208  
-Sum of Squared Residuals (SSR) = 51,807,412,707  
-Total Sum of Squares (TSS) = ESS + SSR = 54,684,168,915
-
 
 - __YOUR ANSWER HERE: TSS__: 
 
-$TSS = \sum_{i=1}^{n} (Y_i-\bar{Y})^2$
-
-Total sum of squares measures the total variance in Y, in terms of $\bar{Y}$
-
 - __YOUR ANSWER HERE: ESS__:
-
-$ESS = \sum_{i=1}^{n} (\hat{Y_i}-\bar{Y})^2$  
-
-Explained sum of squares measures the amount of variation in Y explained by X.
 
 - __YOUR ANSWER HERE: SSR__: 
 
-$SSR = \sum_{i=1}^{n} (Y_i-\hat{Y})^2$   
-
-The sum of squared residuals measures the amount of variation in Y not explained by X.
 
 
 <span style="color:red"><b>/2<b></span>   
 
 #### 3. Using the values for ESS, SSR, and TSS from above, calculate $R^2$ in both ways discussed in lecture (can do it by hand below or in a code chunk). Interpret the value of $R^2$ in words. 
 
-- __YOUR ANSWER HERE__: The model explains 5.2% of the variation in Y (that is not already explained by sample mean, $\bar{Y}$)
+- __YOUR ANSWER HERE__: 
 
 ```{r}
-#ESS
-anova(mod1)$"Sum Sq"[1]
 
-#SSR
-anova(mod1)$"Sum Sq"[2]
-
-#TSS
-anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2]
-
-#R2, ESS/TSS
-anova(mod1)$"Sum Sq"[1] / (anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2])
-
-#R2, 1 - SSR/TSS
-1 - anova(mod1)$"Sum Sq"[2] / (anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2])
 ```
 
 
@@ -427,13 +395,6 @@ anova(mod1)$"Sum Sq"[1] / (anova(mod1)$"Sum Sq"[1] + anova(mod1)$"Sum Sq"[2])
 
 - __YOUR ANSWER HERE__: 
 
-Sample standard deviation = The sample standard deviation of Y $\hat{\sigma}_Y$ measures the average distance between a random observation $Y_i$ and the sample mean $\bar{Y_i}$. 
-
-$\hat{\sigma}_Y = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\bar{Y})^2}{n -1}}$  
-
-Standard error of the regression (SER) = The standard error of the regression is an estimate of how far away, on average, an actual observed value of $Y_i$ is from the predicted value of $\hat{Y_i}$ of $Y_i$ for a random observation, $i$. 
-
-$SER = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\hat{Y_i})^2}{n -2}} = \sqrt{\frac{\sum_{i=1}^{n} (\hat{\mu_i})^2}{n -2}}$  
 
 
 
@@ -445,15 +406,7 @@ $SER = \sqrt{\frac{\sum_{i=1}^{n} (Y_i-\hat{Y_i})^2}{n -2}} = \sqrt{\frac{\sum_{
 - Y= `debt_all_stgp_eval_mean`
 
 ```{r}
-mod2 <- lm(formula = debt_all_stgp_eval_mean ~ coa_grad_res, data = df_edu)
 
-summary(mod2)
-
-#SER
-summary(mod2)$sigma
-
-#Standard deviation of debt
-sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 ```
 
 
@@ -464,11 +417,7 @@ sd(df_edu$debt_all_stgp_eval_mean, na.rm = TRUE)
 
 - __YOUR ANSWER HERE__: 
 
-Interpretation of SER: On average, observed values of institution-level student debt ($Y_i$) are 8,377.51 dollars away from predicted values of institution-level student debt $\hat{Y_i}$.
 
-Interpretation of sample standard deviation: On average, observations of $Y_i$ are 9,321.58 dollars away from the sample mean $\bar{Y_i}$ of Y.
-
-- Yes, the model makes our prediction better. 
 
 
 # Part II: Categorical X variables
@@ -484,7 +433,7 @@ In this section, we will explore the relationship between Carneige classificatio
 
 #### 1. Explain what a reference group is in words.  
 
-- __YOUR ANSWER HERE__: The reference group is the group in our model that all other groups will be compared to. 
+- __YOUR ANSWER HERE__:  
 
 
 <span style="color:red"><b>/1<b></span>   
@@ -497,14 +446,15 @@ df_edu_fac %>% count(carnegie)
 df_edu_fac %>% count(as.integer(carnegie))
 ```
 
-- __YOUR ANSWER HERE__: Research 1 institutions will be the reference group in our model because R automatically assigns the lowest value of $X$ as the reference group.
+- __YOUR ANSWER HERE__:
+
 
 
 <span style="color:red"><b>/2<b></span> 
 
 #### 3. What is a factor variable and why is it important for running a regression?  
 
-- __YOUR ANSWER HERE__: A factor variable is a vector of integer values. When running a regression with a categorical variable (X), the variable should be class factor as values are stored as integers (e.g., 1,0) rather than strings (e.g., "Married", "Single", etc). 
+- __YOUR ANSWER HERE__: 
 
 
 
@@ -529,37 +479,14 @@ df_edu_fac %>% count(carnegie)
 - X= `carnegie`
 - Y= `earn_mdn_hi_2yr`
 
+
 ```{r}
-mod3 <- lm(formula = earn_mdn_hi_2yr ~ carnegie, data = df_edu_fac)
-summary(mod3)
+
 ```
+
 
 - __YOUR ANSWER HERE__:  
 
-- Population linear regression model: $Y_i = \beta_0 + \beta_1X_{1i} + \beta_2X_{2i} + \beta_3X_{3i} + u_i$
-- where:
-  - subscript $i$ refers to university $i$
-  - $Y_i$ = institution-level student earnings (in dollars) at university i (measured by variable `earn_mdn_hi_2yr`)
-  - $X_i$ = type of institution (measured by `carnegie`), which has the following four categories: Research 1 [refrence group]; Research 2; Masters 1; Masters 2  
-    - $X_{1i}$: 0/1 “research 2”  
-    - $X_{2i}$: 0/1 “masters 1”
-    - $X_{3i}$: 0/1 “masters 2”
-  - $\beta_0$ = ("population intercept"), average value of $Y$ when $X$ is the reference group category (that is $X_{1i}$=0,$X_{2i}$=0,$X_{3i}$=0
-  - $\beta_1$ = population regression coefficient associated with being a “research 2” rather than reference group  
-  - $\beta_2$ = population regression coefficient associated with being a “masters 1” rather than reference group  
-  - $\beta_3$ = population regression coefficient associated with being a “masters 2” rather than reference group
- 
-- OLS prediction line (without estimates): $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2}X_{2i} + \hat{\beta_3}X_{3i}$
-
-- where:
-  - $\hat{Y_i}$ = predicted value of institution-level student earnings (in dollars) at university i (measured by variable `earn_mdn_hi_2yr`)
-  - $\hat{\beta_0}$ = predicted value of $Y$ when all independent variables in the model ($X_1$,$X_2$,…$X_k$) are equal to 0. 
-  - $\hat{\beta_1}$= predicted value of $Y$ when $X_1$ = 1 “research 2”.  
-  - $\hat{\beta_2}$= predicted value of $Y$ when $X_2$ = 1 “masters 1”.    
-  - $\hat{\beta_3}$= predicted value of $Y$ when $X_3$ = 1 “masters 2”.
-
-
-- OLS prediction line (with estimates): $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$
 
 
 
@@ -569,12 +496,7 @@ summary(mod3)
 
 - __YOUR ANSWER HERE__:  
 
-- Interpretation of $\hat{\beta_1}=$ `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` (Research 2)
-  - "Graduating from a Research 2 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
-- Interpretation of $\hat{\beta_2}=$ `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` (suburb)
-  - "Graduating from a Masters 1 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for for MA graduates of education programs"
-- Interpretation of $\hat{\beta_3}=$ `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` (town/rural)
-  - "Graduating from a Masters 2 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs.
+
   
 
 <span style="color:red"><b>/1<b></span> 
@@ -583,8 +505,6 @@ summary(mod3)
 
 - __YOUR ANSWER HERE__:
 
-- Interpret point estimate value of $\hat{\beta}_0$:
-  - interpretation of $\hat{\beta_0}=$ 51,988 is the predicted institution-level student earnings for MA graduates of education programs who attended a Research 1 university.
  
 
 
@@ -595,15 +515,18 @@ summary(mod3)
 
 **OLS line with estimates**  
 
-- **Hint**: Our OLS prediction line looks something like this:$\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$  
+- **Hint**: Our OLS prediction line looks something like this:$\hat{Y_i} =$ $51,988.34 + 2745*X_{1i} + 6346 *X_{2i} + 5450*X_{3i}$ 
+
 
 **Calculation:**  
 
 - If all other values of the independent variable are 0 ($X_2$,$X_3$) except $X_1$, then our OLS prediction line looks like this: 
 
-  - $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$    
+  - $\hat{Y_i} =$ $51,988.34 + 2745*X_{1i} + 6346 *0 + 5450*0$    
 
-  - $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + (summary(mod3)$coefficients[2,1])`
+  - $\hat{Y_i} =$  $51,988.34 + 2745$  
+  
+  - $\hat{Y_i} =$  $54,733.34$
 
 
 Now do the following for each value of X  
@@ -615,21 +538,6 @@ Now do the following for each value of X
 - __YOUR ANSWER HERE__:  
 
 
-Non reference group 2 ($X_2$) = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$   
-
-= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + (summary(mod3)$coefficients[3,1])`   
-
-
-Non reference group 3 ($X_3$) = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$   
-
-= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1] + summary(mod3)$coefficients[4,1]`   
-
-Reference group = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` $\times 0$ + `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` $\times 0$   
-
-= $\hat{Y_i} =$  `r summary(mod3)$coefficients[1,1]`  
-
-    
-
 <span style="color:red"><b>/3<b></span>   
 
 #### 8. For one of the non-reference group categories of $X$ (e.g., Research 2, Master's 1, Master's 2) do the following:  
@@ -639,19 +547,6 @@ Reference group = $\hat{Y_i} =$  `r format(round(summary(mod3)$coefficients[1,1]
 
 - __YOUR ANSWER HERE__:  
 
-Hypothesis 
- - $H_0: \beta_1 = 0$
- - $H_a: \beta_1 \ne 0$  
- 
-T-value  
-
-- calculate t-statistic
-  - $\hat{\beta}_1$: `r round(summary(mod3)$coefficients[2,1], digits = 4)`
-  - $SE(\hat{\beta}_1)$: `r round(summary(mod3)$coefficients[2,2], digits = 4)`
-  - $t = \frac{\hat{\beta}_1}{SE(\hat{\beta}_1)}=$ (`r round(summary(mod3)$coefficients[2,1], digits = 4)`)/(`r round(summary(mod3)$coefficients[2,2], digits = 4)`) = `r round(summary(mod3)$coefficients[2,3], digits = 4)`
-- p-value associated with $t$: `r round(summary(mod3)$coefficients[2,4], digits = 4)`
-  - interpretation: Under the assumption that $H_0: \beta_1 =0$ is true, there is a `r round(summary(mod3)$coefficients[2,4]*100, digits = 1)` percent chance of obtaining a point estimate $\hat{\beta_1}$ as far away from the hypothesized value ($\beta_1 =0$) as the one we observed.   
-  - p-value of `r round(summary(mod3)$coefficients[2,4], digits = 4)` is greater than the alpha-level of `0.05`, so we do not reject $H_0$.
 
 
 # Part III: Confidence interval about $\beta_k$  
@@ -660,21 +555,23 @@ T-value
 
 #### 1.  In words, what is a confidence interval?  
 
-- __YOUR ANSWER HERE__: A confidence interval gives us a range of values that contain the true value of a parameter with a prespecified probability.
+- __YOUR ANSWER HERE__: 
 
 
 <span style="color:red"><b>/1<b></span>     
 
 #### 2. What is the formula for a confidence interval about some population parameter?  
 
-- __YOUR ANSWER HERE__: $\bar{Y} \pm z*SE(\bar{Y})$ 
+- __YOUR ANSWER HERE__: 
+
 
 
 <span style="color:red"><b>/1<b></span>     
 
 #### 3. What is the formula for a 95% confidence interval about a population regression coefficient $\hat{\beta}$  
 
-- __YOUR ANSWER HERE__:  $\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)$
+- __YOUR ANSWER HERE__:  
+
 
 
 <span style="color:red"><b>/3<b></span>     
@@ -688,15 +585,6 @@ T-value
 
 - __YOUR ANSWER HERE__:    
 
-$\hat{\beta}_1$ = "being located in a medium/small city as opposed to large city is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
-
-- Formula: $\hat{\beta}_k \pm 1.96*SE(\hat{\beta}_k)$
-  - $\hat{\beta_1}=$ `r round(summary(mod3)$coefficients[2,1], digits =4)`
-  - $SE(\hat{\beta_1})=$ `r round(summary(mod3)$coefficients[2,2], digits =4)`
-  - lower bound: = $\hat{\beta}_k - 1.96*SE(\hat{\beta}_k)=$  `r round(summary(mod3)$coefficients[2,1]-1.96*summary(mod3)$coefficients[2,2], digits =2)`
-  - upper bound: = $\hat{\beta}_k + 1.96*SE(\hat{\beta}_k)=$ `r round(summary(mod3)$coefficients[2,1]+1.96*summary(mod3)$coefficients[2,2], digits =2)`
-- Interpretation:
-  - We are 95% confident that the population parameter $\beta_1$ lies somewhere between `r round(summary(mod3)$coefficients[2,1]-1.96*summary(mod3)$coefficients[2,2], digits =2)` and `r round(summary(mod3)$coefficients[2,1]+1.96*summary(mod3)$coefficients[2,2], digits =2)`
 
 
 # Part IV: Post a comment/question

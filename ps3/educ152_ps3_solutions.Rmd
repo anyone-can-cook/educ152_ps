@@ -570,11 +570,11 @@ summary(mod3)
 - __YOUR ANSWER HERE__:  
 
 - Interpretation of $\hat{\beta_1}=$ `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` (Research 2)
-  - "Graduating from a Research 2 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
+  - "Graduating from a Research 2 university as opposed to a Research 1 university is, on average, associated with a `r format(round(summary(mod3)$coefficients[2,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs"
 - Interpretation of $\hat{\beta_2}=$ `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` (suburb)
-  - "Graduating from a Masters 1 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for for MA graduates of education programs"
+  - "Graduating from a Masters 1 university as opposed to a Research 1 university is, on average, associated with a `r format(round(summary(mod3)$coefficients[3,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for for MA graduates of education programs"
 - Interpretation of $\hat{\beta_3}=$ `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` (town/rural)
-  - "Graduating from a Masters 2 university as opposed to a Research 1 city is, on average, associated with a `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs.
+  - "Graduating from a Masters 2 university as opposed to a Research 1 university is, on average, associated with a `r format(round(summary(mod3)$coefficients[4,1], digits =2),big.mark = ',')` dollar change in institution-level student earnings for MA graduates of education programs.
   
 
 <span style="color:red"><b>/1<b></span> 

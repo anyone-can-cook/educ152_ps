@@ -1,0 +1,184 @@
+---
+title: "EDUC152, week 8 homework"
+# author: "INSERT YOUR NAME HERE"
+date: ""
+urlcolor: blue
+output: 
+  #pdf_document:
+    #pandoc_args: ["--extract-media", "."]
+    #keep_md: yes
+    #self_contained: true
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    self_contained: true
+    #theme: default
+    #highlight: tango
+---
+
+```{r setup, include=FALSE}
+
+```
+
+```{r, echo=FALSE, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", highlight = TRUE, warning = FALSE, message = FALSE)
+```
+
+<span style="color:red"><b>Grade: /45<b></span>
+
+# Overview  
+
+
+The purpose of this short homework assignment is to get some practice with the basics of multivariate regression. You will:
+
+- run a regression model in *R* (code provided)
+- write out the population linear regression  model
+- write out the OLS prediction line
+  - with estimates
+  - without estimates
+- Interpret value of regression coefficients
+- Calculate predicted values
+
+
+```{r}
+# remove scientific notation
+options(scipen=999)
+
+##########
+########## Libraries
+##########
+
+  library(tidyverse)
+  library(labelled)
+  library(haven)
+
+##########
+########## ELS:2002 data
+##########
+
+# RUN SCRIPT THAT CREATES STUDENT-LEVEL DATA FRAME CONTAINING ALL VARIABLES AND CREATES DATA FRAME WITH A SUBSET OF VARIABLES
+
+  #NOTE: this script will take 30 seconds to a minute to run because loading a dataset w/ about 16,000 observations and 4,000 variables from a website
+
+  source(file = url('https://github.com/anyone-can-cook/educ152/raw/main/scripts/els/read_els_by_pets.R'))
+    #source(file = file.path('.','..','..','scripts','els','read_els_by_pets.R'))
+      #list.files(path = file.path('.','..','..','scripts','els'))
+
+# Create a dataframe df_els_stu_fac that has categorical variables as factor class variables rather than labelled class variables
+  df_els_stu_fac <- as_factor(df_els_stu, only_labelled = TRUE) %>%
+    # create a version of parent income that is in $1000s
+    mutate(parent_income000 = parent_income/1000)
+  # convert continuous variables we know we want numeric back to numeric
+  for (v in c('bytxmstd','bytxrstd','f1txmstd','f3stloanamt','f3stloanpay','f3ern2011','f3tzrectrans','f3tzreqtrans','f3tzschtotal')) {
+    df_els_stu_fac[[v]] <- df_els_stu[[v]]  
+  }
+```
+
+# Run descriptive statistics and regression
+
+Variables
+
+- The dependent variable is high school reading test score, `bytxrstd`
+  - variable label: `r attr(df_els_stu_fac$bytxrstd, which = 'label')`
+- The continuous independent variable is `parent_income000`
+  - variable label: `r attr(df_els_stu_fac$parent_income, which = 'label')`
+  - *Note*. This is parent income in $thousands (e.g., value of 62.5 refers to \$62,500)
+    - so a "one-unit" increase in this variable would be a \$1,000 increase in parent income
+- The categorical independent variable is "school control" `bysctrl`
+  - variable label: `r attr(df_els_stu_fac$bysctrl, which = 'label')`
+
+Your job in this section is just to run the provided code
+
+
+- Descriptive statistics about variable in the model
+```{r}
+df_els_stu_fac %>% select(bytxrstd,parent_income000,bysctrl) %>% glimpse()
+
+# dependent variable
+df_els_stu_fac %>% summarize(
+  mean_read_score = mean(bytxrstd, na.rm = TRUE),
+  sd_read_score = sd(bytxrstd, na.rm = TRUE),
+)
+
+# continuous independent variable
+df_els_stu_fac %>% summarize(
+  mean_parent_income = mean(parent_income000, na.rm = TRUE),
+  sd_parent_income = sd(parent_income000, na.rm = TRUE),
+)
+
+# categorical independent variable
+df_els_stu_fac %>% count(bysctrl)
+
+  # categorical independent variable, showing value of underlying integer values
+ df_els_stu_fac %>% count(as.integer(bysctrl))
+```
+
+Run regression model
+```{r}
+mod1 <- lm(formula = bytxrstd ~ parent_income000 + bysctrl, data = df_els_stu_fac %>% filter(f2enroll0506=='yes'))
+
+summary(mod1)
+```
+# Questions for you to answer
+
+#### 1. write out the population linear regression  model  (make sure to define which variable (e.g., "parental income") is associated with which $X_{ki}$ in the model; and define unit of analysis if relevant)
+
+- __YOUR ANSWER HERE__: 
+
+- Population linear regression model (multivariate regression)
+  - $Y_i = \beta_0 + \beta_1 X_{1i}+ \beta_2 X_{2i}+ \beta_3 X_{3i}+ u_i$, where:
+    - $Y_i$: is high school reading test score for student $i$
+    - $X_{1i}$: (continuous) is parental income in \$1,000s
+    - $X_{2i}$: (dichotomous) student $i$ attends a Catholic private school
+    - $X_{3i}$: (dichotomous) student $i$ attends a non-Catholic private school
+    - $u_i$ is all variables that affect $Y_i$ but were not included in our model
+    
+#### 2. write out the OLS prediction line without estimate values and write out the OLS prediction line with estimate values
+
+__YOUR ANSWER HERE__: 
+
+- OLS prediction line without estimates
+  - $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_i + \hat{\beta_2} X_{2i}+ \hat{\beta_3} X_{3i}$
+- OLS prediction line with estimates
+  - $\hat{Y_i} =$  `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$
+
+#### 3. Interpret the value of regression coefficients $\hat{\beta_1}$, $\hat{\beta_2}$, and $\hat{\beta_3}$ in words
+
+__YOUR ANSWER HERE__: 
+
+- $X_{1i}$ (parental income in \$ thousands); $\hat{\beta_1}=$ `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')`
+  - a one thousand dollar increase in parental income associated with a `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` point change in high school reading test score
+- $X_{2i}$ (attends a Catholic private school); $\hat{\beta_2}=$ `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')`
+  - attending a Catholic private school as opposed to a public school is, on average, associated with a `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')` change in high school reading test score, holding the of value all other $X$ variables constant
+- $X_{3i}$ (attends a non-Catholic private school); $\hat{\beta_3}=$ `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')`
+  - attending a non-Catholic private school as opposed to a public school is, on average, associated with a `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` change in high school reading test score, holding the of value all other $X$ variables constant  
+
+#### 4. Interpret the value of regression coefficients $\hat{\beta_0}$ in words
+
+__YOUR ANSWER HERE__: 
+
+- $\hat{\beta_0}=$ `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')`
+- The estimated average high school test score for a student with parental income of `0` who attended a public high school is `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')`
+
+#### 5. Calculate the predicted high school reading test score for a student who attended a non-Catholic private school and who has `parental_income000 = 150` (i.e., \$150,000); show your work
+
+- $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}\times 150 + \hat{\beta_2} \times 0 + \hat{\beta_3} \times 1$
+- $\hat{Y_i} =$ `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` $\times 150$ + `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` $\times 1=$
+
+
+
+- Interpret value of regression coefficients
+- Calculate predicted values
+
+# Knit to html and submit problem set  
+
+**Knit to html** by clicking the "Knit" button near the top of your RStudio window (icon with blue yarn ball) or drop down and select "Knit to HTML"
+
+- Go to the [class website](https://anyone-can-cook.github.io/educ152/) and under the "Readings & Assignments" >> "Week 7" tab, click on the "Problem set 3 submission link"
+- Submit both your html and .Rmd files 
+- Use this naming convention "lastname_firstname_ps#" for your .Rmd (e.g. martin_patricia_ps3.Rmd)
+

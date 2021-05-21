@@ -1679,71 +1679,28 @@ summary(mod1)
 <div id="write-out-the-population-linear-regression-model-make-sure-to-define-which-variable-e.g.-parental-income-is-associated-with-which-x_ki-in-the-model-and-define-unit-of-analysis-if-relevant." class="section level4">
 <h4>1. Write out the population linear regression model (make sure to define which variable (e.g., “parental income”) is associated with which <span class="math inline">\(X_{ki}\)</span> in the model; and define unit of analysis if relevant).</h4>
 <ul>
-<li><p><strong>YOUR ANSWER HERE</strong>:</p></li>
-<li><p>Population linear regression model (multivariate regression)</p>
-<ul>
-<li><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i}+ \beta_2 X_{2i}+ \beta_3 X_{3i}+ u_i\)</span>, where:
-<ul>
-<li><span class="math inline">\(Y_i\)</span>: is high school reading test score for student <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(X_{1i}\)</span>: (continuous) is parental income in $1,000s</li>
-<li><span class="math inline">\(X_{2i}\)</span>: (dichotomous) student <span class="math inline">\(i\)</span> attends a Catholic private school</li>
-<li><span class="math inline">\(X_{3i}\)</span>: (dichotomous) student <span class="math inline">\(i\)</span> attends a non-Catholic private school</li>
-<li><span class="math inline">\(u_i\)</span> is all variables that affect <span class="math inline">\(Y_i\)</span> but were not included in our model</li>
-</ul></li>
-</ul></li>
+<li><strong>YOUR ANSWER HERE</strong>:</li>
 </ul>
 <p><span style="color:red"><b> /2<b></span></p>
 </div>
 <div id="write-out-the-ols-prediction-line-without-estimate-values-and-write-out-the-ols-prediction-line-with-estimate-values." class="section level4">
 <h4>2. Write out the OLS prediction line without estimate values and write out the OLS prediction line with estimate values.</h4>
 <p><strong>YOUR ANSWER HERE</strong>:</p>
-<ul>
-<li>OLS prediction line without estimates
-<ul>
-<li><span class="math inline">\(\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2} X_{2i}+ \hat{\beta_3} X_{3i}\)</span></li>
-</ul></li>
-<li>OLS prediction line with estimates
-<ul>
-<li><span class="math inline">\(\hat{Y_i} =\)</span> 51.17 + 0.03 <span class="math inline">\(\times X_{1i}\)</span> + 1.98 <span class="math inline">\(\times X_{2i}\)</span> + 2.3 <span class="math inline">\(\times X_{3i}\)</span></li>
-</ul></li>
-</ul>
 <p><span style="color:red"><b> /3<b></span></p>
 </div>
 <div id="interpret-the-value-of-regression-coefficients-hatbeta_1-hatbeta_2-and-hatbeta_3-in-words." class="section level4">
 <h4>3. Interpret the value of regression coefficients <span class="math inline">\(\hat{\beta_1}\)</span>, <span class="math inline">\(\hat{\beta_2}\)</span>, and <span class="math inline">\(\hat{\beta_3}\)</span> in words.</h4>
 <p><strong>YOUR ANSWER HERE</strong>:</p>
-<ul>
-<li><span class="math inline">\(X_{1i}\)</span> (parental income in $ thousands); <span class="math inline">\(\hat{\beta_1}=\)</span> 0.03
-<ul>
-<li>a one thousand dollar increase in parental income is associated with a 0.03 point change in high school reading test score.</li>
-</ul></li>
-<li><span class="math inline">\(X_{2i}\)</span> (attends a Catholic private school); <span class="math inline">\(\hat{\beta_2}=\)</span> 1.98
-<ul>
-<li>attending a Catholic private school as opposed to a public school is, on average, is associated with a 1.98 change in high school reading test score, holding the value of all other <span class="math inline">\(X\)</span> variables constant.</li>
-</ul></li>
-<li><span class="math inline">\(X_{3i}\)</span> (attends a non-Catholic private school); <span class="math inline">\(\hat{\beta_3}=\)</span> 2.3
-<ul>
-<li>attending a non-Catholic private school as opposed to a public school is, on average, is associated with a 2.3 change in high school reading test score, holding the value of all other <span class="math inline">\(X\)</span> variables constant.</li>
-</ul></li>
-</ul>
 <p><span style="color:red"><b> /1<b></span></p>
 </div>
 <div id="interpret-the-value-of-the-regression-coefficients-hatbeta_0-in-words." class="section level4">
 <h4>4. Interpret the value of the regression coefficients <span class="math inline">\(\hat{\beta_0}\)</span> in words.</h4>
 <p><strong>YOUR ANSWER HERE</strong>:</p>
-<ul>
-<li><span class="math inline">\(\hat{\beta_0}=\)</span> 51.17</li>
-<li>The estimated average high school test score for a student with parental income of <code>0</code> who attended a public high school is 51.17</li>
-</ul>
 <p><span style="color:red"><b> /1<b></span></p>
 </div>
 <div id="calculate-the-predicted-high-school-reading-test-score-for-a-student-who-attended-a-non-catholic-private-school-and-who-has-parental_income000-150-i.e.-150000-show-your-work" class="section level4">
 <h4>5. Calculate the predicted high school reading test score for a student who attended a non-Catholic private school and who has <code>parental_income000 = 150</code> (i.e., $150,000); show your work</h4>
 <p><strong>YOUR ANSWER HERE</strong>:</p>
-<ul>
-<li><span class="math inline">\(\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}\times 150 + \hat{\beta_2} \times 0 + \hat{\beta_3} \times 1\)</span></li>
-<li><span class="math inline">\(\hat{Y_i} =\)</span> 51.17 + 0.03 <span class="math inline">\(\times 150\)</span> + 2.3 <span class="math inline">\(\times 1=\)</span> 57.97</li>
-</ul>
 </div>
 </div>
 <div id="knit-to-html-and-submit-exercise" class="section level1">

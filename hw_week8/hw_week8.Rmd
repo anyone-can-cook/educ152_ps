@@ -132,13 +132,8 @@ summary(mod1)
 
 - __YOUR ANSWER HERE__: 
 
-- Population linear regression model (multivariate regression)
-  - $Y_i = \beta_0 + \beta_1 X_{1i}+ \beta_2 X_{2i}+ \beta_3 X_{3i}+ u_i$, where:
-    - $Y_i$: is high school reading test score for student $i$
-    - $X_{1i}$: (continuous) is parental income in \$1,000s
-    - $X_{2i}$: (dichotomous) student $i$ attends a Catholic private school
-    - $X_{3i}$: (dichotomous) student $i$ attends a non-Catholic private school
-    - $u_i$ is all variables that affect $Y_i$ but were not included in our model
+
+
     
 <span style="color:red"><b> /2<b></span>
 
@@ -146,10 +141,8 @@ summary(mod1)
 
 __YOUR ANSWER HERE__: 
 
-- OLS prediction line without estimates
-  - $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}X_{1i} + \hat{\beta_2} X_{2i}+ \hat{\beta_3} X_{3i}$
-- OLS prediction line with estimates
-  - $\hat{Y_i} =$  `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` $\times X_{1i}$ + `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')` $\times X_{2i}$ + `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` $\times X_{3i}$
+
+
 
 <span style="color:red"><b> /3<b></span> 
 
@@ -157,12 +150,8 @@ __YOUR ANSWER HERE__:
 
 __YOUR ANSWER HERE__: 
 
-- $X_{1i}$ (parental income in \$ thousands); $\hat{\beta_1}=$ `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')`
-  - a one thousand dollar increase in parental income is associated with a `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` point change in high school reading test score.
-- $X_{2i}$ (attends a Catholic private school); $\hat{\beta_2}=$ `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')`
-  - attending a Catholic private school as opposed to a public school is, on average, is associated with a `r format(round(summary(mod1)$coefficients[3,1], digits =2),big.mark = ',')` change in high school reading test score, holding the value of all other $X$ variables constant.
-- $X_{3i}$ (attends a non-Catholic private school); $\hat{\beta_3}=$ `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')`
-  - attending a non-Catholic private school as opposed to a public school is, on average, is associated with a `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` change in high school reading test score, holding the value of all other $X$ variables constant.  
+
+
 
 <span style="color:red"><b> /1<b></span>
 
@@ -170,8 +159,8 @@ __YOUR ANSWER HERE__:
 
 __YOUR ANSWER HERE__: 
 
-- $\hat{\beta_0}=$ `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')`
-- The estimated average high school test score for a student with parental income of `0` who attended a public high school is `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')`
+
+
 
 <span style="color:red"><b> /1<b></span>  
 
@@ -179,8 +168,6 @@ __YOUR ANSWER HERE__:
 
 __YOUR ANSWER HERE__: 
 
-- $\hat{Y_i} = \hat{\beta_0} + \hat{\beta_1}\times 150 + \hat{\beta_2} \times 0 + \hat{\beta_3} \times 1$
-- $\hat{Y_i} =$ `r format(round(summary(mod1)$coefficients[1,1], digits =2),big.mark = ',')` + `r format(round(summary(mod1)$coefficients[2,1], digits =2),big.mark = ',')` $\times 150$ + `r format(round(summary(mod1)$coefficients[4,1], digits =2),big.mark = ',')` $\times 1=$ `r  round(summary(mod1)$coefficients[1,1], digits =2) + (round(summary(mod1)$coefficients[2,1], digits =2) * 150) + (round(summary(mod1)$coefficients[4,1], digits =2) * 1)`
 
 
 

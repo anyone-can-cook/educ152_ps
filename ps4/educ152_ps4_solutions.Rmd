@@ -334,9 +334,9 @@ summary(cred_mod1)
 
 
 - Interpretation of $\hat{\beta_1}=$ `r format(round(summary(cred_mod1)$coefficients[2,1], digits =2),big.mark = ',')` (1 developmental math course)
-  - "Taking one developmental math course as opposed to zero developmental math courses is, on average, associated with a `r format(round(summary(cred_mod1)$coefficients[2,1], digits =2),big.mark = ',')` credit increase in postsecondary credits earned."
+  - "Taking one developmental math course as opposed to zero developmental math courses is, on average, associated with a `r format(round(summary(cred_mod1)$coefficients[2,1], digits =2),big.mark = ',')` credit increase in postsecondary credits earned, holding the value of all other X variables constant."
 - Interpretation of $\hat{\beta_2}=$ `r format(round(summary(cred_mod1)$coefficients[3,1], digits =2),big.mark = ',')` (2+ more developmental math courses)
-  - "Taking two or more developmental math courses as opposed to zero developmental math courses is, on average, associated with a `r format(round(summary(cred_mod1)$coefficients[3,1], digits =2),big.mark = ',')` credit increase in postsecondary credits earned." 
+  - "Taking two or more developmental math courses as opposed to zero developmental math courses is, on average, associated with a `r format(round(summary(cred_mod1)$coefficients[3,1], digits =2),big.mark = ',')` credit increase in postsecondary credits earnedm, holding the value of all other X variables constant." 
   
   
 - For each coefficient associated with developmental math do we reject the null hypothesis $H_0: \beta_k = 0$ using an alpha-level (rejection region) of .05?

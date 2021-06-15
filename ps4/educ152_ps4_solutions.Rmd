@@ -634,7 +634,7 @@ summary(cred_mod2_allcc)
 - Interpretation of $\hat{\beta_2}=$ `r format(round(summary(cred_mod2_allcc)$coefficients[3,1], digits =2),big.mark = ',')` (2+ more developmental math courses)
   - "Taking two or more developmental math courses as opposed to zero developmental math courses is, on average, associated with a `r format(round(summary(cred_mod2_allcc)$coefficients[3,1], digits =2),big.mark = ',')` credit increase in postsecondary credits earned, holding the value of all other X variables constant."
   
-- The coefficients for the model `cred_mod2_allcc` may be different from the model `cred_mod2` (sample of students who delayed at least one year) because students who delayed may find it helpful to take developmental courses to get them up to speed with college-level courses. On the other hand, students who start at a community college and take developmental courses may extend their time to degree and deter them from taking postsecondary courses (e.g., perhaps lose motivation). Additionally, the sample of students taken from both data frames are different and the relationship between the independent and dependent variables for both models could also be different.
+- The coefficients for the model `cred_mod2_allcc` may be different from the model `cred_mod2` (sample of students who delayed at least one year) because  the sample of students taken from both data frames are different and the relationship between the independent and dependent variables for both models is also different.
 
 
 # Part III: Effect of developmental math on transfer to 4-yr
